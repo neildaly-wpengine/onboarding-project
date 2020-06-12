@@ -1,24 +1,19 @@
-# README
+# Onboarding Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A React frontend with a Rails backend.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+To run the server, run the following command:
 
-* System dependencies
+```bash
+make up
+```
 
-* Configuration
+Alternatively, you can build with:
 
-* Database creation
+```bash
+make build
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Run `make help` for additional commands. After, visit `localhost:3000` to view the application.
