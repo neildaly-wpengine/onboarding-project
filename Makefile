@@ -21,3 +21,6 @@ build_run: ## build and run the application using docker-compose
 
 up: ## run the application using docker-compose
 	docker-compose up
+
+rspec: ## run rails tests using rails rspec
+	rspec
