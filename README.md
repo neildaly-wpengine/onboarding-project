@@ -16,4 +16,12 @@ Alternatively, you can build with:
 make build
 ```
 
-Run `make help` for additional commands. After, visit `localhost:3000` to view the application.
+Run `make help` for additional commands. After, visit `localhost:3000` to view the application. The mounted volumes:
+
+```bash
+volumes:
+    - .:/app
+    - /app/node_modules
+```
+
+allow for updates using webpacker.
