@@ -48,5 +48,10 @@ RSpec.describe User, type: :model do
       user = User.new(email: "#{'a' * 255}@a.com", password: 'dd', password_confirmation: 'dd').save
       expect(user).to eq(false)
     end
+
+    it 'saves with long email' do
+      user = User.new(email: "#{'a' * (255 - 6)}@a.com", password: 'dd', password_confirmation: 'dd').save
+      expect(user).to eq(true)
+    end
   end
 end
