@@ -24,3 +24,9 @@ up: ## run the application using docker-compose
 
 rspec: ## run rails tests using rails rspec
 	rspec
+
+show_specs: ## show list of all specs
+	rspec -f d --color --dry-run spec
+
+annotate_models: ## annotate model schemas
+	annotate --models
