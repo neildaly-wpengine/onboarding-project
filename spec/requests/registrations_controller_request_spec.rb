@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'RegistrationsControllers', type: :request do
   before(:all) do
-    @registation_endpoint = '/registrations'
+    @registation_endpoint = '/api/v1/registrations'
     @user = create(:user)
   end
 

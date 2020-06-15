@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'SessionsControllers', type: :request do
   before(:all) do
-    @logged_in_endpoint = '/logged_in'
-    @login_endpoint = '/sessions'
-    @logout_endpoint = '/logout'
+    @logged_in_endpoint = '/api/v1/logged_in'
+    @login_endpoint = '/api/v1/sessions'
+    @logout_endpoint = '/api/v1/logout'
     @user = create(:user)
   end
 
