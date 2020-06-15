@@ -23,7 +23,7 @@ up: ## run the application using docker-compose
 	docker-compose up
 
 rspec: ## run rails tests using rails rspec
-	rake db:seed RAILS_ENV=test
+	# rake db:seed RAILS_ENV=test
 	rspec
 
 show_specs: ## show specs for rails application

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'RegistrationsControllers', type: :request do
-  before(:each) do
+  before(:all) do
     @registation_endpoint = '/registrations'
+    @user = create(:user)
   end
 
   context 'invalid user registration' do
@@ -53,7 +54,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
     end
 
     it 'does not create a user that already exists' do
-      user = { 'user': { 'email': User.last.email, 'password': '1', 'password_confirmation': '1' } }
+      user = { 'user': { 'email': @user.email, 'password': '1', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
 
@@ -62,8 +63,8 @@ RSpec.describe 'RegistrationsControllers', type: :request do
   end
 
   context 'valid user registration' do
-    it 'does not create a user without an email' do
-      user = { 'user': { 'email': 'test@test.com', 'password': '1', 'password_confirmation': '1' } }
+    it 'creates a valid user' do
+      user = { 'user': { 'email': 'another@test.com', 'password': '1', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
 
