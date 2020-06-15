@@ -9,7 +9,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
   end
 
   context 'invalid user registration' do
-    it 'does not create a user without an email' do
+    it 'without an email' do
       user = { 'user': { 'password': '1', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
@@ -17,7 +17,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
       expect(JSON.parse(response.body)['status']).to eq(400)
     end
 
-    it 'does not create a user with blank fields' do
+    it 'with blank fields' do
       user = { 'user': { 'email': '', 'password': '', 'password_confirmation': '' } }
 
       post @registation_endpoint, params: user
@@ -29,7 +29,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
       expect(response_body['message']['password_confirmation']).to eq(["can't be blank"])
     end
 
-    it 'does not create a user with an invalid email regex' do
+    it 'with an invalid email regex' do
       user = { 'user': { 'email': 'test@test', 'password': '1', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
@@ -37,7 +37,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
       expect(JSON.parse(response.body)['message']['email']).to eq(['is invalid'])
     end
 
-    it 'does not create a user without a password' do
+    it 'without a password' do
       user = { 'user': { 'email': 'test@test.com', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
@@ -45,7 +45,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
       expect(JSON.parse(response.body)['status']).to eq(400)
     end
 
-    it 'does not create a user without a password confirmation' do
+    it 'without a password confirmation' do
       user = { 'user': { 'email': 'test@test.com', 'password': '1' } }
 
       post @registation_endpoint, params: user
@@ -53,7 +53,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
       expect(JSON.parse(response.body)['status']).to eq(400)
     end
 
-    it 'does not create a user that already exists' do
+    it 'when that user already exists' do
       user = { 'user': { 'email': @user.email, 'password': '1', 'password_confirmation': '1' } }
 
       post @registation_endpoint, params: user
