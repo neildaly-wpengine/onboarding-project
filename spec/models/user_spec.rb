@@ -65,9 +65,9 @@ RSpec.describe User, type: :model do
     end
 
     it 'saves with long email' do
-      email_sufix = '@a.com'
+      email_suffix = '@a.com'
 
-      user = User.new(email: "#{'a' * (255 - email_sufix.length)}#{email_sufix}",
+      user = User.new(email: "#{'a' * (255 - email_suffix.length)}#{email_suffix}",
                       password: 'dd', password_confirmation: 'dd').save
 
       expect(user).to eq(true)
