@@ -10,8 +10,7 @@ WORKDIR /app
 
 COPY Gemfile* package.json yarn.lock ./
 
-RUN bundle install
-RUN yarn install --check-files
+RUN bundle install && yarn install --check-files
 
 COPY . . 
 
