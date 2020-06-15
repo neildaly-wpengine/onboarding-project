@@ -24,6 +24,9 @@ up: ## run the application using docker-compose
 
 rspec: ## run rails tests using rails rspec
 	rake db:seed RAILS_ENV=test
+	rspec
+
+show_specs: ## show specs for rails application
 	rspec -f d --color --dry-run spec
 
 annotate_models: ## annotate model schemas

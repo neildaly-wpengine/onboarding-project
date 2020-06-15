@@ -51,7 +51,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'does not save with existing email' do
-      user = User.new(email: 'a@a.a', password: 'dd', password_confirmation: 'dd').save
+      user = User.new(email: User.last.email, password: 'dd', password_confirmation: 'dd').save
 
       expect(user).to eq(false)
     end
