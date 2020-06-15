@@ -10,10 +10,6 @@ RSpec.describe 'SessionsControllers', type: :request do
     @user = create(:user)
   end
 
-  def login_user
-    post @login_endpoint, params: { 'user': { 'email': @user.email, 'password': @user.password } }
-  end
-
   context 'unauthenticated users' do
     it 'should not have a session' do
       get @logged_in_endpoint
@@ -45,5 +41,11 @@ RSpec.describe 'SessionsControllers', type: :request do
 
       expect(response_body['logged_in']).to be true
     end
+  end
+
+  private
+
+  def login_user
+    post @login_endpoint, params: { 'user': { 'email': @user.email, 'password': @user.password } }
   end
 end
