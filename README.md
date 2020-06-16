@@ -25,3 +25,9 @@ volumes:
 ```
 
 allow for updates using webpacker.
+
+## Tests
+
+### Specs
+
+You can run specs locally by running `rspec`, otherwise run them using docker with `make spec`.
