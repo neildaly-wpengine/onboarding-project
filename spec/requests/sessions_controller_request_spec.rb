@@ -7,8 +7,9 @@ RSpec.describe 'SessionsControllers', type: :request do
     @logged_in_endpoint = '/api/v1/logged_in'
     @login_endpoint = '/api/v1/sessions'
     @logout_endpoint = '/api/v1/logout'
-    @user = create(:user)
   end
+
+  let(:user) {create(:user)}
 
   context 'unauthenticated users' do
     it 'should not have a session' do
@@ -46,6 +47,6 @@ RSpec.describe 'SessionsControllers', type: :request do
   private
 
   def login_user
-    post @login_endpoint, params: { 'user': { 'email': @user.email, 'password': @user.password } }
+    post @login_endpoint, params: { 'user': { 'email': user.email, 'password': user.password } }
   end
 end
