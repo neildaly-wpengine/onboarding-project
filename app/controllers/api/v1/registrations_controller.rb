@@ -14,6 +14,8 @@ module Api
         render json: { status: 400, message: e.record.errors }
       end
 
+      private
+
       def attempt_user_creation
         User.create!(
           email: params['user']['email'],
