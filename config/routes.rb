@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       get :logged_in, to: 'sessions#logged_in'
       # POST /registrations
       resources :registrations, only: %i[create]
+      # GET POST PATCH DELETE /articles
+      resources :articles
     end
   end
 end

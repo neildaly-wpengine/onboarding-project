@@ -13,6 +13,7 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   has_secure_password
+  has_many :articles
 
   validates_presence_of :email
   validates_presence_of :password

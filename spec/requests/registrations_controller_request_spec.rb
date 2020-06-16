@@ -25,7 +25,7 @@ RSpec.describe 'RegistrationsControllers', type: :request do
 
       expect(response_body['status']).to eq(400)
       expect(response_body['message']['email']).to eq(["can't be blank", 'is invalid'])
-      expect(response_body['message']['password']).to eq(["can't be blank", "can't be blank"])
+      expect(response_body['message']['password']).to eq(["can't be blank"])
       expect(response_body['message']['password_confirmation']).to eq(["can't be blank"])
     end
 
