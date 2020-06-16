@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: articles
+#
+#  id         :integer          not null, primary key
+#  title      :string
+#  content    :text
+#  user_id    :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 FactoryBot.define do
   factory :article do
-    title { 'MyString' }
-    content { 'MyText' }
-    user { nil }
+    title { Faker::Lorem.sentence(word_count: 2) }
+    content { Faker::Lorem.paragraphs(number: 1) }
+    association :user, factory: :user
   end
 end
