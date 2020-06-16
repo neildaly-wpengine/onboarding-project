@@ -30,4 +30,4 @@ allow for updates using webpacker.
 
 ### Specs
 
-You can run specs locally by running `rspec`, otherwise run them using docker with `make spec`.
+You can run specs locally by running `rspec`, otherwise run them using docker with `make rspec`.
