@@ -15,7 +15,9 @@ Rails.application.routes.draw do
       # POST /registrations
       resources :registrations, only: %i[create]
       # GET POST PATCH DELETE /articles
-      resources :articles
+      resources :articles do
+        post :recover, on: :member
+      end
     end
   end
 end
