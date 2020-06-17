@@ -16,6 +16,7 @@ FactoryBot.define do
   factory :article do
     title { Faker::Lorem.sentence(word_count: 2) }
     content { Faker::Lorem.paragraphs(number: 1) }
+    discarded_at { nil }
     association :user, factory: :user
   end
 end

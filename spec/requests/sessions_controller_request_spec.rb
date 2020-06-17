@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'SessionsControllers', type: :request do
+RSpec.describe 'Sessions', type: :request do
   let(:user) { create(:user) }
 
   context 'unauthenticated users' do

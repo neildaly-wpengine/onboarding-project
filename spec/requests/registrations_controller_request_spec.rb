@@ -2,9 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'RegistrationsControllers', type: :request do
+RSpec.describe 'Registrations', type: :request do
   let(:user) { create(:user) }
-  let(:registration_endpoint) { '/api/v1/registrations/' }
 
   context 'invalid user registration' do
     it 'without an email' do

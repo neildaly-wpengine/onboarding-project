@@ -71,7 +71,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def article_params
-        params.require(:article).permit(:title, :content, :user_id)
+        params.permit(:title, :content, :user_id)
       end
 
       def create_article_serializer(records)
