@@ -89,12 +89,6 @@ module Api
       def user_is_article_creator?
         @current_user.id == @article.user.id
       end
-
-      def create_article_serializer(records)
-        ArticleSerializer
-          .new(records)
-          .serialized_json
-      end
     end
   end
 end
