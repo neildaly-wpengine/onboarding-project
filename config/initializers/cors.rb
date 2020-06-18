@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # CORS (Cross Origin Resource Sharing) will allow you to whitelist the origin of requests that can communicate with our Rails backend.
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
