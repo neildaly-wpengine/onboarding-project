@@ -49,6 +49,15 @@ RSpec.describe 'Registrations', type: :request do
       expect(JSON.parse(response.body)['status']).to eq(400)
     end
 
+    it 'with unequal passwords' do
+      user.password_confirmation = 111
+
+      register user
+
+      expect(JSON.parse(response.body)['status']).to eq(400)
+      expect(JSON.parse(response.body)['message']['password_confirmation']).to eq ['doesn\'t match Password']
+    end
+
     it 'when that user already exists' do
       register user
 
