@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe 'SessionsControllers', type: :request do
@@ -9,7 +7,7 @@ RSpec.describe 'SessionsControllers', type: :request do
     @logout_endpoint = '/api/v1/logout'
   end
 
-  let(:user) {create(:user)}
+  let(:user) { create(:user) }
 
   context 'unauthenticated users' do
     it 'should not have a session' do

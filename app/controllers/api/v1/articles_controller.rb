@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 module Api
   module V1
     class ArticlesController < ApplicationController
       include CurrentUserConcern
-      
+
       before_action :set_article, only: %i[show edit update destroy]
       before_action :authenticate, only: %i[create update destroy]
 

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe 'RegistrationsControllers', type: :request do
@@ -7,7 +5,6 @@ RSpec.describe 'RegistrationsControllers', type: :request do
   let(:registration_endpoint) { '/api/v1/registrations/' }
 
   context 'invalid user registration' do
-
     it 'without an email' do
       user.email = nil
 
@@ -60,7 +57,6 @@ RSpec.describe 'RegistrationsControllers', type: :request do
   end
 
   context 'valid user registration' do
-
     it 'with all fields included' do
       user = { 'user': { 'email': 'valid.user@test.com', 'password': '1', 'password_confirmation': '1' } }
 
