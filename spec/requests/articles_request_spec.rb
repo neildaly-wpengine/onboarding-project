@@ -8,8 +8,8 @@ RSpec.describe 'Articles', type: :request do
   let(:delete_article_endpoint) { '/api/v1/' }
 
   context 'authenticated users' do
-    before(:all) do
-      user = create(:user)
+    before(:each) do
+      user = first_article.user
       sign_in user
     end
 
@@ -44,7 +44,7 @@ RSpec.describe 'Articles', type: :request do
     it 'should not be able to delete articles' do
       delete "/api/v1/articles/#{first_article.id}"
       response_body = JSON.parse(response.body)
-
+      # { 'error': 'Access Denied' }
       expect(response_body.count).to eq 1
       expect(response_body['error']).to eq 'Access Denied'
     end

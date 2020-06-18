@@ -11,7 +11,7 @@ module Api
       # GET /articles
       # GET /articles.json
       def index
-        articles = Article.all
+        articles = Article.kept
 
         render json: create_article_serializer(articles)
       end
@@ -37,6 +37,10 @@ module Api
       # PATCH/PUT /articles/1
       # PATCH/PUT /articles/1.json
       def update
+        unless user_is_article_creator?
+          return render json: { message: 'You do not have permission to update this article.' }, status: 401
+        end
+
         if @article.update(article_params)
           render json: create_article_serializer(@article)
         else
@@ -47,6 +51,10 @@ module Api
       # DELETE /articles/1
       # DELETE /articles/1.json
       def destroy
+        unless user_is_article_creator?
+          return render json: { message: 'You do not have permission to delete this article.' }, status: 401
+        end
+
         if @article.discard
           render json: { id: @article.id, discarded_at: @article.discarded_at }
         else
@@ -78,6 +86,10 @@ module Api
         ArticleSerializer
           .new(records)
           .serialized_json
+      end
+
+      def user_is_article_creator?
+        @current_user.id == @article.user.id
       end
     end
   end
