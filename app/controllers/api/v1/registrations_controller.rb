@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api
   module V1
     class RegistrationsController < ApplicationController
@@ -13,6 +11,8 @@ module Api
       rescue ActiveRecord::RecordInvalid => e
         render json: { status: 400, message: e.record.errors }
       end
+
+      private
 
       def attempt_user_creation
         User.create!(

@@ -22,9 +22,8 @@ build_run: ## build and run the application using docker-compose
 up: ## run the application using docker-compose
 	docker-compose up
 
-rspec: ## run rails tests using rails rspec
-	# rake db:seed RAILS_ENV=test
-	rspec
+rspec: ## run specs using docker
+	docker-compose run --rm web rspec
 
 show_specs: ## show specs for rails application
 	rspec -f d --color --dry-run spec
