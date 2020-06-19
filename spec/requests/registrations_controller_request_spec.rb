@@ -13,16 +13,20 @@ RSpec.describe 'Registrations', type: :request do
     end
 
     it 'with blank fields' do
-      user.email = user.password = user.password_confirmation = ' '
+      user.email = user.password = user.password_confirmation = user.first_name = user.last_name = ' '
 
       register user
+
       response_body = JSON.parse(response.body)
+      response_body_message = response_body['message']
 
       expect(response_body['status']).to eq(400)
-      expect(response_body['message'].count).to eq(3)
-      expect(response_body['message']['email']).to eq(["can't be blank", 'is invalid'])
-      expect(response_body['message']['password']).to eq(["can't be blank"])
-      expect(response_body['message']['password_confirmation']).to eq(["can't be blank"])
+      expect(response_body_message.count).to eq(5)
+      expect(response_body_message['email']).to eq(["can't be blank", 'is invalid'])
+      expect(response_body_message['first_name']).to eq(["can't be blank"])
+      expect(response_body_message['last_name']).to eq(["can't be blank"])
+      expect(response_body_message['password']).to eq(["can't be blank"])
+      expect(response_body_message['password_confirmation']).to eq(["can't be blank"])
     end
 
     it 'with an invalid email regex' do
