@@ -58,6 +58,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bcrypt'
+gem 'discard'
 gem 'fast_jsonapi'
 gem 'rack-cors'
 gem 'react-rails'

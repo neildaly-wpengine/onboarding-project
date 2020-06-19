@@ -2,12 +2,13 @@
 #
 # Table name: articles
 #
-#  id         :integer          not null, primary key
-#  title      :string
-#  content    :text
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :integer          not null, primary key
+#  title        :string
+#  content      :text
+#  user_id      :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  discarded_at :datetime
 #
 require 'rails_helper'
 
