@@ -22,8 +22,16 @@ RSpec.describe 'Articles', type: :request do
       expect(response_body['id']).to eq first_article.id
     end
 
+    it 'should be unable to create articles for other users' do
+      post '/api/v1/articles/', params: { article: { user_id: discarded_article.user.id } }
+      response_body = JSON.parse(response.body)
+
+      expect(response_body.count).to eq 1
+      expect(response_body['error']).to eq 'You cannot create an article for somebody else.'
+    end
+
     it 'should be able to edit articles' do
-      patch "/api/v1/articles/#{first_article.id}", params: { title: 'Some New Title' }
+      patch "/api/v1/articles/#{first_article.id}", params: { article: { title: 'Some New Title' } }
       response_body = JSON.parse(response.body)
 
       expect(response_body['data']['id']).to eq first_article.id.to_s

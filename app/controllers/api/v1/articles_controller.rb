@@ -25,6 +25,11 @@ module Api
       def create
         article = Article.new(article_params)
 
+        # the logged in user cannot create an article on behalf of somebody else
+        unless article.user_id == @current_user.id
+          return render json: { error: 'You cannot create an article for somebody else.' }
+        end
+
         if article.save
           render json: create_article_serializer(article)
         else
@@ -77,7 +82,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def article_params
-        params.permit(:title, :content, :user_id)
+        params.require(:article).permit(:title, :content, :user_id)
       end
 
       def create_article_serializer(records)
