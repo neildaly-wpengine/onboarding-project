@@ -2,7 +2,7 @@ module Api
   module V1
     class RegistrationsController < ApplicationController
       def create
-        user = attempt_user_creation
+        user = attempt_user_creation(params['user'])
 
         if user
           session[:user_id] = user.id
@@ -14,11 +14,13 @@ module Api
 
       private
 
-      def attempt_user_creation
+      def attempt_user_creation(user)
         User.create!(
-          email: params['user']['email'],
-          password: params['user']['password'],
-          password_confirmation: params['user']['password_confirmation']
+          email: user['email'],
+          first_name: user['first_name'],
+          last_name: user['last_name'],
+          password: user['password'],
+          password_confirmation: user['password_confirmation']
         )
       end
     end
