@@ -89,7 +89,7 @@ RSpec.describe 'Articles', type: :request do
     end
 
     it 'should be able to view archived articles' do
-      get articles_endpoint, params: { archived: true }
+      get api_v1_articles_url, params: { archived: true }
       response_body = JSON.parse(response.body)
 
       expect(response_body['data'].count).to eq 1
