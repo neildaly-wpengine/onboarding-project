@@ -4,6 +4,7 @@ task archive_articles: :environment do
   articles_to_archive = Article.order(:updated_at).kept.where('updated_at <= ?', Time.now - 7.days)
 
   articles_to_archive.each do |article|
-    puts article
+    article.archived = true
+    article.save
   end
 end
