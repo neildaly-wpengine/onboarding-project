@@ -11,7 +11,7 @@ module Api
       # GET /articles.json
       def index
         archived = request.query_parameters['archived'] ? 1 : 0
-        articles = Article.kept.where('archived = ?', archived)
+        articles = Article.order(updated_at: :desc).kept.where(archived: archived)
 
         render json: create_article_serializer(articles)
       end
