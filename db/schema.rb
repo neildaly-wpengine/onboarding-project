@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_22_095905) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
-    t.boolean "archived"
+    t.boolean "archived", default: false
     t.index ["discarded_at"], name: "index_articles_on_discarded_at"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
