@@ -63,3 +63,4 @@ gem 'fast_jsonapi'
 gem 'rack-cors'
 gem 'react-rails'
 gem 'rspec-rails'
+gem 'whenever', require: false

@@ -7,9 +7,11 @@ module Api
       before_action :authenticate, only: %i[create update destroy recover]
 
       # GET /articles
+      # GET /articles/?archived=true
       # GET /articles.json
       def index
-        articles = Article.kept
+        archived = request.query_parameters['archived'] ? 1 : 0
+        articles = Article.order(updated_at: :desc).kept.where(archived: archived)
 
         render json: create_article_serializer(articles)
       end

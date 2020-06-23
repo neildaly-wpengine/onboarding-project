@@ -78,13 +78,21 @@ RSpec.describe 'Articles', type: :request do
       # need some articles in the test database for retrieving
       create(:article).save
       create(:article).save
+      create(:article, archived: true).save
     end
 
     it 'should be able to view all articles' do
       get api_v1_articles_url
       response_body = JSON.parse(response.body)
 
-      expect(response_body['data'].count).to eq Article.count
+      expect(response_body['data'].count).to eq 2
+    end
+
+    it 'should be able to view archived articles' do
+      get api_v1_articles_url, params: { archived: true }
+      response_body = JSON.parse(response.body)
+
+      expect(response_body['data'].count).to eq 1
     end
 
     it 'should be able to view specific articles' do

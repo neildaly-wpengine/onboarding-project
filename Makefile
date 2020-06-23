@@ -30,3 +30,6 @@ show_specs: ## show specs for rails application
 
 annotate_models: ## annotate model schemas
 	annotate --models
+
+recreate_db: ## reset database and reload current schema
+	rake db:reset db:migrate
