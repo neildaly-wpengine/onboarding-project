@@ -24,4 +24,12 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
 
   validates :email, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
+
+  before_create :set_initials_image_link
+
+  def set_initials_image_link
+    self.initials_image_link = \
+      "https://eu.ui-avatars.com/api/?background=fff&color=000&name=#{first_name}+#{last_name}"
+    puts initials_image_link
+  end
 end

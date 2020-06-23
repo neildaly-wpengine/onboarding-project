@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_19_130145) do
+ActiveRecord::Schema.define(version: 2020_06_23_085438) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_130145) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
+    t.boolean "archived", default: false
     t.index ["discarded_at"], name: "index_articles_on_discarded_at"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_130145) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "initials_image_link"
   end
 
   add_foreign_key "articles", "users"
