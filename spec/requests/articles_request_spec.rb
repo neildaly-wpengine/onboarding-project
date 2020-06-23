@@ -99,7 +99,8 @@ RSpec.describe 'Articles', type: :request do
       get "#{api_v1_articles_url}/#{Article.first.id}"
       response_body = JSON.parse(response.body)
 
-      expect(response_body.count).to eq 1
+      # {data: ..., included...}
+      expect(response_body.count).to eq 2
       expect(response_body['data']['id']).to eq Article.first.id.to_s
     end
 
