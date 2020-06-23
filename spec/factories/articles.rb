@@ -9,6 +9,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  discarded_at :datetime
+#  archived     :boolean          default(FALSE)
 #
 FactoryBot.define do
   factory :article do

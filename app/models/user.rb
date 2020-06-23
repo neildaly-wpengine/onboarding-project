@@ -2,13 +2,14 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  email           :string
-#  password_digest :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  first_name      :string
-#  last_name       :string
+#  id                  :integer          not null, primary key
+#  email               :string
+#  password_digest     :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  first_name          :string
+#  last_name           :string
+#  initials_image_link :string
 #
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
@@ -30,6 +31,5 @@ class User < ApplicationRecord
   def set_initials_image_link
     self.initials_image_link = \
       "https://eu.ui-avatars.com/api/?background=fff&color=000&name=#{first_name}+#{last_name}"
-    puts initials_image_link
   end
 end

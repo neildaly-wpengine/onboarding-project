@@ -89,12 +89,16 @@ module Api
 
       def create_article_serializer(records)
         ArticleSerializer
-          .new(records)
+          .new(records, options)
           .serialized_json
       end
 
       def user_is_article_creator?
         @current_user.id == @article.user.id
+      end
+
+      def options
+        @options ||= { include: %i[user] }
       end
     end
   end

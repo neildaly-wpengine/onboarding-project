@@ -9,8 +9,11 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  discarded_at :datetime
+#  archived     :boolean          default(FALSE)
 #
 class ArticleSerializer
   include FastJsonapi::ObjectSerializer
   attributes :title, :content, :user_id, :created_at, :updated_at, :discarded_at, :archived
+
+  belongs_to :user
 end
