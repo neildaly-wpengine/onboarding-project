@@ -38,6 +38,7 @@ const ArticleHighlight: React.FC<Article> = ({
   user,
   createdAt,
   link,
+  stockImage,
 }) => {
   const classes = useStyles();
 
@@ -58,7 +59,7 @@ const ArticleHighlight: React.FC<Article> = ({
           component="img"
           alt="blog-image"
           height="200"
-          image="https://picsum.photos/400/200"
+          image={stockImage}
           title={title}
         />
         <CardContent>

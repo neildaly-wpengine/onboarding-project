@@ -32,10 +32,11 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
     return null;
   }
 
-  const articlesList = articles.map((article: Article) => {
+  const articlesList = articles.map((article: Article, index: number) => {
     return (
       <ArticleHighlight
         key={article.id}
+        stockImage={`https://picsum.photos/400/200?image=${article.id}`}
         title={article.title}
         content={article.content}
         user={article.user}

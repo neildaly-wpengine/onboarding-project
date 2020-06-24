@@ -11,6 +11,7 @@ export type Article = {
     id?: string;
     user: User;
     link?: string;
+    stockImage?: string;
 }
 
 export type User = {
