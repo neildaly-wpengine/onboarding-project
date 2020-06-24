@@ -1,8 +1,9 @@
 import React from "react";
-import ArticleList from "../articles/ArticleList";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ArticleDetail from "../articles/ArticleDetail";
 import APIConsumer from "../../common/api-consumer";
+import { ArticleDetailMatchParams } from "../../common/types";
+import ArticleDetail from "../articles/ArticleDetail";
+import ArticleList from "../articles/ArticleList";
 
 const App: React.FC = () => {
   const consumer = new APIConsumer();
@@ -13,9 +14,11 @@ const App: React.FC = () => {
       component: () => <ArticleList consumer={consumer} />,
     },
     {
-      path: "/article/:id",
+      path: "/articles/:id",
       exact: true,
-      component: () => <ArticleDetail consumer={consumer} />,
+      component: (props: ArticleDetailMatchParams) => (
+        <ArticleDetail {...props} consumer={consumer} />
+      ),
     },
   ];
 

@@ -1,4 +1,5 @@
 import APIConsumer from "./api-consumer"
+import { RouteComponentProps } from "react-router-dom"
 
 export type Article = {
     title: string;
@@ -22,3 +23,9 @@ export type User = {
 export type ConsumerProps = {
     consumer: APIConsumer;
 }
+
+interface MatchParams {
+    id: string;
+}
+
+export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { } 

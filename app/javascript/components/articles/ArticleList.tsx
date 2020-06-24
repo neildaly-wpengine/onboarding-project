@@ -1,5 +1,5 @@
+import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
 
@@ -7,14 +7,14 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    const CancelToken: CancelTokenStatic = axios.CancelToken;
+    const source: CancelTokenSource = CancelToken.source();
 
     const fetchAllArticles = () => {
       consumer
         .getAllArticles(source)
         .then((articleData: Article[]) => setArticles(articleData))
-        .catch((err) => {
+        .catch((err: any) => {
           if (axios.isCancel(err)) {
             console.log("cancelled");
           }

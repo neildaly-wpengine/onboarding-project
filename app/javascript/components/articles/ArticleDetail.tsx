@@ -1,22 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { Article } from "../../common/types";
-import { RouteComponentProps } from "react-router-dom";
-import APIConsumer from "../../common/api-consumer";
+import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
+import React, { useEffect, useState } from "react";
+import {
+  Article,
+  ArticleDetailMatchParams,
+  ConsumerProps,
+} from "../../common/types";
 
-const ArticleDetail: React.FC<RouteComponentProps & APIConsumer> = ({
+const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
   match,
   consumer,
 }) => {
   const [article, setArticle] = useState<Article>();
 
   useEffect(() => {
-    const articleID = match.params.id;
-    // fetch
+    const articleID: string = match.params.id;
+    const CancelToken: CancelTokenStatic = axios.CancelToken;
+    const source: CancelTokenSource = CancelToken.source();
+
+    const fetchSpecificArticle = () => {
+      consumer
+        .getSpecificArticle(source, articleID)
+        .then((articleData: Article) => setArticle(articleData))
+        .catch((err: any) => {
+          if (axios.isCancel(err)) {
+            console.log("cancelled");
+          }
+        });
+    };
+    fetchSpecificArticle();
+
+    return () => {
+      source.cancel();
+    };
   }, []);
+
+  if (article === undefined) {
+    return null;
+  }
 
   return (
     <React.Fragment>
-      <p>Specific article {match.params.id}</p>
+      <h1>{article.title}</h1>
+      <img src={article.user.initialsImageLink} alt="author" />
+      <p>{article.content}</p>
     </React.Fragment>
   );
 };
