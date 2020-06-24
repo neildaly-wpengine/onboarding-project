@@ -1,11 +1,13 @@
 import React from "react";
-import { ArticleProps } from "../../common/types";
+import { Article } from "../../common/types";
+import { Link } from "react-router-dom";
 
-const Article: React.FC<ArticleProps> = ({
+const ArticleHighlight: React.FC<Article> = ({
   title,
   content,
   user,
   createdAt,
+  link,
 }) => {
   const getFullUserName = (): string => {
     return `${user.firstName} ${user.lastName}`;
@@ -18,8 +20,9 @@ const Article: React.FC<ArticleProps> = ({
       <strong>{getFullUserName()}</strong>
       <p>{createdAt}</p>
       <p>{content.substring(0, 20)}...</p>
+      <Link to={`/articles/${link}`}>View More</Link>
     </React.Fragment>
   );
 };
 
-export default Article;
+export default ArticleHighlight;

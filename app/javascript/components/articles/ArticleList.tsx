@@ -1,44 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ArticleProps } from "../../common/types";
-import Article from "./Article";
+import { Article } from "../../common/types";
+import ArticleHighlight from "./ArticleHighlight";
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 const ArticleList: React.FC = () => {
-  const [articles, setArticles] = useState<ArticleProps[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    const fetchAllArticles = async () => {
-      const responseData = await axios
-        .get("/api/v1/articles")
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const fetchAllArticles = () => {
+      axios
+        .get("/api/v1/articles", { cancelToken: source.token })
         .then((articlesResponse) => {
-          return new JSONAPIDeserializer({
+          new JSONAPIDeserializer({
             keyForAttribute: "camelCase",
           }).deserialize(
             articlesResponse.data,
-            (_err: any, articlesResponseData: ArticleProps[]) => {
-              return articlesResponseData;
+            (_err: any, articlesResponseData: Article[]) => {
+              setArticles(articlesResponseData);
             }
           );
+        })
+        .catch((err) => {
+          if (axios.isCancel(err)) {
+            console.log("cancelled");
+          }
         });
-      setArticles(responseData);
     };
-
     fetchAllArticles();
+
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   if (articles === undefined || articles.length == 0) {
     return null;
   }
 
-  const articlesList = articles.map((article: ArticleProps) => {
+  const articlesList = articles.map((article: Article) => {
     return (
-      <Article
+      <ArticleHighlight
         key={article.id}
         title={article.title}
         content={article.content}
         user={article.user}
         createdAt={article.createdAt}
+        link={article.id}
       />
     );
   });

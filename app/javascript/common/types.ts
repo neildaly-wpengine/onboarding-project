@@ -1,4 +1,4 @@
-export type ArticleProps = {
+export type Article = {
     title: string;
     content: string;
     createdAt: string;
@@ -7,6 +7,7 @@ export type ArticleProps = {
     archived?: boolean;
     id?: string;
     user: User;
+    link?: string;
 }
 
 export type User = {
