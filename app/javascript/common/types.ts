@@ -7,8 +7,6 @@ export interface Article {
     archived: boolean;
     id: string;
     user: User;
-    // todo remove this from backend serializer
-    userID: number;
 }
 
 export interface User {

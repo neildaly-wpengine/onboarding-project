@@ -28,6 +28,7 @@ const ArticleList: React.FC = () => {
   }
 
   const articlesList = articles.map((article: Article, index: number) => {
+    console.log(article);
     return <li key={index}>{article.title}</li>;
   });
 
