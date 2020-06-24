@@ -1,8 +1,8 @@
+import { Box, Grid, Typography } from "@material-ui/core";
 import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
-import { Typography, Box, Button } from "@material-ui/core";
 
 const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -47,13 +47,18 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <Box component="span" m={1}>
-        <Button />
-        <Typography variant="h1" gutterBottom>
+      <Box display="flex" justifyContent="center" m={1} p={1}>
+        <Typography variant="h2" gutterBottom>
           Articles
         </Typography>
-        {articlesList}
       </Box>
+      <Grid container spacing={10}>
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={2}>
+            {articlesList}
+          </Grid>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };

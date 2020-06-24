@@ -20,6 +20,15 @@ import { Article } from "../../common/types";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    margin: 10,
+    // display card actions on complete bottom
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  cardActions: {
+    // display card actions on complete bottom
+    marginTop: "auto",
   },
 });
 
@@ -33,7 +42,7 @@ const ArticleHighlight: React.FC<Article> = ({
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} style={{ margin: 10 }}>
+    <Card className={classes.root}>
       <CardHeader
         avatar={<Avatar aria-label="user" src={user.initialsImageLink} />}
         action={
@@ -61,7 +70,7 @@ const ArticleHighlight: React.FC<Article> = ({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions className={classes.cardActions}>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
