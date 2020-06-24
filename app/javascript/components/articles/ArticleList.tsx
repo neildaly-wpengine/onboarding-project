@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Article } from "../../common/types";
+import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
-const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
-const ArticleList: React.FC = () => {
+const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
@@ -12,18 +11,9 @@ const ArticleList: React.FC = () => {
     const source = CancelToken.source();
 
     const fetchAllArticles = () => {
-      axios
-        .get("/api/v1/articles", { cancelToken: source.token })
-        .then((articlesResponse) => {
-          new JSONAPIDeserializer({
-            keyForAttribute: "camelCase",
-          }).deserialize(
-            articlesResponse.data,
-            (_err: any, articlesResponseData: Article[]) => {
-              setArticles(articlesResponseData);
-            }
-          );
-        })
+      consumer
+        .getAllArticles(source)
+        .then((articleData: Article[]) => setArticles(articleData))
         .catch((err) => {
           if (axios.isCancel(err)) {
             console.log("cancelled");

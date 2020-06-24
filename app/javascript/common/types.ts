@@ -1,3 +1,5 @@
+import APIConsumer from "./api-consumer"
+
 export type Article = {
     title: string;
     content: string;
@@ -15,4 +17,8 @@ export type User = {
     firstName: string;
     lastName: string;
     initialsImageLink: string;
+}
+
+export type ConsumerProps = {
+    consumer: APIConsumer;
 }

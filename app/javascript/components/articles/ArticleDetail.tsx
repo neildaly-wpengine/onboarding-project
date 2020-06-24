@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Article } from "../../common/types";
 import { RouteComponentProps } from "react-router-dom";
+import APIConsumer from "../../common/api-consumer";
 
-const ArticleDetail: React.FC<RouteComponentProps> = ({ match }) => {
+const ArticleDetail: React.FC<RouteComponentProps & APIConsumer> = ({
+  match,
+  consumer,
+}) => {
   const [article, setArticle] = useState<Article>();
 
   useEffect(() => {
