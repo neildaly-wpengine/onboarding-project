@@ -7,17 +7,20 @@ const ArticleList: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    const fetchAllArticles = () => {
-      axios.get("/api/v1/articles").then((articlesResponse) => {
-        return new JSONAPIDeserializer({
-          keyForAttribute: "camelCase",
-        }).deserialize(
-          articlesResponse.data,
-          (_err: any, articlesResponseData: Article[]) => {
-            setArticles(articlesResponseData);
-          }
-        );
-      });
+    const fetchAllArticles = async () => {
+      const responseData = await axios
+        .get("/api/v1/articles")
+        .then((articlesResponse) => {
+          return new JSONAPIDeserializer({
+            keyForAttribute: "camelCase",
+          }).deserialize(
+            articlesResponse.data,
+            (_err: any, articlesResponseData: Article[]) => {
+              return articlesResponseData;
+            }
+          );
+        });
+      setArticles(responseData);
     };
 
     fetchAllArticles();
@@ -28,7 +31,6 @@ const ArticleList: React.FC = () => {
   }
 
   const articlesList = articles.map((article: Article, index: number) => {
-    console.log(article);
     return <li key={index}>{article.title}</li>;
   });
 
