@@ -4,6 +4,7 @@ import APIConsumer from "../../common/api-consumer";
 import { ArticleDetailMatchParams } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const App: React.FC = () => {
   const consumer = new APIConsumer();
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 
   return (
     <React.Fragment>
+      <CssBaseline />
       <Router>
         <Switch>
           {routes.map((route, index) => (

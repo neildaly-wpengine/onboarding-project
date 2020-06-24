@@ -2,6 +2,7 @@ import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
+import { Typography, Box, Button } from "@material-ui/core";
 
 const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -46,8 +47,13 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <h1>Articles</h1>
-      <ul>{articlesList}</ul>
+      <Box component="span" m={1}>
+        <Button />
+        <Typography variant="h1" gutterBottom>
+          Articles
+        </Typography>
+        {articlesList}
+      </Box>
     </React.Fragment>
   );
 };
