@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Article } from "../../common/types";
+import { ArticleProps } from "../../common/types";
+import Article from "./Article";
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 const ArticleList: React.FC = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<ArticleProps[]>([]);
 
   useEffect(() => {
     const fetchAllArticles = async () => {
@@ -15,7 +16,7 @@ const ArticleList: React.FC = () => {
             keyForAttribute: "camelCase",
           }).deserialize(
             articlesResponse.data,
-            (_err: any, articlesResponseData: Article[]) => {
+            (_err: any, articlesResponseData: ArticleProps[]) => {
               return articlesResponseData;
             }
           );
@@ -30,8 +31,16 @@ const ArticleList: React.FC = () => {
     return null;
   }
 
-  const articlesList = articles.map((article: Article, index: number) => {
-    return <li key={index}>{article.title}</li>;
+  const articlesList = articles.map((article: ArticleProps) => {
+    return (
+      <Article
+        key={article.id}
+        title={article.title}
+        content={article.content}
+        user={article.user}
+        createdAt={article.createdAt}
+      />
+    );
   });
 
   return (

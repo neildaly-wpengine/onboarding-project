@@ -1,15 +1,15 @@
-export interface Article {
+export type ArticleProps = {
     title: string;
     content: string;
     createdAt: string;
-    updatedAt: string;
+    updatedAt?: string;
     discardedAt?: string;
-    archived: boolean;
-    id: string;
+    archived?: boolean;
+    id?: string;
     user: User;
 }
 
-export interface User {
+export type User = {
     id: string;
     firstName: string;
     lastName: string;
