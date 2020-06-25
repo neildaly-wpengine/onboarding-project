@@ -28,7 +28,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
     };
   }, []);
 
-  if (articles === undefined || articles.length == 0) {
+  if (articles === undefined) {
     return null;
   }
 
@@ -41,7 +41,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
         content={article.content}
         user={article.user}
         createdAt={article.createdAt}
-        link={article.id}
+        id={article.id}
       />
     );
   });
@@ -49,7 +49,12 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   return (
     <React.Fragment>
       <Box display="flex" justifyContent="center" m={1} p={1} margin={0}>
-        <Typography variant="h2" gutterBottom style={{ marginTop: 5 }}>
+        <Typography
+          variant="h2"
+          gutterBottom
+          style={{ marginTop: 5 }}
+          data-testid="article-list-title"
+        >
           Articles
         </Typography>
       </Box>

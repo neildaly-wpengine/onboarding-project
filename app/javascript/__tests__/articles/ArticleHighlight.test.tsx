@@ -27,7 +27,7 @@ const renderHelper = (): JSX.Element => {
         content={mockArticle.content}
         createdAt={mockArticle.createdAt}
         user={mockArticle.user}
-        link={mockArticle.id}
+        id={mockArticle.id}
       />
     </Router>
   );

@@ -38,7 +38,7 @@ const ArticleHighlight: React.FC<Article> = ({
   content,
   user,
   createdAt,
-  link,
+  id,
   stockImage,
 }) => {
   const classes = useStyles();
@@ -91,7 +91,7 @@ const ArticleHighlight: React.FC<Article> = ({
           size="small"
           color="primary"
           component={Link}
-          to={`/articles/${link}`}
+          to={`/articles/${id}`}
           data-testid="article-card-button"
         >
           View More

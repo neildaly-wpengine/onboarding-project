@@ -26,8 +26,8 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "test": "jest --env=jsdom",
-    "test:watch": "jest --env=jsdom --watch"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "version": "0.1.0",
   "devDependencies": {

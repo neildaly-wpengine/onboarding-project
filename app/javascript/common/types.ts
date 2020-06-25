@@ -8,9 +8,8 @@ export type Article = {
     updatedAt?: string;
     discardedAt?: string;
     archived?: boolean;
-    id?: string;
+    id: string;
     user: User;
-    link?: string;
     stockImage?: string;
 }
 
