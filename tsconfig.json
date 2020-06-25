@@ -13,8 +13,9 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
+    "esModuleInterop": true,
     "strictNullChecks": true
   },
-  "exclude": ["**/*.spec.ts", "node_modules", "public"],
+  "exclude": ["**/*.spec.ts", "node_modules", "public", "vendor"],
   "compileOnSave": false
 }

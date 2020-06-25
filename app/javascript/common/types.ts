@@ -18,7 +18,7 @@ export type User = {
     id: string;
     firstName: string;
     lastName: string;
-    initialsImageLink: string;
+    initialsImageLink?: string;
 }
 
 export type ConsumerProps = {

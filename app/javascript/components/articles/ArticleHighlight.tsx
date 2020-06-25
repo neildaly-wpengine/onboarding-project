@@ -54,6 +54,7 @@ const ArticleHighlight: React.FC<Article> = ({
         }
         title={`${user.firstName} ${user.lastName}`}
         subheader={createdAt}
+        data-testid="article-card-header"
       />
       <CardActionArea>
         <CardMedia
@@ -64,10 +65,20 @@ const ArticleHighlight: React.FC<Article> = ({
           title={title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            data-testid="article-card-title"
+          >
             {title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            data-testid="article-card-content"
+          >
             {content.substring(0, 200)}...
           </Typography>
         </CardContent>
@@ -81,6 +92,7 @@ const ArticleHighlight: React.FC<Article> = ({
           color="primary"
           component={Link}
           to={`/articles/${link}`}
+          data-testid="article-card-button"
         >
           View More
         </Button>
