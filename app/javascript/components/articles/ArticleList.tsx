@@ -1,11 +1,11 @@
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography, CircularProgress } from "@material-ui/core";
 import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
 
 const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[]>();
 
   useEffect(() => {
     const CancelToken: CancelTokenStatic = axios.CancelToken;
@@ -29,7 +29,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   }, []);
 
   if (articles === undefined) {
-    return null;
+    return <CircularProgress data-testid="loading" />;
   }
 
   const articlesList = articles.map((article: Article, index: number) => {
@@ -58,7 +58,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
           Articles
         </Typography>
       </Box>
-      <Grid container spacing={10}>
+      <Grid container spacing={10} data-testid="resolved">
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
             {articlesList}

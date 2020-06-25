@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import * as React from "react";
 import APIConsumer from "../../common/api-consumer";
 import ArticleList from "../../components/articles/ArticleList";
@@ -9,6 +9,8 @@ const renderHelper = (): JSX.Element => {
   return <ArticleList consumer={consumer} />;
 };
 
+afterEach(cleanup);
+
 describe("<ArticleList />", () => {
   test("should render a heading without articles", () => {
     const { container } = render(renderHelper());
@@ -17,11 +19,10 @@ describe("<ArticleList />", () => {
   });
 
   describe("Content", () => {
-    test("should render an article heading", () => {
+    test("should render a loading spinner", () => {
       const { getByTestId } = render(renderHelper());
 
-      expect(getByTestId("article-list-title")).toHaveTextContent("Articles");
-      expect(getByTestId("article-list-title")).toHaveStyle("margin-top: 5px;");
+      expect(getByTestId("loading")).toHaveAttribute("role", "progressbar");
     });
   });
 });

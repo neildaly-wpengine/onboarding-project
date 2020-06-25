@@ -1,23 +1,9 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render, cleanup } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import * as React from "react";
-import ArticleHighlight from "../../components/articles/ArticleHighlight";
-import { Article, User } from "../../common/types";
 import { BrowserRouter as Router } from "react-router-dom";
-
-const mockUser: User = {
-  firstName: "Test",
-  lastName: "User",
-  id: "1",
-};
-
-const mockArticle: Article = {
-  id: "10",
-  title: "Some Fake Title",
-  content: "Some dummy content",
-  createdAt: "2020-06-24T16:10:53.448Z",
-  user: mockUser,
-};
+import ArticleHighlight from "../../components/articles/ArticleHighlight";
+import { mockArticle } from "./__helpers__/test-data";
 
 const renderHelper = (): JSX.Element => {
   return (
