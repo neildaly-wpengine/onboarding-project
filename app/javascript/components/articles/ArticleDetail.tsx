@@ -1,3 +1,4 @@
+import { Box, Typography, makeStyles, Avatar } from "@material-ui/core";
 import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
 import React, { useEffect, useState } from "react";
 import {
@@ -6,11 +7,47 @@ import {
   ConsumerProps,
 } from "../../common/types";
 
+const useStyles = makeStyles({
+  boxHeader: {
+    margin: 0,
+    height: 450,
+    padding: 0,
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageHeader: {
+    objectFit: "cover",
+    minWidth: "100%",
+    minHeight: "100%",
+    flexShrink: 0,
+  },
+  mainArea: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  mainHeader: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: 15,
+  },
+  avatar: {
+    alignSelf: "center",
+  },
+});
+
 const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
   match,
   consumer,
 }) => {
   const [article, setArticle] = useState<Article>();
+  const classes = useStyles();
 
   useEffect(() => {
     const articleID: string = match.params.id;
@@ -38,11 +75,40 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
     return null;
   }
 
+  article.stockImage = `https://picsum.photos/1920/450?image=${article.id}`;
+
   return (
     <React.Fragment>
-      <h1>{article.title}</h1>
-      <img src={article.user.initialsImageLink} alt="author" />
-      <p>{article.content}</p>
+      <Box m={1} p={1} className={classes.boxHeader} width={1}>
+        <img
+          src={article.stockImage}
+          alt={article.title}
+          className={classes.imageHeader}
+        />
+      </Box>
+      <Box m={1} p={1} className={classes.mainArea}>
+        <Box width="50%" className={classes.mainHeader}>
+          <Typography variant="h2" gutterBottom>
+            {article.title}
+          </Typography>
+          <Typography variant="h4" gutterBottom>
+            {`${article.user.firstName} ${article.user.lastName}`}
+          </Typography>
+          <Avatar
+            aria-label="user"
+            src={article.user.initialsImageLink}
+            className={classes.avatar}
+          />
+          <Typography variant="subtitle1" gutterBottom>
+            {article.createdAt}
+          </Typography>
+        </Box>
+        <Box width="50%" className={classes.mainHeader}>
+          <Typography variant="body1" align="justify" gutterBottom>
+            {article.content}
+          </Typography>
+        </Box>
+      </Box>
     </React.Fragment>
   );
 };

@@ -48,8 +48,8 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <Box display="flex" justifyContent="center" m={1} p={1}>
-        <Typography variant="h2" gutterBottom>
+      <Box display="flex" justifyContent="center" m={1} p={1} margin={0}>
+        <Typography variant="h2" gutterBottom style={{ marginTop: 5 }}>
           Articles
         </Typography>
       </Box>
