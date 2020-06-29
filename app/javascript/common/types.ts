@@ -30,14 +30,16 @@ interface MatchParams {
 
 export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
 
+export type RegistrationUser = {
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+    passwordConfirmation: string
+}
+
 export type RegistrationBody = {
-    user: {
-        email: string,
-        firstName: string,
-        lastName: string,
-        password: string,
-        passwordConfirmation: string
-    };
+    user: RegistrationUser
 }
 
 export type Registration = {

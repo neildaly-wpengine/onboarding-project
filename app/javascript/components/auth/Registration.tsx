@@ -2,16 +2,21 @@ import {
   Avatar,
   Button,
   Container,
-  CssBaseline,
   Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ConsumerProps } from "../../common/types";
+import {
+  ConsumerProps,
+  RegistrationUser,
+  Registration,
+  RegistrationBody,
+} from "../../common/types";
+import { consumer } from "../../__tests__/articles/__helpers__/test-data";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -34,10 +39,50 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Registration: React.FC<ConsumerProps> = () => {
+  const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
+  const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
+    email: "",
+    firstName: "",
+    lastName: "",
+    passwordConfirmation: "",
+    password: "",
+  });
+
+  const validPasswordEntries = (): boolean => {
+    return (
+      registrationUser?.password === registrationUser?.passwordConfirmation
+    );
+  };
+
+  const handleChange = (e: React.BaseSyntheticEvent): void => {
+    const { name, value } = e.target;
+    setRegistrationUser({ ...registrationUser, [name]: value });
+  };
+
+  const handleSubmit = (e: React.BaseSyntheticEvent): void => {
+    e.preventDefault();
+
+    if (!validPasswordEntries()) {
+      setConfirmPasswordHelper("Passwords do not match.");
+      return;
+    }
+    setConfirmPasswordHelper("");
+    registerUser();
+  };
+
+  const registerUser = async () => {
+    const registrationResponse = await consumer.registerNewUser({
+      user: registrationUser,
+    } as RegistrationBody);
+
+    if (registrationResponse.data.status === "created") {
+      // redirect
+    }
+  };
+
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -45,12 +90,13 @@ const Registration: React.FC<ConsumerProps> = () => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit} method="post">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
+                onChange={handleChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -63,6 +109,7 @@ const Registration: React.FC<ConsumerProps> = () => {
               <TextField
                 variant="outlined"
                 required
+                onChange={handleChange}
                 fullWidth
                 id="lastName"
                 label="Last Name"
@@ -74,8 +121,10 @@ const Registration: React.FC<ConsumerProps> = () => {
               <TextField
                 variant="outlined"
                 required
+                onChange={handleChange}
                 fullWidth
                 id="email"
+                type="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -85,6 +134,7 @@ const Registration: React.FC<ConsumerProps> = () => {
               <TextField
                 variant="outlined"
                 required
+                onChange={handleChange}
                 fullWidth
                 name="password"
                 label="Password"
@@ -97,11 +147,13 @@ const Registration: React.FC<ConsumerProps> = () => {
               <TextField
                 variant="outlined"
                 required
+                onChange={handleChange}
                 fullWidth
-                name="confirmPassword"
+                name="passwordConfirmation"
                 label="Confirm Password"
                 type="password"
-                id="confirmPassword"
+                helperText={confirmPasswordHelper}
+                id="passwordConfirmation"
               />
             </Grid>
           </Grid>
