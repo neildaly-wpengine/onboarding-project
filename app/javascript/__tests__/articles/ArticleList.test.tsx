@@ -45,6 +45,7 @@ describe("<ArticleList />", () => {
       expect(axios.get).toHaveBeenCalledWith("/api/v1/articles");
       expect(resolvedData).toBeInTheDocument();
       expect(resolvedData).not.toBeEmptyDOMElement();
+      expect(axios.get).toBeCalledTimes(1);
     });
   });
 });

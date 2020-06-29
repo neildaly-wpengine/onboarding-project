@@ -68,6 +68,7 @@ describe("<ArticleDetail />", () => {
       );
       expect(resolvedData).toBeInTheDocument();
       expect(resolvedData).not.toBeEmptyDOMElement();
+      expect(axios.get).toBeCalledTimes(1);
     });
   });
 });
