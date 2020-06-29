@@ -25,10 +25,6 @@ RSpec.describe ArticleSerializer do
       expect(serialized_hash[:content]).to eq(article.content)
     end
 
-    it 'should include the correct user_id' do
-      expect(serialized_hash[:user_id]).to eq(article.user_id)
-    end
-
     it 'should include the correct creation date' do
       expect(serialized_hash[:created_at]).to eq(article.created_at)
     end
