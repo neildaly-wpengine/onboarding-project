@@ -114,9 +114,9 @@ const Registration: React.FC<ConsumerProps> = () => {
           >
             Register
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="center">
             <Grid item>
-              <Link to="#">Already have an account? Sign in</Link>
+              <Link to="/login">Already have an account? Sign in</Link>
             </Grid>
           </Grid>
         </form>
