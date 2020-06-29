@@ -7,14 +7,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ConsumerProps,
-  RegistrationUser,
   Registration,
   RegistrationBody,
+  RegistrationUser,
 } from "../../common/types";
 import { consumer } from "../../__tests__/articles/__helpers__/test-data";
 
@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
+    padding: 10,
     alignItems: "center",
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(3),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
@@ -34,12 +35,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 4),
   },
 }));
 
 const Registration: React.FC<ConsumerProps> = () => {
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
+  const [emailHelper, setEmailHelper] = useState("");
   const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
     email: "",
     firstName: "",
@@ -67,17 +69,19 @@ const Registration: React.FC<ConsumerProps> = () => {
       return;
     }
     setConfirmPasswordHelper("");
-    registerUser();
+    attempt();
   };
 
-  const registerUser = async () => {
+  const attempt = async () => {
     const registrationResponse = await consumer.registerNewUser({
       user: registrationUser,
     } as RegistrationBody);
 
-    if (registrationResponse.data.status === "created") {
-      // redirect
+    if (registrationResponse.data.status !== "created") {
+      setEmailHelper(registrationResponse.data.message.email[0]);
+      return;
     }
+    // redirect
   };
 
   const classes = useStyles();
@@ -85,7 +89,7 @@ const Registration: React.FC<ConsumerProps> = () => {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <PersonIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Register
@@ -123,6 +127,8 @@ const Registration: React.FC<ConsumerProps> = () => {
                 required
                 onChange={handleChange}
                 fullWidth
+                helperText={emailHelper}
+                error={emailHelper !== ""}
                 id="email"
                 type="email"
                 label="Email Address"
@@ -153,6 +159,7 @@ const Registration: React.FC<ConsumerProps> = () => {
                 label="Confirm Password"
                 type="password"
                 helperText={confirmPasswordHelper}
+                error={confirmPasswordHelper !== ""}
                 id="passwordConfirmation"
               />
             </Grid>
