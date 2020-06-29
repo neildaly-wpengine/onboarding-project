@@ -1,7 +1,9 @@
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
 import axios from "axios";
+import humps from "humps";
 import { consumer, jsonAPIAllArticleResponseData, jsonAPISpecificArticleResponseData } from "./articles/__helpers__/test-data";
+import { registrationBody, successfulRegistrationResponse } from "./auth/__helpers__/test-data";
 
 jest.mock("axios");
 
@@ -43,5 +45,22 @@ describe('API Consumer', () => {
         );
         expect(specificArticle.title).toEqual(expectedResponse.data.data.attributes.title)
         expect(specificArticle.content).toEqual(expectedResponse.data.data.attributes.content)
+    });
+
+    test('a user can successfully register', async () => {
+        (axios.post as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve(successfulRegistrationResponse),
+        );
+
+        const registrationResponse = await consumer.registerNewUser(registrationBody);
+
+        expect(axios.post).toHaveBeenCalledWith(
+            '/api/v1/registrations', humps.decamelizeKeys(registrationBody)
+        );
+        expect(registrationResponse.status).toEqual(successfulRegistrationResponse.status);
+        expect(registrationResponse.user.firstName).toEqual(successfulRegistrationResponse.user.first_name);
+        expect(registrationResponse.user.lastName).toEqual(successfulRegistrationResponse.user.last_name);
+        expect(registrationResponse.user.initialsImageLink).toEqual(successfulRegistrationResponse.user.initials_image_link);
+        expect(axios.post).toHaveBeenCalledTimes(1);
     });
 });

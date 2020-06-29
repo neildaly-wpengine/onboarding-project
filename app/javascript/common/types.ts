@@ -28,4 +28,19 @@ interface MatchParams {
     id: string;
 }
 
-export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { } 
+export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
+
+export type RegistrationBody = {
+    user: {
+        email: string,
+        firstName: string,
+        lastName: string,
+        password: string,
+        passwordConfirmation: string
+    };
+}
+
+export type Registration = {
+    status: string,
+    user: User
+}
