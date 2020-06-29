@@ -5,6 +5,7 @@ import { ArticleDetailMatchParams } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Registration from "../auth/Registration";
 
 const App: React.FC = () => {
   const consumer = new APIConsumer();
@@ -20,6 +21,10 @@ const App: React.FC = () => {
       component: (props: ArticleDetailMatchParams) => (
         <ArticleDetail {...props} consumer={consumer} />
       ),
+    },
+    {
+      path: "/register",
+      component: () => <Registration consumer={consumer} />,
     },
   ];
 
