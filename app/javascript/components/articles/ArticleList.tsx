@@ -1,5 +1,4 @@
-import { Box, Grid, Typography, CircularProgress } from "@material-ui/core";
-import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
+import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
@@ -8,31 +7,18 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>();
 
   useEffect(() => {
-    const CancelToken: CancelTokenStatic = axios.CancelToken;
-    const source: CancelTokenSource = CancelToken.source();
-
-    const fetchAllArticles = () => {
-      consumer
-        .getAllArticles(source)
-        .then((articleData: Article[]) => setArticles(articleData))
-        .catch((err: any) => {
-          if (axios.isCancel(err)) {
-            console.log("cancelled");
-          }
-        });
+    const fetchAllArticles = async () => {
+      const articleData = await consumer.getAllArticles();
+      setArticles(articleData);
     };
     fetchAllArticles();
-
-    return () => {
-      source.cancel();
-    };
   }, []);
 
   if (articles === undefined) {
     return <CircularProgress data-testid="loading" />;
   }
 
-  const articlesList = articles.map((article: Article, index: number) => {
+  const articlesList = articles.map((article: Article) => {
     return (
       <ArticleHighlight
         key={article.id}

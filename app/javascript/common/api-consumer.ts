@@ -1,27 +1,36 @@
-import axios, { CancelTokenSource, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Article } from "./types";
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 class APIConsumer {
-    async getAllArticles(source: CancelTokenSource): Promise<Article[]> {
-        return await axios
-            .get("/api/v1/articles", { cancelToken: source.token })
-            .then((articlesResponse) => {
-                return this.deserializeResponse(articlesResponse);
-            });
+    async getAllArticles(): Promise<Article[]> {
+        try {
+            const response: AxiosResponse = await axios.get("/api/v1/articles");
+            const articleData: Article[] = await this.deserializeResponse(response);
+
+            return articleData;
+        } catch (e) {
+            throw e
+        }
     }
 
-    async getSpecificArticle(source: CancelTokenSource, id: string): Promise<Article> {
-        return await axios.get(`/api/v1/articles/${id}`, { cancelToken: source.token })
-            .then((articlesResponse) => {
-                return this.deserializeResponse(articlesResponse);
-            });
+    async getSpecificArticle(id: string): Promise<Article> {
+        try {
+            const response: AxiosResponse = await axios.get(`/api/v1/articles/${id}`);
+            const articleData: Article = await this.deserializeResponse(response);
+
+            return articleData;
+        } catch (e) {
+            throw e;
+        }
     }
 
     private deserializeResponse = (response: AxiosResponse) => {
-        return new JSONAPIDeserializer({
-            keyForAttribute: "camelCase",
-        }).deserialize(
+        const deserializerOptions = {
+            keyForAttribute: "camelCase"
+        }
+        const deserializer = new JSONAPIDeserializer(deserializerOptions);
+        return deserializer.deserialize(
             response.data,
             (_err: any, articlesResponseData: any) => {
                 return articlesResponseData;

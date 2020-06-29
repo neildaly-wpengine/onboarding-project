@@ -1,28 +1,50 @@
+import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, RenderResult, waitFor } from "@testing-library/react";
+import axios from "axios";
 import * as React from "react";
-import APIConsumer from "../../common/api-consumer";
+import { BrowserRouter as Router } from "react-router-dom";
 import ArticleList from "../../components/articles/ArticleList";
+import {
+  consumer,
+  jsonAPIAllArticleResponseData,
+} from "./__helpers__/test-data";
 
-const renderHelper = (): JSX.Element => {
-  const consumer: APIConsumer = new APIConsumer();
-  return <ArticleList consumer={consumer} />;
+const renderArticleList = (): RenderResult => {
+  return render(
+    <Router>
+      <ArticleList consumer={consumer} />
+    </Router>
+  );
 };
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup;
+});
+
+jest.mock("axios");
 
 describe("<ArticleList />", () => {
-  test("should render a heading without articles", () => {
-    const { container } = render(renderHelper());
-
-    expect(container).toMatchSnapshot();
-  });
-
   describe("Content", () => {
-    test("should render a loading spinner", () => {
-      const { getByTestId } = render(renderHelper());
+    it("renders correctly", async () => {
+      const expectedResponse = {
+        data: jsonAPIAllArticleResponseData,
+      };
 
+      (axios.get as jest.Mock).mockImplementationOnce(() =>
+        Promise.resolve(expectedResponse)
+      );
+
+      const { container, getByTestId } = renderArticleList();
       expect(getByTestId("loading")).toHaveAttribute("role", "progressbar");
+
+      const resolvedData = await waitFor(() => getByTestId("resolved"));
+
+      expect(container).toMatchSnapshot();
+      expect(getByTestId("article-list-title")).toHaveTextContent("Articles");
+      expect(axios.get).toHaveBeenCalledWith("/api/v1/articles");
+      expect(resolvedData).toBeInTheDocument();
+      expect(resolvedData).not.toBeEmptyDOMElement();
     });
   });
 });

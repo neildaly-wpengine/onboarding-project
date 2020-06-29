@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ArticleDetail /> Content renders correctly 1`] = `
+<div>
+  <div
+    class="MuiBox-root MuiBox-root-6 makeStyles-boxHeader-1"
+  >
+    <img
+      alt="Computer Games Development"
+      class="makeStyles-imageHeader-2"
+      data-testid="specific-article-stock-image"
+      src="https://picsum.photos/1920/450?image=1"
+    />
+  </div>
+  <div
+    class="MuiBox-root MuiBox-root-7 makeStyles-mainArea-3"
+    data-testid="resolved"
+  >
+    <div
+      class="MuiBox-root MuiBox-root-8 makeStyles-mainHeader-4"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
+      >
+        Computer Games Development
+      </h2>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
+      >
+        Harry Smith
+      </h4>
+      <div
+        aria-label="user"
+        class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-5"
+      >
+        <img
+          class="MuiAvatar-img"
+          src="https://eu.ui-avatars.com/api/?background=fff&color=000&name=Harry+Smith"
+        />
+      </div>
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-gutterBottom"
+      >
+        2020-06-25T10:07:42.357Z
+      </h6>
+    </div>
+    <div
+      class="MuiBox-root MuiBox-root-9 makeStyles-mainHeader-4"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom MuiTypography-alignJustify"
+      >
+        Lorem ipsum dolor sit 
+      </p>
+    </div>
+  </div>
+</div>
+`;

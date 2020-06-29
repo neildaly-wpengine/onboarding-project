@@ -1,12 +1,12 @@
 import "@testing-library/jest-dom/extend-expect";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import ArticleHighlight from "../../components/articles/ArticleHighlight";
 import { mockArticle } from "./__helpers__/test-data";
 
-const renderHelper = (): JSX.Element => {
-  return (
+const renderHelper = (): RenderResult => {
+  return render(
     <Router>
       <ArticleHighlight
         title={mockArticle.title}
@@ -24,7 +24,7 @@ afterEach(cleanup);
 describe("<ArticleHighlight />", () => {
   describe("Snapshots", () => {
     test("should render an article highlight without crashing", () => {
-      const { container } = render(renderHelper());
+      const { container } = renderHelper();
 
       expect(container).toMatchSnapshot();
     });
@@ -32,7 +32,7 @@ describe("<ArticleHighlight />", () => {
 
   describe("Content", () => {
     test("should render the correct title", () => {
-      const { getByTestId } = render(renderHelper());
+      const { getByTestId } = renderHelper();
 
       expect(getByTestId("article-card-title")).toHaveTextContent(
         mockArticle.title
@@ -40,7 +40,7 @@ describe("<ArticleHighlight />", () => {
     });
 
     test("should render the correct content", () => {
-      const { getByTestId } = render(renderHelper());
+      const { getByTestId } = renderHelper();
 
       expect(getByTestId("article-card-content")).toHaveTextContent(
         `${mockArticle.content}...`
@@ -48,7 +48,7 @@ describe("<ArticleHighlight />", () => {
     });
 
     test("should render the correct header details", () => {
-      const { getByTestId } = render(renderHelper());
+      const { getByTestId } = renderHelper();
 
       expect(getByTestId("article-card-header")).toHaveTextContent(
         mockArticle.createdAt
@@ -59,7 +59,7 @@ describe("<ArticleHighlight />", () => {
     });
 
     test("should render the correct button content", () => {
-      const { getByTestId } = render(renderHelper());
+      const { getByTestId } = renderHelper();
 
       expect(getByTestId("article-card-button")).toHaveTextContent("View More");
       expect(getByTestId("article-card-button").closest("a")).toHaveAttribute(

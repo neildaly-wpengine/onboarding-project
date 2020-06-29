@@ -1,11 +1,17 @@
+import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, RenderResult, waitFor } from "@testing-library/react";
+import axios from "axios";
 import { createLocation, createMemoryHistory } from "history";
 import * as React from "react";
 import { match } from "react-router";
 import { ArticleDetailMatchParams } from "../../common/types";
 import ArticleDetail from "../../components/articles/ArticleDetail";
-import { mockArticle, consumer } from "./__helpers__/test-data";
+import {
+  consumer,
+  jsonAPISpecificArticleResponseData,
+  mockArticle,
+} from "./__helpers__/test-data";
 
 const history = createMemoryHistory();
 
@@ -26,16 +32,42 @@ const createRouteComponentProps = (): ArticleDetailMatchParams => {
   };
 };
 
-const renderHelper = (): JSX.Element => {
-  return <ArticleDetail consumer={consumer} {...createRouteComponentProps()} />;
+const renderArticleDetail = (): RenderResult => {
+  return render(
+    <ArticleDetail consumer={consumer} {...createRouteComponentProps()} />
+  );
 };
 
 afterEach(cleanup);
 
-describe("<ArticleDetail />", () => {
-  test("should render an empty div without articles", () => {
-    const { container } = render(renderHelper());
+jest.mock("axios");
 
-    expect(container).toMatchSnapshot();
+describe("<ArticleDetail />", () => {
+  describe("Content", () => {
+    it("renders correctly", async () => {
+      const expectedResponse = {
+        data: jsonAPISpecificArticleResponseData,
+      };
+
+      (axios.get as jest.Mock).mockImplementationOnce(() =>
+        Promise.resolve(expectedResponse)
+      );
+
+      const { container, getByTestId } = renderArticleDetail();
+      expect(getByTestId("loading")).toHaveAttribute("role", "progressbar");
+
+      const resolvedData = await waitFor(() => getByTestId("resolved"));
+
+      expect(container).toMatchSnapshot();
+      expect(getByTestId("specific-article-stock-image")).toHaveAttribute(
+        "src",
+        `https://picsum.photos/1920/450?image=${mockArticle.id}`
+      );
+      expect(axios.get).toHaveBeenCalledWith(
+        `/api/v1/articles/${mockArticle.id}`
+      );
+      expect(resolvedData).toBeInTheDocument();
+      expect(resolvedData).not.toBeEmptyDOMElement();
+    });
   });
 });

@@ -1,5 +1,10 @@
-import { Box, Typography, makeStyles, Avatar } from "@material-ui/core";
-import axios, { CancelTokenSource, CancelTokenStatic } from "axios";
+import {
+  Avatar,
+  Box,
+  CircularProgress,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import {
   Article,
@@ -51,28 +56,16 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
 
   useEffect(() => {
     const articleID: string = match.params.id;
-    const CancelToken: CancelTokenStatic = axios.CancelToken;
-    const source: CancelTokenSource = CancelToken.source();
 
-    const fetchSpecificArticle = () => {
-      consumer
-        .getSpecificArticle(source, articleID)
-        .then((articleData: Article) => setArticle(articleData))
-        .catch((err: any) => {
-          if (axios.isCancel(err)) {
-            console.log("cancelled");
-          }
-        });
+    const fetchSpecificArticle = async () => {
+      const articleData = await consumer.getSpecificArticle(articleID);
+      setArticle(articleData);
     };
     fetchSpecificArticle();
-
-    return () => {
-      source.cancel();
-    };
   }, []);
 
   if (article === undefined) {
-    return null;
+    return <CircularProgress data-testid="loading" />;
   }
 
   article.stockImage = `https://picsum.photos/1920/450?image=${article.id}`;
@@ -81,12 +74,13 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
     <React.Fragment>
       <Box m={1} p={1} className={classes.boxHeader} width={1}>
         <img
+          data-testid="specific-article-stock-image"
           src={article.stockImage}
           alt={article.title}
           className={classes.imageHeader}
         />
       </Box>
-      <Box m={1} p={1} className={classes.mainArea}>
+      <Box m={1} p={1} className={classes.mainArea} data-testid="resolved">
         <Box width="50%" className={classes.mainHeader}>
           <Typography variant="h2" gutterBottom>
             {article.title}
