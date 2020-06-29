@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
 import axios from "axios";
-import { consumer, jsonAPIAllArticleResponseData, jsonAPISpecificArticleResponseData } from "./__helpers__/test-data";
+import { consumer, jsonAPIAllArticleResponseData, jsonAPISpecificArticleResponseData } from "./articles/__helpers__/test-data";
 
 jest.mock("axios");
 
