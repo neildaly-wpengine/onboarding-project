@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { Article } from "./types";
+import { Article, RegistrationBody, Registration } from "./types";
+import humps from 'humps';
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 class APIConsumer {
@@ -20,6 +21,17 @@ class APIConsumer {
             const articleData: Article = await this.deserializeResponse(response);
 
             return articleData;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async registerNewUser(registrationBody: RegistrationBody): Promise<Registration> {
+        try {
+            const decamelizedKeys: RegistrationBody = humps.decamelizeKeys(registrationBody) as RegistrationBody;
+            const response: Registration = await axios.post('/api/v1/registrations', decamelizedKeys);
+
+            return humps.camelizeKeys(response) as Registration;
         } catch (e) {
             throw e;
         }
