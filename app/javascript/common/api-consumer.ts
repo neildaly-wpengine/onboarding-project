@@ -26,10 +26,11 @@ class APIConsumer {
         }
     }
 
-    async registerNewUser(registrationBody: RegistrationBody): Promise<Registration> {
+    async registerNewUser(registrationBody: RegistrationBody): Promise<any> {
         try {
             const decamelizedKeys: RegistrationBody = humps.decamelizeKeys(registrationBody) as RegistrationBody;
-            const response: Registration = await axios.post('/api/v1/registrations', decamelizedKeys);
+            const response: Registration = await axios.post('/api/v1/registrations', decamelizedKeys,
+                { withCredentials: true });
 
             return humps.camelizeKeys(response) as Registration;
         } catch (e) {

@@ -55,7 +55,7 @@ describe('API Consumer', () => {
         const registrationResponse = await consumer.registerNewUser(registrationBody);
 
         expect(axios.post).toHaveBeenCalledWith(
-            '/api/v1/registrations', humps.decamelizeKeys(registrationBody)
+            '/api/v1/registrations', humps.decamelizeKeys(registrationBody), { withCredentials: true }
         );
         expect(registrationResponse.status).toEqual(successfulRegistrationResponse.status);
         expect(registrationResponse.user.firstName).toEqual(successfulRegistrationResponse.user.first_name);
