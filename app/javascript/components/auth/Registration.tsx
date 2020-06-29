@@ -9,7 +9,7 @@ import {
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   ConsumerProps,
   Registration,
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Registration: React.FC<ConsumerProps> = () => {
+  const history = useHistory();
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
   const [emailHelper, setEmailHelper] = useState("");
   const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
@@ -51,9 +52,12 @@ const Registration: React.FC<ConsumerProps> = () => {
   });
 
   const validPasswordEntries = (): boolean => {
-    return (
-      registrationUser?.password === registrationUser?.passwordConfirmation
-    );
+    const valid: boolean =
+      registrationUser?.password === registrationUser?.passwordConfirmation;
+
+    valid ? setConfirmPasswordHelper("") : null;
+
+    return valid;
   };
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
@@ -68,11 +72,10 @@ const Registration: React.FC<ConsumerProps> = () => {
       setConfirmPasswordHelper("Passwords do not match.");
       return;
     }
-    setConfirmPasswordHelper("");
-    attempt();
+    attemptUserRegistration();
   };
 
-  const attempt = async () => {
+  const attemptUserRegistration = async () => {
     const registrationResponse = await consumer.registerNewUser({
       user: registrationUser,
     } as RegistrationBody);
@@ -81,7 +84,7 @@ const Registration: React.FC<ConsumerProps> = () => {
       setEmailHelper(registrationResponse.data.message.email[0]);
       return;
     }
-    // redirect
+    history.push("/");
   };
 
   const classes = useStyles();
@@ -94,7 +97,7 @@ const Registration: React.FC<ConsumerProps> = () => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit} method="post">
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
