@@ -8,8 +8,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import { Link } from "react-router-dom";
-import { NavbarProps, ConsumerProps } from "../../common/types";
+import { Link, useHistory } from "react-router-dom";
+import {
+  ConsumerProps,
+  NotifyAuthProps,
+  NavbarProps,
+} from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,21 +36,37 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Navbar: React.FC<NavbarProps & ConsumerProps> = ({
+const Navbar: React.FC<NavbarProps & ConsumerProps & NotifyAuthProps> = ({
   authenticated,
   consumer,
+  toggleAuthentication,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
 
-  const handleLogout = (e: React.BaseSyntheticEvent): void => {
-    console.log(e);
+  const handleLogout = async () => {
+    const response = await consumer.destroySession();
+
+    if (response.data.loggedOut) {
+      toggleAuthentication();
+      history.push("/");
+    }
   };
 
-  const logoutJSX: JSX.Element | null = authenticated ? (
+  const toolbarJSX: JSX.Element | null = authenticated ? (
     <Button color="inherit" onClick={handleLogout}>
       Logout
     </Button>
-  ) : null;
+  ) : (
+    <React.Fragment>
+      <Button color="inherit">Login</Button>
+      <Button color="inherit">
+        <Link to="/register" className={classes.link}>
+          Register
+        </Link>
+      </Button>
+    </React.Fragment>
+  );
 
   return (
     <div className={classes.root}>
@@ -57,13 +77,7 @@ const Navbar: React.FC<NavbarProps & ConsumerProps> = ({
               Bloggy
             </Link>
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">
-            <Link to="/register" className={classes.link}>
-              Register
-            </Link>
-          </Button>
-          {logoutJSX}
+          {toolbarJSX}
         </Toolbar>
       </AppBar>
     </div>

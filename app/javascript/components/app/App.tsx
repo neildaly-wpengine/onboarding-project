@@ -24,8 +24,8 @@ const customTheme = createMuiTheme({
 const App: React.FC = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
-  const notifyAuthentication = () => {
-    setAuthenticated(true);
+  const toggleAuthentication = () => {
+    setAuthenticated(!authenticated);
   };
 
   const consumer: APIConsumer = new APIConsumer();
@@ -48,7 +48,7 @@ const App: React.FC = () => {
       component: () => (
         <Registration
           consumer={consumer}
-          notifyAuthentication={notifyAuthentication}
+          toggleAuthentication={toggleAuthentication}
         />
       ),
     },
@@ -59,7 +59,11 @@ const App: React.FC = () => {
       <React.Fragment>
         <CssBaseline />
         <Router>
-          <Navbar authenticated={authenticated} consumer={consumer} />
+          <Navbar
+            authenticated={authenticated}
+            consumer={consumer}
+            toggleAuthentication={toggleAuthentication}
+          />
           <Switch>
             {routes.map((route, index) => (
               <Route

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
   consumer,
-  notifyAuthentication,
+  toggleAuthentication,
 }) => {
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
   const [emailHelper, setEmailHelper] = useState("");
@@ -79,7 +79,6 @@ const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
       return;
     }
     attemptUserRegistration();
-    history.push("/");
   };
 
   const attemptUserRegistration = async () => {
@@ -91,7 +90,7 @@ const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
       setEmailHelper(registrationResponse.data.message.email[0]);
       return;
     }
-    notifyAuthentication();
+    toggleAuthentication();
     history.push("/");
   };
 
