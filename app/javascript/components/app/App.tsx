@@ -7,6 +7,7 @@ import { ArticleDetailMatchParams } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
+import Navbar from "../nav/Navbar";
 
 const customTheme = createMuiTheme({
   palette: {
@@ -15,6 +16,7 @@ const customTheme = createMuiTheme({
     },
     secondary: {
       main: "#EA80FC",
+      dark: "#B64EC8",
     },
   },
 });
@@ -46,6 +48,7 @@ const App: React.FC = () => {
       <React.Fragment>
         <CssBaseline />
         <Router>
+          <Navbar />
           <Switch>
             {routes.map((route, index) => (
               <Route

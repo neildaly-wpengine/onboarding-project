@@ -2,85 +2,6 @@
 
 exports[`<Registration /> Snapshots should render an article highlight without crashing 1`] = `
 <div>
-  <div
-    class="makeStyles-root-5"
-  >
-    <header
-      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary makeStyles-bar-6 MuiPaper-elevation4"
-    >
-      <div
-        class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
-      >
-        <button
-          aria-label="menu"
-          class="MuiButtonBase-root MuiIconButton-root makeStyles-menuButton-7 MuiIconButton-colorInherit MuiIconButton-edgeStart"
-          tabindex="0"
-          type="button"
-        >
-          <span
-            class="MuiIconButton-label"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-              />
-            </svg>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </button>
-        <h6
-          class="MuiTypography-root makeStyles-title-8 MuiTypography-h6"
-        >
-          <a
-            class="makeStyles-link-9"
-            href="/"
-          >
-            Articles
-          </a>
-        </h6>
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
-          tabindex="0"
-          type="button"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            Login
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </button>
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
-          tabindex="0"
-          type="button"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <a
-              class="makeStyles-link-9"
-              href="/register"
-            >
-              Register
-            </a>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </button>
-      </div>
-    </header>
-  </div>
   <main
     class="MuiContainer-root MuiContainer-maxWidthXs"
   >
@@ -149,10 +70,10 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 />
                 <fieldset
                   aria-hidden="true"
-                  class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline"
+                  class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
                 >
                   <legend
-                    class="PrivateNotchedOutline-legendLabelled-12 PrivateNotchedOutline-legendNotched-13"
+                    class="PrivateNotchedOutline-legendLabelled-8 PrivateNotchedOutline-legendNotched-9"
                   >
                     <span>
                       First Name
@@ -200,10 +121,10 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 />
                 <fieldset
                   aria-hidden="true"
-                  class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline"
+                  class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
                 >
                   <legend
-                    class="PrivateNotchedOutline-legendLabelled-12"
+                    class="PrivateNotchedOutline-legendLabelled-8"
                   >
                     <span>
                       Last Name
@@ -251,10 +172,10 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 />
                 <fieldset
                   aria-hidden="true"
-                  class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline"
+                  class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
                 >
                   <legend
-                    class="PrivateNotchedOutline-legendLabelled-12"
+                    class="PrivateNotchedOutline-legendLabelled-8"
                   >
                     <span>
                       Email Address
@@ -303,10 +224,10 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 />
                 <fieldset
                   aria-hidden="true"
-                  class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline"
+                  class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
                 >
                   <legend
-                    class="PrivateNotchedOutline-legendLabelled-12"
+                    class="PrivateNotchedOutline-legendLabelled-8"
                   >
                     <span>
                       Password
@@ -353,10 +274,10 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 />
                 <fieldset
                   aria-hidden="true"
-                  class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline"
+                  class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
                 >
                   <legend
-                    class="PrivateNotchedOutline-legendLabelled-12"
+                    class="PrivateNotchedOutline-legendLabelled-8"
                   >
                     <span>
                       Confirm Password
@@ -390,11 +311,18 @@ exports[`<Registration /> Snapshots should render an article highlight without c
           <div
             class="MuiGrid-root MuiGrid-item"
           >
-            <a
-              href="/login"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-gutterBottom"
             >
-              Already have an account? Sign in
-            </a>
+              Already have an account?
+               
+              <a
+                class="makeStyles-link-5"
+                href="/login"
+              >
+                Sign In.
+              </a>
+            </h6>
           </div>
         </div>
       </form>

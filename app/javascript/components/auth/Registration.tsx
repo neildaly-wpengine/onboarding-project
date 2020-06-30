@@ -17,7 +17,6 @@ import {
   RegistrationUser,
 } from "../../common/types";
 import { consumer } from "../../__tests__/articles/__helpers__/test-data";
-import Navbar from "../nav/Navbar";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -37,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 4),
+  },
+  link: {
+    color: theme.palette.secondary.dark,
   },
 }));
 
@@ -90,110 +92,112 @@ const Registration: React.FC<ConsumerProps> = () => {
 
   const classes = useStyles();
   return (
-    <React.Fragment>
-      <Navbar />
-      <Container component="main" maxWidth="xs">
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <PersonIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Register
+        </Typography>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                inputProps={{ "data-testid": "firstNameInput" }}
+                onChange={handleChange}
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                onChange={handleChange}
+                inputProps={{ "data-testid": "lastNameInput" }}
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                inputProps={{ "data-testid": "emailInput" }}
+                required
+                onChange={handleChange}
+                fullWidth
+                helperText={emailHelper}
+                error={emailHelper !== ""}
+                id="email"
+                type="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                onChange={handleChange}
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                inputProps={{ "data-testid": "passwordInput" }}
+                id="password"
+                autoComplete="current-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                onChange={handleChange}
+                fullWidth
+                name="passwordConfirmation"
+                label="Confirm Password"
+                type="password"
+                inputProps={{ "data-testid": "passwordConfirmationInput" }}
+                helperText={confirmPasswordHelper}
+                error={confirmPasswordHelper !== ""}
+                id="passwordConfirmation"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            data-testid="submit"
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Register
-          </Typography>
-          <form className={classes.form} onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  inputProps={{ "data-testid": "firstNameInput" }}
-                  onChange={handleChange}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  onChange={handleChange}
-                  inputProps={{ "data-testid": "lastNameInput" }}
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  inputProps={{ "data-testid": "emailInput" }}
-                  required
-                  onChange={handleChange}
-                  fullWidth
-                  helperText={emailHelper}
-                  error={emailHelper !== ""}
-                  id="email"
-                  type="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  onChange={handleChange}
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ "data-testid": "passwordInput" }}
-                  id="password"
-                  autoComplete="current-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  onChange={handleChange}
-                  fullWidth
-                  name="passwordConfirmation"
-                  label="Confirm Password"
-                  type="password"
-                  inputProps={{ "data-testid": "passwordConfirmationInput" }}
-                  helperText={confirmPasswordHelper}
-                  error={confirmPasswordHelper !== ""}
-                  id="passwordConfirmation"
-                />
-              </Grid>
+          </Button>
+          <Grid container justify="center">
+            <Grid item>
+              <Typography variant="subtitle1" gutterBottom>
+                Already have an account?{" "}
+                <Link to="/login" className={classes.link}>
+                  Sign In.
+                </Link>
+              </Typography>
             </Grid>
-            <Button
-              data-testid="submit"
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Register
-            </Button>
-            <Grid container justify="center">
-              <Grid item>
-                <Link to="/login">Already have an account? Sign in</Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
-    </React.Fragment>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 
