@@ -61,6 +61,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                   aria-invalid="false"
                   autocomplete="fname"
                   class="MuiInputBase-input MuiOutlinedInput-input"
+                  data-testid="firstNameInput"
                   id="firstName"
                   name="firstName"
                   required=""
@@ -111,6 +112,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                   aria-invalid="false"
                   autocomplete="lname"
                   class="MuiInputBase-input MuiOutlinedInput-input"
+                  data-testid="lastNameInput"
                   id="lastName"
                   name="lastName"
                   required=""
@@ -161,6 +163,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                   aria-invalid="false"
                   autocomplete="email"
                   class="MuiInputBase-input MuiOutlinedInput-input"
+                  data-testid="emailInput"
                   id="email"
                   name="email"
                   required=""
@@ -212,6 +215,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                   aria-invalid="false"
                   autocomplete="current-password"
                   class="MuiInputBase-input MuiOutlinedInput-input"
+                  data-testid="passwordInput"
                   id="password"
                   name="password"
                   required=""
@@ -261,6 +265,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
                 <input
                   aria-invalid="false"
                   class="MuiInputBase-input MuiOutlinedInput-input"
+                  data-testid="passwordConfirmationInput"
                   id="passwordConfirmation"
                   name="passwordConfirmation"
                   required=""
@@ -287,6 +292,7 @@ exports[`<Registration /> Snapshots should render an article highlight without c
         </div>
         <button
           class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-4 MuiButton-containedPrimary MuiButton-fullWidth"
+          data-testid="submit"
           tabindex="0"
           type="submit"
         >
