@@ -12,11 +12,11 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
   ConsumerProps,
+  NotifyAuthProps,
   Registration,
   RegistrationBody,
   RegistrationUser,
 } from "../../common/types";
-import { consumer } from "../../__tests__/articles/__helpers__/test-data";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -42,8 +42,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Registration: React.FC<ConsumerProps> = () => {
-  const history = useHistory();
+const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
+  consumer,
+  notifyAuthentication,
+}) => {
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
   const [emailHelper, setEmailHelper] = useState("");
   const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
@@ -53,6 +55,7 @@ const Registration: React.FC<ConsumerProps> = () => {
     passwordConfirmation: "",
     password: "",
   });
+  const history = useHistory();
 
   const validPasswordEntries = (): boolean => {
     const valid: boolean =
@@ -76,6 +79,7 @@ const Registration: React.FC<ConsumerProps> = () => {
       return;
     }
     attemptUserRegistration();
+    history.push("/");
   };
 
   const attemptUserRegistration = async () => {
@@ -87,6 +91,7 @@ const Registration: React.FC<ConsumerProps> = () => {
       setEmailHelper(registrationResponse.data.message.email[0]);
       return;
     }
+    notifyAuthentication();
     history.push("/");
   };
 

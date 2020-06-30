@@ -24,6 +24,10 @@ export type ConsumerProps = {
     consumer: APIConsumer;
 }
 
+export type NotifyAuthProps = {
+    notifyAuthentication(): void
+}
+
 interface MatchParams {
     id: string;
 }
@@ -45,4 +49,8 @@ export type RegistrationBody = {
 export type Registration = {
     status: string,
     user: User
+}
+
+export type NavbarProps = {
+    authenticated: boolean
 }
