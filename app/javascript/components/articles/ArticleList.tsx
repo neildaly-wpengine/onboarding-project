@@ -1,10 +1,24 @@
-import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  createStyles,
+  Grid,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
+import Navbar from "../nav/Navbar";
 import ArticleHighlight from "./ArticleHighlight";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    grid: { margin: 0, width: "100%" },
+  })
+);
 
 const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>();
+  const classes = useStyles();
 
   useEffect(() => {
     let mounted: boolean = true;
@@ -41,19 +55,10 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <Box display="flex" justifyContent="center" m={1} p={1} margin={0}>
-        <Typography
-          variant="h2"
-          gutterBottom
-          style={{ marginTop: 5 }}
-          data-testid="article-list-title"
-        >
-          Articles
-        </Typography>
-      </Box>
-      <Grid container spacing={10} data-testid="resolved">
+      <Navbar />
+      <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
         <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
+          <Grid container justify="center" className={classes.grid}>
             {articlesList}
           </Grid>
         </Grid>

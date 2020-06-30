@@ -11,10 +11,10 @@ import Registration from "../auth/Registration";
 const customTheme = createMuiTheme({
   palette: {
     primary: {
-      main: "#3f51b5",
+      main: "#212121",
     },
     secondary: {
-      main: "#FF4081",
+      main: "#EA80FC",
     },
   },
 });
