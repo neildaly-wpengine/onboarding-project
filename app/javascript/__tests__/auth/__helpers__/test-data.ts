@@ -2,7 +2,7 @@ import { RegistrationBody } from "../../../common/types";
 
 export const registrationBody: RegistrationBody = {
     user: {
-        email: 'test-user@mail.com',
+        email: 'test-user@mail.ie',
         firstName: 'Test',
         lastName: 'User',
         password: 'test',

@@ -103,6 +103,7 @@ const Registration: React.FC<ConsumerProps> = () => {
               <TextField
                 autoComplete="fname"
                 name="firstName"
+                inputProps={{ "data-testid": "firstNameInput" }}
                 onChange={handleChange}
                 variant="outlined"
                 required
@@ -117,6 +118,7 @@ const Registration: React.FC<ConsumerProps> = () => {
                 variant="outlined"
                 required
                 onChange={handleChange}
+                inputProps={{ "data-testid": "lastNameInput" }}
                 fullWidth
                 id="lastName"
                 label="Last Name"
@@ -127,6 +129,7 @@ const Registration: React.FC<ConsumerProps> = () => {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                inputProps={{ "data-testid": "emailInput" }}
                 required
                 onChange={handleChange}
                 fullWidth
@@ -148,6 +151,7 @@ const Registration: React.FC<ConsumerProps> = () => {
                 name="password"
                 label="Password"
                 type="password"
+                inputProps={{ "data-testid": "passwordInput" }}
                 id="password"
                 autoComplete="current-password"
               />
@@ -161,6 +165,7 @@ const Registration: React.FC<ConsumerProps> = () => {
                 name="passwordConfirmation"
                 label="Confirm Password"
                 type="password"
+                inputProps={{ "data-testid": "passwordConfirmationInput" }}
                 helperText={confirmPasswordHelper}
                 error={confirmPasswordHelper !== ""}
                 id="passwordConfirmation"
@@ -168,6 +173,7 @@ const Registration: React.FC<ConsumerProps> = () => {
             </Grid>
           </Grid>
           <Button
+            data-testid="submit"
             type="submit"
             fullWidth
             variant="contained"
