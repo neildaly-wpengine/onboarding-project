@@ -40,19 +40,14 @@ const Navbar: React.FC = () => {
     <div className={classes.root}>
       <AppBar position="static" className={classes.bar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
+            Bloggy
+          </Typography>
+          <Button color="inherit">
             <Link to="/" className={classes.link}>
               Articles
             </Link>
-          </Typography>
+          </Button>
           <Button color="inherit">Login</Button>
           <Button color="inherit">
             <Link to="/register" className={classes.link}>

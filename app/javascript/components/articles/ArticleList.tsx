@@ -3,11 +3,10 @@ import {
   createStyles,
   Grid,
   makeStyles,
-  Theme,
+  Theme
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
-import Navbar from "../nav/Navbar";
 import ArticleHighlight from "./ArticleHighlight";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,7 +54,6 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <Navbar />
       <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
         <Grid item xs={12}>
           <Grid container justify="center" className={classes.grid}>
