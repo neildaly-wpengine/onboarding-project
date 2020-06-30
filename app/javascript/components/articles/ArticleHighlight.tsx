@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   root: {
     borderRadius: 10,
     maxWidth: 345,
-    margin: 10,
+    margin: 20,
     // display card actions on complete bottom
     display: "flex",
     flexDirection: "column",
