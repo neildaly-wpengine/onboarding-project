@@ -124,7 +124,6 @@ describe("<Registration />", () => {
       });
 
       expect(axios.post).toBeCalledTimes(1);
-      expect(axios.post).toBeCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
         "/api/v1/registrations",
         humps.decamelizeKeys(body),
