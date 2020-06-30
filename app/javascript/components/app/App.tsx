@@ -1,6 +1,6 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import APIConsumer from "../../common/api-consumer";
 import { ArticleDetailMatchParams } from "../../common/types";
@@ -22,7 +22,13 @@ const customTheme = createMuiTheme({
 });
 
 const App: React.FC = () => {
-  const consumer = new APIConsumer();
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
+
+  const notifyAuthentication = () => {
+    setAuthenticated(true);
+  };
+
+  const consumer: APIConsumer = new APIConsumer();
   const routes = [
     {
       path: "/",
@@ -39,7 +45,12 @@ const App: React.FC = () => {
     {
       path: "/register",
       exact: true,
-      component: () => <Registration consumer={consumer} />,
+      component: () => (
+        <Registration
+          consumer={consumer}
+          notifyAuthentication={notifyAuthentication}
+        />
+      ),
     },
   ];
 
@@ -48,7 +59,7 @@ const App: React.FC = () => {
       <React.Fragment>
         <CssBaseline />
         <Router>
-          <Navbar />
+          <Navbar authenticated={authenticated} consumer={consumer} />
           <Switch>
             {routes.map((route, index) => (
               <Route
