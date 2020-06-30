@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Article, RegistrationBody, Registration } from "./types";
+import { Article, RegistrationBody, Registration, LogoutResponse } from "./types";
 import humps from 'humps';
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
@@ -33,6 +33,16 @@ class APIConsumer {
                 { withCredentials: true });
 
             return humps.camelizeKeys(response) as Registration;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async destroySession(): Promise<LogoutResponse> {
+        try {
+            const response: AxiosResponse = await axios.delete('/api/v1/logout');
+
+            return humps.camelizeKeys(response) as LogoutResponse;
         } catch (e) {
             throw e;
         }

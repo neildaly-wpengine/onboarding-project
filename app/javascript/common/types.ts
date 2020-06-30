@@ -25,7 +25,7 @@ export type ConsumerProps = {
 }
 
 export type NotifyAuthProps = {
-    notifyAuthentication(): void
+    toggleAuthentication(): void
 }
 
 interface MatchParams {
@@ -47,10 +47,19 @@ export type RegistrationBody = {
 }
 
 export type Registration = {
-    status: string,
-    user: User
+    data: {
+        status: string,
+        user: User
+    }
 }
 
 export type NavbarProps = {
-    authenticated: boolean
+    authenticated: boolean,
+}
+
+export type LogoutResponse = {
+    data: {
+        status: number,
+        loggedOut: boolean
+    }
 }
