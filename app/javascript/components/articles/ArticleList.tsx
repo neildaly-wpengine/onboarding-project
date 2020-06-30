@@ -7,11 +7,18 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>();
 
   useEffect(() => {
+    let mounted: boolean = true;
     const fetchAllArticles = async () => {
       const articleData = await consumer.getAllArticles();
-      setArticles(articleData);
+      if (mounted) {
+        setArticles(articleData);
+      }
     };
     fetchAllArticles();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (articles === undefined) {

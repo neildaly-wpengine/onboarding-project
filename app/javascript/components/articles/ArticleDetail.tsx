@@ -55,13 +55,19 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
   const classes = useStyles();
 
   useEffect(() => {
-    const articleID: string = match.params.id;
-
+    let mounted: boolean = true;
     const fetchSpecificArticle = async () => {
+      const articleID: string = match.params.id;
       const articleData = await consumer.getSpecificArticle(articleID);
-      setArticle(articleData);
+      if (mounted) {
+        setArticle(articleData);
+      }
     };
     fetchSpecificArticle();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (article === undefined) {
