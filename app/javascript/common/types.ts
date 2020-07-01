@@ -15,6 +15,7 @@ export type Article = {
 
 export type User = {
     id: string;
+    email?: string;
     firstName: string;
     lastName: string;
     initialsImageLink?: string;
@@ -55,6 +56,8 @@ export type Registration = {
 
 export type NavbarProps = {
     authenticated: boolean,
+    notifyLogout(): void
+    consumer: APIConsumer
 }
 
 export type LogoutResponse = {
@@ -62,4 +65,14 @@ export type LogoutResponse = {
         status: number,
         loggedOut: boolean
     }
+}
+
+export type AuthStore = {
+    authenticated: boolean,
+    user: User
+}
+
+export type AuthProps = {
+    consumer: APIConsumer,
+    notifyLogin(authStore: AuthStore): void
 }

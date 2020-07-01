@@ -11,8 +11,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
-  ConsumerProps,
-  NotifyAuthProps,
+  AuthProps,
+  AuthStore,
   Registration,
   RegistrationBody,
   RegistrationUser,
@@ -42,10 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
-  consumer,
-  toggleAuthentication,
-}) => {
+const Registration: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
   const [emailHelper, setEmailHelper] = useState("");
   const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
@@ -82,15 +79,23 @@ const Registration: React.FC<ConsumerProps & NotifyAuthProps> = ({
   };
 
   const attemptUserRegistration = async () => {
-    const registrationResponse = await consumer.registerNewUser({
+    const response = await consumer.registerNewUser({
       user: registrationUser,
     } as RegistrationBody);
 
-    if (registrationResponse.data.status !== "created") {
-      setEmailHelper(registrationResponse.data.message.email[0]);
+    if (response.data.status !== "created") {
+      setEmailHelper(response.data.message.email[0]);
       return;
     }
-    toggleAuthentication();
+    notifyLogin({
+      authenticated: true,
+      user: {
+        id: response.data.user.id,
+        email: response.data.user.email,
+        firstName: response.data.user.firstName,
+        lastName: response.data.user.lastName,
+      },
+    } as AuthStore);
     history.push("/");
   };
 

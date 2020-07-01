@@ -1,34 +1,27 @@
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { logout, setAuthDetails } from "../../actions";
 import APIConsumer from "../../common/api-consumer";
-import { ArticleDetailMatchParams } from "../../common/types";
+import { ArticleDetailMatchParams, AuthStore } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
 
-const customTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#212121",
-    },
-    secondary: {
-      main: "#EA80FC",
-      dark: "#B64EC8",
-    },
-  },
-});
-
 const App: React.FC = () => {
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const consumer: APIConsumer = new APIConsumer();
+  const auth: AuthStore = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
 
-  const toggleAuthentication = () => {
-    setAuthenticated(!authenticated);
+  const notifyLogin = (authStore: AuthStore) => {
+    dispatch(setAuthDetails(authStore));
   };
 
-  const consumer: APIConsumer = new APIConsumer();
+  const notifyLogout = () => {
+    dispatch(logout());
+  };
+
   const routes = [
     {
       path: "/",
@@ -46,37 +39,31 @@ const App: React.FC = () => {
       path: "/register",
       exact: true,
       component: () => (
-        <Registration
-          consumer={consumer}
-          toggleAuthentication={toggleAuthentication}
-        />
+        <Registration consumer={consumer} notifyLogin={notifyLogin} />
       ),
     },
   ];
 
   return (
-    <ThemeProvider theme={customTheme}>
-      <React.Fragment>
-        <CssBaseline />
-        <Router>
-          <Navbar
-            authenticated={authenticated}
-            consumer={consumer}
-            toggleAuthentication={toggleAuthentication}
-          />
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                exact={route.exact}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-          </Switch>
-        </Router>
-      </React.Fragment>
-    </ThemeProvider>
+    <React.Fragment>
+      <Router>
+        <Navbar
+          authenticated={auth.authenticated}
+          consumer={consumer}
+          notifyLogout={notifyLogout}
+        />
+        <Switch>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              exact={route.exact}
+              path={route.path}
+              component={route.component}
+            />
+          ))}
+        </Switch>
+      </Router>
+    </React.Fragment>
   );
 };
 

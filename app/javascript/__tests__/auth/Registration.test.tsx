@@ -20,7 +20,7 @@ import {
 const renderHelper = (): RenderResult => {
   return render(
     <Router>
-      <Registration consumer={consumer} toggleAuthentication={jest.fn()} />;
+      <Registration consumer={consumer} notifyLogin={jest.fn()} />;
     </Router>
   );
 };
