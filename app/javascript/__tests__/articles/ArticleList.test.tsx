@@ -36,8 +36,6 @@ describe("<ArticleList />", () => {
       );
 
       const { container, getByTestId } = renderArticleList();
-      expect(getByTestId("loading")).toHaveAttribute("role", "progressbar");
-
       const resolvedData = await waitFor(() => getByTestId("resolved"));
 
       expect(container).toMatchSnapshot();
