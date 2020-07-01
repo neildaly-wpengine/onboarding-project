@@ -9,11 +9,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import {
-  ConsumerProps,
-  NotifyAuthProps,
-  NavbarProps,
-} from "../../common/types";
+import { NavbarProps } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Navbar: React.FC<NavbarProps & ConsumerProps & NotifyAuthProps> = ({
+const Navbar: React.FC<NavbarProps> = ({
   authenticated,
   consumer,
-  toggleAuthentication,
+  notifyLogout,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -48,7 +44,7 @@ const Navbar: React.FC<NavbarProps & ConsumerProps & NotifyAuthProps> = ({
     const response = await consumer.destroySession();
 
     if (response.data.loggedOut) {
-      toggleAuthentication();
+      notifyLogout();
       history.push("/");
     }
   };
