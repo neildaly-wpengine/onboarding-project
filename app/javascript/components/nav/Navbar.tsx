@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     bar: {
       backgroundColor: theme.palette.primary.main,
+      minHeight: "5vh",
     },
     menuButton: {
       marginRight: theme.spacing(2),
