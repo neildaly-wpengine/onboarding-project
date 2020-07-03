@@ -82,3 +82,10 @@ export type AuthProps = {
     consumer: APIConsumer,
     notifyLogin(authStore: AuthStore): void
 }
+
+export type CollapsibleAlertProps = {
+    showAlert: boolean,
+    severity: "error" | "success" | "info" | "warning" | undefined,
+    closeAlert(): void,
+    message: string
+}

@@ -9,10 +9,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
-import { Alert } from "@material-ui/lab";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthProps, AuthStore, LoginBody, LoginUser } from "../../common/types";
+import CollapsibleAlert from "../alert/CollapsibleAlert";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -48,9 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     color: theme.palette.secondary.dark,
-  },
-  alert: {
-    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -92,17 +89,22 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
+  const closeAlert = (): void => {
+    setShowAlert(false);
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <div className={classes.paper}>
-          {showAlert && (
-            <Alert severity="error" className={classes.alert}>
-              Could not log in with those credentials!
-            </Alert>
-          )}
+          <CollapsibleAlert
+            closeAlert={closeAlert}
+            severity="error"
+            showAlert={showAlert}
+            message="Could not log in with those credentials!"
+          />
           <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>
