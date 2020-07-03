@@ -55,7 +55,11 @@ const Navbar: React.FC<NavbarProps> = ({
     </Button>
   ) : (
     <React.Fragment>
-      <Button color="inherit">Login</Button>
+      <Button color="inherit">
+        <Link to="/login" className={classes.link}>
+          Login
+        </Link>
+      </Button>
       <Button color="inherit">
         <Link to="/register" className={classes.link}>
           Register
