@@ -36,12 +36,9 @@ describe("<ArticleList />", () => {
       );
 
       const { container, getByTestId } = renderArticleList();
-      expect(getByTestId("loading")).toHaveAttribute("role", "progressbar");
-
       const resolvedData = await waitFor(() => getByTestId("resolved"));
 
       expect(container).toMatchSnapshot();
-      expect(getByTestId("article-list-title")).toHaveTextContent("Articles");
       expect(axios.get).toHaveBeenCalledWith("/api/v1/articles");
       expect(resolvedData).toBeInTheDocument();
       expect(resolvedData).not.toBeEmptyDOMElement();

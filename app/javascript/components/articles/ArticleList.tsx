@@ -1,21 +1,42 @@
-import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  createStyles,
+  Grid,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Article, ConsumerProps } from "../../common/types";
 import ArticleHighlight from "./ArticleHighlight";
+import Fade from "@material-ui/core/Fade";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    grid: { margin: 0, width: "100%" },
+  })
+);
 
 const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   const [articles, setArticles] = useState<Article[]>();
+  const classes = useStyles();
 
   useEffect(() => {
+    let mounted: boolean = true;
     const fetchAllArticles = async () => {
       const articleData = await consumer.getAllArticles();
-      setArticles(articleData);
+      if (mounted) {
+        setArticles(articleData);
+      }
     };
     fetchAllArticles();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (articles === undefined) {
-    return <CircularProgress data-testid="loading" />;
+    return null;
   }
 
   const articlesList = articles.map((article: Article) => {
@@ -34,23 +55,15 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
 
   return (
     <React.Fragment>
-      <Box display="flex" justifyContent="center" m={1} p={1} margin={0}>
-        <Typography
-          variant="h2"
-          gutterBottom
-          style={{ marginTop: 5 }}
-          data-testid="article-list-title"
-        >
-          Articles
-        </Typography>
-      </Box>
-      <Grid container spacing={10} data-testid="resolved">
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            {articlesList}
+      <Fade in={true}>
+        <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
+          <Grid item xs={12}>
+            <Grid container justify="center" className={classes.grid}>
+              {articlesList}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Fade>
     </React.Fragment>
   );
 };

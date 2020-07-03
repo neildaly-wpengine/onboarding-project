@@ -15,6 +15,7 @@ export type Article = {
 
 export type User = {
     id: string;
+    email?: string;
     firstName: string;
     lastName: string;
     initialsImageLink?: string;
@@ -28,4 +29,46 @@ interface MatchParams {
     id: string;
 }
 
-export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { } 
+export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
+
+export type RegistrationUser = {
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+    passwordConfirmation: string
+}
+
+export type RegistrationBody = {
+    user: RegistrationUser
+}
+
+export type Registration = {
+    data: {
+        status: string,
+        user: User
+    }
+}
+
+export type NavbarProps = {
+    authenticated: boolean,
+    notifyLogout(): void
+    consumer: APIConsumer
+}
+
+export type LogoutResponse = {
+    data: {
+        status: number,
+        loggedOut: boolean
+    }
+}
+
+export type AuthStore = {
+    authenticated: boolean,
+    user: User
+}
+
+export type AuthProps = {
+    consumer: APIConsumer,
+    notifyLogin(authStore: AuthStore): void
+}
