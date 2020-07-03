@@ -8,6 +8,7 @@ import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
+import Login from "../auth/Login";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
@@ -41,6 +42,11 @@ const App: React.FC = () => {
       component: () => (
         <Registration consumer={consumer} notifyLogin={notifyLogin} />
       ),
+    },
+    {
+      path: "/login",
+      exact: true,
+      component: () => <Login consumer={consumer} notifyLogin={notifyLogin} />,
     },
   ];
 
