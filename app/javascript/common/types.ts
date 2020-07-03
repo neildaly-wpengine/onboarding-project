@@ -25,6 +25,10 @@ export type ConsumerProps = {
     consumer: APIConsumer;
 }
 
+export type NotifyAuthProps = {
+    toggleAuthentication(): void
+}
+
 interface MatchParams {
     id: string;
 }
