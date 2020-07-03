@@ -1,10 +1,11 @@
 import APIConsumer from "../../../common/api-consumer";
 import { Article, User } from "../../../common/types";
 
-const mockUser: User = {
+export const mockUser: User = {
     firstName: "Test",
     lastName: "User",
     id: "1",
+    email: 'test@test.com'
 };
 
 export const mockArticle: Article = {
