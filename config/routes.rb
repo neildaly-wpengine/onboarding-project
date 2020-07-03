@@ -18,4 +18,5 @@ Rails.application.routes.draw do
       end
     end
   end
+  match '*path', to: 'pages#index', via: :all
 end
