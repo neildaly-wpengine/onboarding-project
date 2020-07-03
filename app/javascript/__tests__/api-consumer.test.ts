@@ -63,4 +63,24 @@ describe('API Consumer', () => {
         expect(registrationResponse.user.initialsImageLink).toEqual(successfulRegistrationResponse.user.initials_image_link);
         expect(axios.post).toHaveBeenCalledTimes(1);
     });
+
+    test('a user can successfully logout', async () => {
+        const expectedResponse = {
+            data: {
+                "status": 200,
+                "loggedOut": true
+            }
+        };
+        (axios.delete as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve(expectedResponse),
+        );
+
+        const logoutResponse = await consumer.destroySession();
+
+        expect(axios.delete).toHaveBeenCalledWith('/api/v1/logout');
+
+        expect(logoutResponse.data.status).toEqual(expectedResponse.data.status);
+        expect(logoutResponse.data.loggedOut).toBe(expectedResponse.data.loggedOut);
+        expect(axios.delete).toHaveBeenCalledTimes(1);
+    });
 });
