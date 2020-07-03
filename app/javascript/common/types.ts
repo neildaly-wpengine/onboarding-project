@@ -62,8 +62,9 @@ export type LoginBody = {
 
 export type NavbarProps = {
     authenticated: boolean,
-    notifyLogout(): void
-    consumer: APIConsumer
+    notifyLogout(): void,
+    consumer: APIConsumer,
+    userInitials?: string
 }
 
 export type LogoutResponse = {

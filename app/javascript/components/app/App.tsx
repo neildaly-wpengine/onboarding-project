@@ -13,6 +13,9 @@ import Login from "../auth/Login";
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
   const auth: AuthStore = useSelector((state: any) => state.auth);
+  const userInitials: string = `${auth.user.firstName.charAt(
+    0
+  )}${auth.user.lastName.charAt(0)}`.toUpperCase();
   const dispatch = useDispatch();
 
   const notifyLogin = (authStore: AuthStore) => {
@@ -57,6 +60,7 @@ const App: React.FC = () => {
           authenticated={auth.authenticated}
           consumer={consumer}
           notifyLogout={notifyLogout}
+          userInitials={userInitials}
         />
         <Switch>
           {routes.map((route, index) => (
