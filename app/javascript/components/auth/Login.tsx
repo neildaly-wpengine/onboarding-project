@@ -11,8 +11,8 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import { Alert } from "@material-ui/lab";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthProps, LoginBody, LoginUser } from "../../common/types";
+import { Link, useHistory } from "react-router-dom";
+import { AuthProps, AuthStore, LoginBody, LoginUser } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -55,11 +55,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
+  const history = useHistory();
   const classes = useStyles();
   const [loginUser, setLoginUser] = useState<LoginUser>({
     email: "",
     password: "",
   });
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -67,11 +69,22 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
     const loginBody: LoginBody = {
       user: loginUser,
     };
-    const loginResponse = await consumer.loginUser(loginBody);
+    const response = await consumer.loginUser(loginBody);
 
-    if (loginResponse.data.status === 401) {
-      console.log("");
+    if (response.data.status === 401) {
+      setShowAlert(true);
+      return;
     }
+    notifyLogin({
+      authenticated: true,
+      user: {
+        id: response.data.user.id,
+        email: response.data.user.email,
+        firstName: response.data.user.firstName,
+        lastName: response.data.user.lastName,
+      },
+    } as AuthStore);
+    history.push("/");
   };
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
@@ -85,9 +98,11 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <div className={classes.paper}>
-          <Alert severity="error" className={classes.alert}>
-            Could not log in with those credentials!
-          </Alert>
+          {showAlert && (
+            <Alert severity="error" className={classes.alert}>
+              Could not log in with those credentials!
+            </Alert>
+          )}
           <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>
