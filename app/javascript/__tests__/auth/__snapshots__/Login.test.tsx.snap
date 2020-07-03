@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> Snapshots should render without crashing 1`] = `
+<div>
+  <h1>
+    Login
+  </h1>
+  ;
+</div>
+`;
