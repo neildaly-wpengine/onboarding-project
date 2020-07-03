@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install SQLite3
+      run: sudo apt-get install libsqlite3-dev
     - uses: actions/checkout@v2
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
