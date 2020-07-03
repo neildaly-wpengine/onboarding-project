@@ -10,28 +10,33 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Article } from "../../common/types";
 
-const useStyles = makeStyles({
-  root: {
-    borderRadius: 10,
-    maxWidth: 345,
-    margin: 20,
-    // display card actions on complete bottom
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  cardActions: {
-    // display card actions on complete bottom
-    marginTop: "auto",
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      borderRadius: 10,
+      maxWidth: 345,
+      margin: 20,
+      // display card actions on complete bottom
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    },
+    cardActions: {
+      // display card actions on complete bottom
+      marginTop: "auto",
+    },
+    avatar: {
+      backgroundColor: theme.palette.primary.main,
+    },
+  })
+);
 
 const ArticleHighlight: React.FC<Article> = ({
   title,
@@ -42,11 +47,18 @@ const ArticleHighlight: React.FC<Article> = ({
   stockImage,
 }) => {
   const classes = useStyles();
+  const userInitials: string = `${user.firstName.charAt(
+    0
+  )}${user.lastName.charAt(0)}`.toUpperCase();
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={<Avatar aria-label="user" src={user.initialsImageLink} />}
+        avatar={
+          <Avatar aria-label="user" className={classes.avatar}>
+            {userInitials}
+          </Avatar>
+        }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />

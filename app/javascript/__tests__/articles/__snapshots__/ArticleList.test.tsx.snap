@@ -25,12 +25,9 @@ exports[`<ArticleList /> Content renders correctly 1`] = `
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-4 MuiAvatar-colorDefault"
               >
-                <img
-                  class="MuiAvatar-img"
-                  src="https://eu.ui-avatars.com/api/?background=fff&color=000&name=Harry+Smith"
-                />
+                HS
               </div>
             </div>
             <div
