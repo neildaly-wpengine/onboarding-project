@@ -39,6 +39,7 @@ export type RegistrationUser = {
     passwordConfirmation: string
 }
 
+
 export type RegistrationBody = {
     user: RegistrationUser
 }
@@ -48,6 +49,15 @@ export type Registration = {
         status: string,
         user: User
     }
+}
+
+export type LoginUser = {
+    email: string,
+    password: string,
+}
+
+export type LoginBody = {
+    user: LoginUser
 }
 
 export type NavbarProps = {

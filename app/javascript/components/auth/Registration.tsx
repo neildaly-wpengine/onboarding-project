@@ -13,7 +13,6 @@ import { Link, useHistory } from "react-router-dom";
 import {
   AuthProps,
   AuthStore,
-  Registration,
   RegistrationBody,
   RegistrationUser,
 } from "../../common/types";

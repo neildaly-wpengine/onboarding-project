@@ -9,9 +9,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
-import React from "react";
+import { Alert } from "@material-ui/lab";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthProps } from "../../common/types";
+import { AuthProps, LoginBody, LoginUser } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -48,14 +49,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   link: {
     color: theme.palette.secondary.dark,
   },
+  alert: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
   const classes = useStyles();
+  const [loginUser, setLoginUser] = useState<LoginUser>({
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e: React.BaseSyntheticEvent): void => {
+  const handleSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    console.log(e);
+
+    const loginBody: LoginBody = {
+      user: loginUser,
+    };
+    const loginResponse = await consumer.loginUser(loginBody);
+
+    if (loginResponse.data.status === 401) {
+      console.log("");
+    }
+  };
+
+  const handleChange = (e: React.BaseSyntheticEvent): void => {
+    const { name, value } = e.target;
+    setLoginUser({ ...loginUser, [name]: value });
   };
 
   return (
@@ -64,6 +85,9 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <div className={classes.paper}>
+          <Alert severity="error" className={classes.alert}>
+            Could not log in with those credentials!
+          </Alert>
           <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>
@@ -82,6 +106,7 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
                   type="email"
                   label="Email Address"
                   name="email"
+                  onChange={handleChange}
                   autoComplete="email"
                 />
               </Grid>
@@ -95,6 +120,7 @@ const Login: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
                   type="password"
                   inputProps={{ "data-testid": "passwordInput" }}
                   id="password"
+                  onChange={handleChange}
                   autoComplete="current-password"
                 />
               </Grid>
