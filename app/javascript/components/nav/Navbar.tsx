@@ -52,6 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const handleLogout = async () => {
     const response = await consumer.destroySession();
+    setAnchorEl(null);
 
     if (response.data.loggedOut) {
       notifyLogout();
