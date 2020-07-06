@@ -13,10 +13,10 @@ import { Link, useHistory } from "react-router-dom";
 import {
   AuthProps,
   AuthStore,
-  Registration,
   RegistrationBody,
   RegistrationUser,
 } from "../../common/types";
+import CollapsibleAlert from "../alert/CollapsibleAlert";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Registration: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
   const [confirmPasswordHelper, setConfirmPasswordHelper] = useState("");
-  const [emailHelper, setEmailHelper] = useState("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const [registrationUser, setRegistrationUser] = useState<RegistrationUser>({
     email: "",
     firstName: "",
@@ -78,13 +78,17 @@ const Registration: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
     attemptUserRegistration();
   };
 
+  const closeAlert = (): void => {
+    setShowAlert(false);
+  };
+
   const attemptUserRegistration = async () => {
     const response = await consumer.registerNewUser({
       user: registrationUser,
     } as RegistrationBody);
 
     if (response.data.status !== "created") {
-      setEmailHelper(response.data.message.email[0]);
+      setShowAlert(true);
       return;
     }
     notifyLogin({
@@ -103,6 +107,12 @@ const Registration: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
+        <CollapsibleAlert
+          closeAlert={closeAlert}
+          severity="error"
+          showAlert={showAlert}
+          message="That email is already in use!"
+        />
         <Avatar className={classes.avatar}>
           <PersonIcon />
         </Avatar>
@@ -145,8 +155,7 @@ const Registration: React.FC<AuthProps> = ({ consumer, notifyLogin }) => {
                 required
                 onChange={handleChange}
                 fullWidth
-                helperText={emailHelper}
-                error={emailHelper !== ""}
+                error={showAlert}
                 id="email"
                 type="email"
                 label="Email Address"

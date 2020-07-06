@@ -8,10 +8,14 @@ import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
+import Login from "../auth/Login";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
   const auth: AuthStore = useSelector((state: any) => state.auth);
+  const userInitials: string = `${auth.user.firstName.charAt(
+    0
+  )}${auth.user.lastName.charAt(0)}`.toUpperCase();
   const dispatch = useDispatch();
 
   const notifyLogin = (authStore: AuthStore) => {
@@ -42,6 +46,11 @@ const App: React.FC = () => {
         <Registration consumer={consumer} notifyLogin={notifyLogin} />
       ),
     },
+    {
+      path: "/login",
+      exact: true,
+      component: () => <Login consumer={consumer} notifyLogin={notifyLogin} />,
+    },
   ];
 
   return (
@@ -51,6 +60,7 @@ const App: React.FC = () => {
           authenticated={auth.authenticated}
           consumer={consumer}
           notifyLogout={notifyLogout}
+          userInitials={userInitials}
         />
         <Switch>
           {routes.map((route, index) => (

@@ -1,13 +1,16 @@
 import {
   AppBar,
+  Avatar,
   Button,
   createStyles,
   makeStyles,
+  Menu,
+  MenuItem,
   Theme,
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { NavbarProps } from "../../common/types";
 
@@ -18,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     bar: {
       backgroundColor: theme.palette.primary.main,
+      minHeight: "5vh",
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -29,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none",
       color: "#fff",
     },
+    avatar: {
+      color: "#fff",
+      backgroundColor: theme.palette.secondary.main,
+    },
   })
 );
 
@@ -36,12 +44,15 @@ const Navbar: React.FC<NavbarProps> = ({
   authenticated,
   consumer,
   notifyLogout,
+  userInitials,
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleLogout = async () => {
     const response = await consumer.destroySession();
+    setAnchorEl(null);
 
     if (response.data.loggedOut) {
       notifyLogout();
@@ -49,13 +60,43 @@ const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const toolbarJSX: JSX.Element | null = authenticated ? (
-    <Button color="inherit" onClick={handleLogout}>
-      Logout
-    </Button>
+    <React.Fragment>
+      <Avatar className={classes.avatar} onClick={handleMenu}>
+        {userInitials}
+      </Avatar>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
+    </React.Fragment>
   ) : (
     <React.Fragment>
-      <Button color="inherit">Login</Button>
+      <Button color="inherit">
+        <Link to="/login" className={classes.link}>
+          Login
+        </Link>
+      </Button>
       <Button color="inherit">
         <Link to="/register" className={classes.link}>
           Register

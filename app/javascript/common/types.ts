@@ -39,6 +39,7 @@ export type RegistrationUser = {
     passwordConfirmation: string
 }
 
+
 export type RegistrationBody = {
     user: RegistrationUser
 }
@@ -50,10 +51,20 @@ export type Registration = {
     }
 }
 
+export type LoginUser = {
+    email: string,
+    password: string,
+}
+
+export type LoginBody = {
+    user: LoginUser
+}
+
 export type NavbarProps = {
     authenticated: boolean,
-    notifyLogout(): void
-    consumer: APIConsumer
+    notifyLogout(): void,
+    consumer: APIConsumer,
+    userInitials?: string
 }
 
 export type LogoutResponse = {
@@ -71,4 +82,11 @@ export type AuthStore = {
 export type AuthProps = {
     consumer: APIConsumer,
     notifyLogin(authStore: AuthStore): void
+}
+
+export type CollapsibleAlertProps = {
+    showAlert: boolean,
+    severity: "error" | "success" | "info" | "warning" | undefined,
+    closeAlert(): void,
+    message: string
 }
