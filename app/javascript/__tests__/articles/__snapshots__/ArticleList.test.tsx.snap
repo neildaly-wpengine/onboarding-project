@@ -11,10 +11,10 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
-        class="MuiGrid-root makeStyles-grid-6 MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root makeStyles-grid-7 MuiGrid-container MuiGrid-justify-xs-center"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-8 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-10 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <div
             class="MuiCardHeader-root"
@@ -25,7 +25,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-10 MuiAvatar-colorDefault"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-12 MuiAvatar-colorDefault"
               >
                 HS
               </div>
@@ -110,7 +110,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             />
           </button>
           <div
-            class="MuiCardActions-root makeStyles-cardActions-9 MuiCardActions-spacing"
+            class="MuiCardActions-root makeStyles-cardActions-11 MuiCardActions-spacing"
           >
             <button
               aria-label="add to favorites"
@@ -160,7 +160,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
   </div>
   <button
     aria-label="add"
-    class="MuiButtonBase-root MuiFab-root MuiFab-primary"
+    class="MuiButtonBase-root MuiFab-root makeStyles-fab-9 MuiFab-secondary"
     data-testid="create-fab"
     tabindex="0"
     type="button"
@@ -169,7 +169,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
       class="MuiFab-label"
     >
       <a
-        class="makeStyles-link-7"
+        class="makeStyles-link-8"
         href="/create"
       >
         <svg
@@ -205,7 +205,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
         class="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-justify-xs-center"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-3 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-4 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <div
             class="MuiCardHeader-root"
@@ -216,7 +216,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-5 MuiAvatar-colorDefault"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-6 MuiAvatar-colorDefault"
               >
                 HS
               </div>
@@ -301,7 +301,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
             />
           </button>
           <div
-            class="MuiCardActions-root makeStyles-cardActions-4 MuiCardActions-spacing"
+            class="MuiCardActions-root makeStyles-cardActions-5 MuiCardActions-spacing"
           >
             <button
               aria-label="add to favorites"

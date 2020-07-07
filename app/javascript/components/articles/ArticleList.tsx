@@ -12,6 +12,15 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       textDecoration: "none",
       color: "#fff",
+      lineHeight: 0,
+    },
+    fab: {
+      margin: 0,
+      top: "auto",
+      right: 20,
+      bottom: 20,
+      left: "auto",
+      position: "fixed",
     },
   })
 );
@@ -57,7 +66,12 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
   });
 
   const createArticleMarkup: JSX.Element = authStore.authenticated ? (
-    <Fab color="primary" aria-label="add" data-testid="create-fab">
+    <Fab
+      color="secondary"
+      aria-label="add"
+      data-testid="create-fab"
+      className={classes.fab}
+    >
       <Link to="/create" className={classes.link}>
         <AddIcon />
       </Link>
