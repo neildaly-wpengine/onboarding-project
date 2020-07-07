@@ -9,6 +9,7 @@ import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
 import Login from "../auth/Login";
+import ArticleCreator from "../articles/ArticleCreator";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
@@ -30,7 +31,7 @@ const App: React.FC = () => {
     {
       path: "/",
       exact: true,
-      component: () => <ArticleList consumer={consumer} />,
+      component: () => <ArticleList consumer={consumer} authStore={auth} />,
     },
     {
       path: "/articles/:id",
@@ -38,6 +39,11 @@ const App: React.FC = () => {
       component: (props: ArticleDetailMatchParams) => (
         <ArticleDetail {...props} consumer={consumer} />
       ),
+    },
+    {
+      path: "/create",
+      exact: true,
+      component: () => <ArticleCreator consumer={consumer} authStore={auth} />,
     },
     {
       path: "/register",

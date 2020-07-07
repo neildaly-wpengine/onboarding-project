@@ -90,3 +90,7 @@ export type CollapsibleAlertProps = {
     closeAlert(): void,
     message: string
 }
+
+export type AuthStoreProps = {
+    authStore: AuthStore;
+}

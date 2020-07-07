@@ -1,22 +1,25 @@
-import {
-  CircularProgress,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { Article, ConsumerProps } from "../../common/types";
-import ArticleHighlight from "./ArticleHighlight";
+import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
+import AddIcon from "@material-ui/icons/Add";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Article, AuthStoreProps, ConsumerProps } from "../../common/types";
+import ArticleHighlight from "./ArticleHighlight";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grid: { margin: 0, width: "100%" },
+    link: {
+      textDecoration: "none",
+      color: "#fff",
+    },
   })
 );
 
-const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
+const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
+  consumer,
+  authStore,
+}) => {
   const [articles, setArticles] = useState<Article[]>();
   const classes = useStyles();
 
@@ -53,6 +56,16 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
     );
   });
 
+  const createArticleMarkup: JSX.Element = authStore.authenticated ? (
+    <Fab color="primary" aria-label="add">
+      <Link to="/create" className={classes.link}>
+        <AddIcon />
+      </Link>
+    </Fab>
+  ) : (
+    <></>
+  );
+
   return (
     <React.Fragment>
       <Fade in={true}>
@@ -64,6 +77,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
           </Grid>
         </Grid>
       </Fade>
+      {createArticleMarkup}
     </React.Fragment>
   );
 };
