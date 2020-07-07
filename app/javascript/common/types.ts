@@ -94,7 +94,12 @@ export type AuthStoreProps = {
     authStore: AuthStore;
 }
 
-export type ArticleCreation = {
+export type ArticleCreationContent = {
     title: string,
-    content: string
+    content: string,
+    userId: number
+}
+
+export type CreateArticleBody = {
+    article: ArticleCreationContent
 }

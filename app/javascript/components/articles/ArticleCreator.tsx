@@ -12,11 +12,11 @@ import CreateIcon from "@material-ui/icons/Create";
 import React, { useState } from "react";
 import { Redirect } from "react-router";
 import {
+  ArticleCreationContent,
   AuthStoreProps,
   ConsumerProps,
-  ArticleCreation,
+  CreateArticleBody,
 } from "../../common/types";
-import { initialState } from "../../reducers";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -46,24 +46,39 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   consumer,
   authStore,
 }) => {
-  const [articleCreation, setArticleCreation] = useState<ArticleCreation>({
+  const classes = useStyles();
+  const [created, setCreated] = useState<boolean>(false);
+  const [articleBody, setArticleBody] = useState<ArticleCreationContent>({
     title: "",
     content: "",
+    userId: parseInt(authStore.user.id),
   });
-  if (!authStore.authenticated) {
-    return <Redirect to="/" />;
-  }
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
     const { name, value } = e.target;
-    setArticleCreation({ ...articleCreation, [name]: value });
+    setArticleBody({ ...articleBody, [name]: value });
   };
 
   const handleSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
+
+    const response = await consumer.createArticle({
+      article: articleBody,
+    } as CreateArticleBody);
+
+    setCreated(() => {
+      return Boolean(response.createdAt);
+    });
   };
 
-  const classes = useStyles();
+  if (created) {
+    return <Redirect to="/" />;
+  }
+
+  if (!authStore.authenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <Container component="main" maxWidth="sm">
       <div className={classes.paper}>
