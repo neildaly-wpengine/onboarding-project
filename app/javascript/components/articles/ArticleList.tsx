@@ -57,7 +57,7 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
   });
 
   const createArticleMarkup: JSX.Element = authStore.authenticated ? (
-    <Fab color="primary" aria-label="add">
+    <Fab color="primary" aria-label="add" data-testid="create-fab">
       <Link to="/create" className={classes.link}>
         <AddIcon />
       </Link>
