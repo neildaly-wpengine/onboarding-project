@@ -39,7 +39,6 @@ export type RegistrationUser = {
     passwordConfirmation: string
 }
 
-
 export type RegistrationBody = {
     user: RegistrationUser
 }
@@ -93,4 +92,9 @@ export type CollapsibleAlertProps = {
 
 export type AuthStoreProps = {
     authStore: AuthStore;
+}
+
+export type ArticleCreation = {
+    title: string,
+    content: string
 }

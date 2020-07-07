@@ -9,9 +9,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
-import React from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router";
-import { AuthStoreProps, ConsumerProps } from "../../common/types";
+import {
+  AuthStoreProps,
+  ConsumerProps,
+  ArticleCreation,
+} from "../../common/types";
+import { initialState } from "../../reducers";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -41,9 +46,23 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   consumer,
   authStore,
 }) => {
+  const [articleCreation, setArticleCreation] = useState<ArticleCreation>({
+    title: "",
+    content: "",
+  });
   if (!authStore.authenticated) {
     return <Redirect to="/" />;
   }
+
+  const handleChange = (e: React.BaseSyntheticEvent): void => {
+    const { name, value } = e.target;
+    setArticleCreation({ ...articleCreation, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+  };
+
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -54,7 +73,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
         <Typography component="h1" variant="h5">
           Create Article
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -65,6 +84,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
                 id="title"
                 label="Title"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,6 +96,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
                 label="Content"
                 multiline
                 name="content"
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
