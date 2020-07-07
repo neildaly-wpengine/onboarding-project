@@ -4,6 +4,8 @@ import {
   CircularProgress,
   makeStyles,
   Typography,
+  createStyles,
+  Theme,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import {
@@ -11,41 +13,46 @@ import {
   ArticleDetailMatchParams,
   ConsumerProps,
 } from "../../common/types";
+import { createUserInitials } from "../../common/common";
 
-const useStyles = makeStyles({
-  boxHeader: {
-    margin: 0,
-    height: 450,
-    padding: 0,
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  imageHeader: {
-    objectFit: "cover",
-    minWidth: "100%",
-    minHeight: "100%",
-    flexShrink: 0,
-  },
-  mainArea: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  mainHeader: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    textAlign: "center",
-    marginTop: 15,
-  },
-  avatar: {
-    alignSelf: "center",
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    boxHeader: {
+      margin: 0,
+      height: 450,
+      padding: 0,
+      overflow: "hidden",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    imageHeader: {
+      objectFit: "cover",
+      minWidth: "100%",
+      minHeight: "100%",
+      flexShrink: 0,
+    },
+    mainArea: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#fff",
+    },
+    mainHeader: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      textAlign: "center",
+      marginTop: 15,
+    },
+    avatar: {
+      alignSelf: "center",
+      backgroundColor: theme.palette.primary.main,
+      marginBottom: theme.spacing(2),
+    },
+  })
+);
 
 const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
   match,
@@ -74,6 +81,8 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
     return <CircularProgress data-testid="loading" />;
   }
 
+  const userInitials: string = createUserInitials(article.user);
+
   article.stockImage = `https://picsum.photos/1920/450?image=${article.id}`;
 
   return (
@@ -94,11 +103,9 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
           <Typography variant="h4" gutterBottom>
             {`${article.user.firstName} ${article.user.lastName}`}
           </Typography>
-          <Avatar
-            aria-label="user"
-            src={article.user.initialsImageLink}
-            className={classes.avatar}
-          />
+          <Avatar aria-label="user" className={classes.avatar}>
+            {userInitials}
+          </Avatar>
           <Typography variant="subtitle1" gutterBottom>
             {article.createdAt}
           </Typography>
