@@ -1,12 +1,13 @@
 import EditIcon from "@material-ui/icons/Edit";
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import {
+  Article,
   ArticleCreationContent,
   ArticleDetailMatchParams,
   AuthStoreProps,
   ConsumerProps,
   CreateArticleBody,
-  Article,
 } from "../../common/types";
 import ArticleForm from "./ArticleForm";
 
@@ -49,13 +50,22 @@ const ArticleEditor: React.FC<
     } as CreateArticleBody);
 
     setEdited(() => {
-      return Boolean(response.createdAt);
+      return Boolean(response.updatedAt);
     });
   };
 
   if (article === undefined) {
     return null;
   }
+  if (!authStore.authenticated) {
+    return <Redirect to="/" />;
+  }
+
+  if (edited) {
+    console.log("edited");
+    return <Redirect to={{ pathname: "/", state: { updated: true } }} />;
+  }
+
   return (
     <ArticleForm
       handleChange={handleChange}

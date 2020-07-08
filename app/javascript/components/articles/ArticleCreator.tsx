@@ -1,4 +1,4 @@
-import CreateIcon from "@material-ui/icons/Create";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import React, { useState } from "react";
 import { Redirect } from "react-router";
 import {
@@ -49,7 +49,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
     <ArticleForm
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      icon={<CreateIcon />}
+      icon={<AddCircleIcon />}
       formTitle="Create Article"
       buttonText="Create"
     />
