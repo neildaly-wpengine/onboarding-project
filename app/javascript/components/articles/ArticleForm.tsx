@@ -40,6 +40,8 @@ interface ArticleEditorProps {
   icon: JSX.Element;
   formTitle: string;
   buttonText: string;
+  titlePlaceholder?: string;
+  contentPlaceholder?: string;
 }
 
 const ArticleForm: React.FC<ArticleEditorProps> = ({
@@ -48,6 +50,8 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
   icon,
   formTitle,
   buttonText,
+  titlePlaceholder,
+  contentPlaceholder,
 }) => {
   const classes = useStyles();
   return (
@@ -67,6 +71,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
                 required
                 fullWidth
                 id="title"
+                value={titlePlaceholder}
                 label="Title"
                 autoFocus
                 onChange={handleChange}
@@ -81,6 +86,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
                 id="content"
                 label="Content"
                 multiline
+                value={contentPlaceholder}
                 name="content"
                 onChange={handleChange}
               />

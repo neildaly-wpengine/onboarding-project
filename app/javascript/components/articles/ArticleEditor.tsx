@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import EditIcon from "@material-ui/icons/Edit";
+import React, { useEffect, useState } from "react";
 import {
+  ArticleCreationContent,
+  ArticleDetailMatchParams,
   AuthStoreProps,
   ConsumerProps,
   CreateArticleBody,
-  ArticleCreationContent,
+  Article,
 } from "../../common/types";
 import ArticleForm from "./ArticleForm";
-import EditIcon from "@material-ui/icons/Edit";
 
-const ArticleEditor: React.FC<ConsumerProps & AuthStoreProps> = ({
-  consumer,
-  authStore,
-}) => {
+const ArticleEditor: React.FC<
+  ConsumerProps & AuthStoreProps & ArticleDetailMatchParams
+> = ({ consumer, authStore, match }) => {
   const [edited, setEdited] = useState<boolean>(false);
+  const [article, setArticle] = useState<Article>();
   const [articleBody, setArticleBody] = useState<ArticleCreationContent>({
     title: "",
     content: "",
     userId: parseInt(authStore.user.id),
   });
+  useEffect(() => {
+    let mounted: boolean = true;
+    const fetchSpecificArticle = async () => {
+      const articleID: string = match.params.id;
+      const articleData = await consumer.getSpecificArticle(articleID);
+      if (mounted) {
+        setArticle(articleData);
+      }
+    };
+    fetchSpecificArticle();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
     const { name, value } = e.target;
@@ -35,6 +52,10 @@ const ArticleEditor: React.FC<ConsumerProps & AuthStoreProps> = ({
       return Boolean(response.createdAt);
     });
   };
+
+  if (article === undefined) {
+    return null;
+  }
   return (
     <ArticleForm
       handleChange={handleChange}
@@ -42,6 +63,8 @@ const ArticleEditor: React.FC<ConsumerProps & AuthStoreProps> = ({
       icon={<EditIcon />}
       formTitle="Edit Article"
       buttonText="Edit"
+      titlePlaceholder={article.title}
+      contentPlaceholder={article.content}
     />
   );
 };
