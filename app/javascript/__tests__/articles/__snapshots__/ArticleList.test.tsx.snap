@@ -32,9 +32,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
           </div>
           <div
             class="MuiAlert-message"
-          >
-            Article successfully created!
-          </div>
+          />
           <div
             class="MuiAlert-action"
           >
@@ -288,9 +286,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
           </div>
           <div
             class="MuiAlert-message"
-          >
-            Article successfully created!
-          </div>
+          />
           <div
             class="MuiAlert-action"
           >
