@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       backgroundColor: theme.palette.primary.main,
     },
+    link: {
+      textDecoration: "none",
+      color: "#000",
+    },
   })
 );
 
@@ -92,7 +96,11 @@ const ArticleHighlight: React.FC<Article> = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>Edit</MenuItem>
+        <MenuItem>
+          <Link to={`/articles/edit/${id}`} className={classes.link}>
+            Edit
+          </Link>
+        </MenuItem>
       </Menu>
       <CardActionArea>
         <CardMedia
