@@ -1,9 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  RouteComponentProps,
+} from "react-router-dom";
 import { logout, setAuthDetails } from "../../actions";
 import APIConsumer from "../../common/api-consumer";
-import { ArticleDetailMatchParams, AuthStore } from "../../common/types";
+import { ArticleDetailMatchParams, AuthStore, ArticleListLocationState } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
@@ -30,7 +35,9 @@ const App: React.FC = () => {
     {
       path: "/",
       exact: true,
-      component: () => <ArticleList consumer={consumer} authStore={auth} />,
+      component: (props: ArticleListLocationState) => (
+        <ArticleList consumer={consumer} authStore={auth} {...props} />
+      ),
     },
     {
       path: "/articles/:id",

@@ -2,8 +2,14 @@ import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Article, AuthStoreProps, ConsumerProps } from "../../common/types";
+import { Link, useHistory } from "react-router-dom";
+import {
+  Article,
+  ArticleListLocationState,
+  AuthStoreProps,
+  ConsumerProps,
+} from "../../common/types";
+import CollapsibleAlert from "../alert/CollapsibleAlert";
 import ArticleHighlight from "./ArticleHighlight";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -25,12 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
-  consumer,
-  authStore,
-}) => {
+const ArticleList: React.FC<
+  ConsumerProps & AuthStoreProps & ArticleListLocationState
+> = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const classes = useStyles();
+  const history = useHistory();
 
   useEffect(() => {
     let mounted: boolean = true;
@@ -42,6 +49,19 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
     };
     fetchAllArticles();
 
+    // Handle article creation flash
+    const handleAlertFlash = (): void => {
+      if (mounted) {
+        if (location.state !== undefined && location.state.created) {
+          setShowAlert(true);
+          const state = location.state;
+          delete state.created;
+          history.replace({ ...history.location, state });
+        }
+      }
+    };
+    handleAlertFlash();
+
     return () => {
       mounted = false;
     };
@@ -50,6 +70,10 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
   if (articles === undefined) {
     return null;
   }
+
+  const closeAlert = (): void => {
+    setShowAlert(false);
+  };
 
   const articlesList = articles.map((article: Article) => {
     return (
@@ -67,7 +91,7 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
 
   const createArticleMarkup: JSX.Element = authStore.authenticated ? (
     <Fab
-      color="primary"
+      color="secondary"
       aria-label="add"
       data-testid="create-fab"
       className={classes.fab}
@@ -82,6 +106,12 @@ const ArticleList: React.FC<ConsumerProps & AuthStoreProps> = ({
 
   return (
     <React.Fragment>
+      <CollapsibleAlert
+        message="Article successfully created!"
+        severity="success"
+        showAlert={showAlert}
+        closeAlert={closeAlert}
+      />
       <Fade in={true}>
         <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
           <Grid item xs={12}>

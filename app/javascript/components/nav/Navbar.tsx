@@ -3,6 +3,7 @@ import {
   Avatar,
   Button,
   createStyles,
+  IconButton,
   makeStyles,
   Menu,
   MenuItem,
@@ -70,9 +71,11 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const toolbarJSX: JSX.Element | null = authenticated ? (
     <React.Fragment>
-      <Avatar className={classes.avatar} onClick={handleMenu}>
-        {userInitials}
-      </Avatar>
+      <IconButton>
+        <Avatar className={classes.avatar} onClick={handleMenu}>
+          {userInitials}
+        </Avatar>
+      </IconButton>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}

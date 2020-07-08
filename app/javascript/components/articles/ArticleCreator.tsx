@@ -72,7 +72,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   };
 
   if (created) {
-    return <Redirect to="/" />;
+    return <Redirect to={{ pathname: "/", state: { created: true } }} />;
   }
 
   if (!authStore.authenticated) {
