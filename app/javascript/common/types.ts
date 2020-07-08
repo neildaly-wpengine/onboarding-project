@@ -32,7 +32,7 @@ interface MatchParams {
 export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
 
 export interface ArticleListLocationState extends RouteComponentProps
-    <{}, any, { created: boolean }> {
+    <{}, any, { message: string }> {
 } { }
 
 export type RegistrationUser = {

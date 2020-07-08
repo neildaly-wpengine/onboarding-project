@@ -38,7 +38,14 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   };
 
   if (created) {
-    return <Redirect to={{ pathname: "/", state: { created: true } }} />;
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+          state: { message: "Article has been successfully created!" },
+        }}
+      />
+    );
   }
 
   if (!authStore.authenticated) {

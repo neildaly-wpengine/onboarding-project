@@ -79,9 +79,9 @@ class APIConsumer {
         }
     }
 
-    async editArticle(articleBody: CreateArticleBody): Promise<Article> {
+    async editArticle(articleBody: CreateArticleBody, articleID: string): Promise<Article> {
         try {
-            const response: AxiosResponse = await axios.patch('/api/v1/articles',
+            const response: AxiosResponse = await axios.patch(`/api/v1/articles/${articleID}`,
                 humps.decamelizeKeys(articleBody),
                 { withCredentials: true });
             const articleData: Article = await this.deserializeResponse(response);

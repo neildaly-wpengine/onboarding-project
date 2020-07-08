@@ -21,6 +21,7 @@ const ArticleEditor: React.FC<
     content: "",
     userId: parseInt(authStore.user.id),
   });
+
   useEffect(() => {
     let mounted: boolean = true;
     const fetchSpecificArticle = async () => {
@@ -37,6 +38,10 @@ const ArticleEditor: React.FC<
     };
   }, []);
 
+  if (article === undefined) {
+    return null;
+  }
+
   const handleChange = (e: React.BaseSyntheticEvent): void => {
     const { name, value } = e.target;
     setArticleBody({ ...articleBody, [name]: value });
@@ -45,26 +50,45 @@ const ArticleEditor: React.FC<
   const handleSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const response = await consumer.editArticle({
-      article: articleBody,
-    } as CreateArticleBody);
+    if (articleBody.title === "") {
+      articleBody.title = article.title;
+    } else if (articleBody.content === "") {
+      articleBody.content = article.content;
+    }
+
+    const response = await consumer.editArticle(
+      {
+        article: articleBody,
+      } as CreateArticleBody,
+      article!.id
+    );
 
     setEdited(() => {
       return Boolean(response.updatedAt);
     });
   };
 
-  if (article === undefined) {
-    return null;
-  }
   if (!authStore.authenticated) {
     return <Redirect to="/" />;
   }
 
   if (edited) {
-    console.log("edited");
-    return <Redirect to={{ pathname: "/", state: { updated: true } }} />;
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+          state: { message: "Article has been successfully edited!" },
+        }}
+      />
+    );
   }
+
+  const checkDisabled = (): boolean => {
+    if (articleBody.title === "" && articleBody.content === "") {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <ArticleForm
@@ -75,6 +99,7 @@ const ArticleEditor: React.FC<
       buttonText="Edit"
       titlePlaceholder={article.title}
       contentPlaceholder={article.content}
+      disabled={checkDisabled()}
     />
   );
 };

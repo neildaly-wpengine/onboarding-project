@@ -42,6 +42,7 @@ interface ArticleEditorProps {
   buttonText: string;
   titlePlaceholder?: string;
   contentPlaceholder?: string;
+  disabled?: boolean;
 }
 
 const ArticleForm: React.FC<ArticleEditorProps> = ({
@@ -51,6 +52,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
   formTitle,
   buttonText,
   titlePlaceholder,
+  disabled,
   contentPlaceholder,
 }) => {
   const classes = useStyles();
@@ -71,7 +73,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
                 required
                 fullWidth
                 id="title"
-                value={titlePlaceholder}
+                defaultValue={titlePlaceholder}
                 label="Title"
                 autoFocus
                 onChange={handleChange}
@@ -86,7 +88,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
                 id="content"
                 label="Content"
                 multiline
-                value={contentPlaceholder}
+                defaultValue={contentPlaceholder}
                 name="content"
                 onChange={handleChange}
               />
@@ -99,6 +101,7 @@ const ArticleForm: React.FC<ArticleEditorProps> = ({
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={disabled}
           >
             {buttonText}
           </Button>

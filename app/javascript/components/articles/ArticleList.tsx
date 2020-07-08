@@ -35,7 +35,7 @@ const ArticleList: React.FC<
   ConsumerProps & AuthStoreProps & ArticleListLocationState
 > = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
-  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
   const classes = useStyles();
   const history = useHistory();
 
@@ -52,10 +52,10 @@ const ArticleList: React.FC<
     // Handle article creation flash
     const handleAlertFlash = (): void => {
       if (mounted) {
-        if (location.state !== undefined && location.state.created) {
-          setShowAlert(true);
+        if (location.state !== undefined && location.state.message) {
+          setAlertMessage(location.state.message);
           const state = location.state;
-          delete state.created;
+          delete state.message;
           history.replace({ ...history.location, state });
         }
       }
@@ -72,7 +72,7 @@ const ArticleList: React.FC<
   }
 
   const closeAlert = (): void => {
-    setShowAlert(false);
+    setAlertMessage("");
   };
 
   const articlesList = articles.map((article: Article) => {
@@ -107,9 +107,9 @@ const ArticleList: React.FC<
   return (
     <React.Fragment>
       <CollapsibleAlert
-        message="Article successfully created!"
+        message={alertMessage}
         severity="success"
-        showAlert={showAlert}
+        showAlert={alertMessage !== ""}
         closeAlert={closeAlert}
       />
       <Fade in={true}>
