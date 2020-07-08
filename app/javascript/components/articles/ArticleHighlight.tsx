@@ -8,15 +8,17 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
+  Menu,
+  MenuItem,
   Typography,
 } from "@material-ui/core";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Article } from "../../common/types";
 import { createUserInitials } from "../../common/common";
+import { Article } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,6 +51,15 @@ const ArticleHighlight: React.FC<Article> = ({
 }) => {
   const classes = useStyles();
   const userInitials: string = createUserInitials(user);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const toggleCardHeaderMenu = (e: React.BaseSyntheticEvent): void => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Card className={classes.root}>
@@ -59,7 +70,7 @@ const ArticleHighlight: React.FC<Article> = ({
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
             <MoreVertIcon />
           </IconButton>
         }
@@ -67,6 +78,22 @@ const ArticleHighlight: React.FC<Article> = ({
         subheader={createdAt}
         data-testid="article-card-header"
       />
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem>Edit</MenuItem>
+      </Menu>
       <CardActionArea>
         <CardMedia
           component="img"
