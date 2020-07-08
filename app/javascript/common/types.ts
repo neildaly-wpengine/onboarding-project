@@ -33,7 +33,6 @@ export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParam
 
 export interface ArticleListLocationState extends RouteComponentProps
     <{}, any, { created: boolean }> {
-    myNormalProp: boolean;
 } { }
 
 export type RegistrationUser = {

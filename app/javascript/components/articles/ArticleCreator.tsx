@@ -94,6 +94,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
               <TextField
                 name="title"
                 variant="outlined"
+                inputProps={{ "data-testid": "titleInput" }}
                 required
                 fullWidth
                 id="title"
@@ -107,6 +108,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
                 variant="outlined"
                 required
                 fullWidth
+                inputProps={{ "data-testid": "contentInput" }}
                 id="content"
                 label="Content"
                 multiline

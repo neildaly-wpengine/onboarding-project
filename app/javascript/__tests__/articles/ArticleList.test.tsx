@@ -4,13 +4,23 @@ import { cleanup, render, RenderResult, waitFor } from "@testing-library/react";
 import axios from "axios";
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthStore } from "../../common/types";
+import { ArticleListLocationState, AuthStore } from "../../common/types";
 import ArticleList from "../../components/articles/ArticleList";
 import {
   consumer,
   jsonAPIAllArticleResponseData,
   mockUser,
 } from "./__helpers__/test-data";
+
+const createRouteComponentProps = (): ArticleListLocationState => {
+  const props: ArticleListLocationState = {
+    history: {} as any,
+    location: {} as any,
+    match: {} as any,
+  };
+
+  return props;
+};
 
 const renderArticleList = (authenticated = false): RenderResult => {
   const mockAuthStore: AuthStore = {
@@ -19,7 +29,11 @@ const renderArticleList = (authenticated = false): RenderResult => {
   };
   return render(
     <Router>
-      <ArticleList consumer={consumer} authStore={mockAuthStore} />
+      <ArticleList
+        consumer={consumer}
+        authStore={mockAuthStore}
+        {...createRouteComponentProps()}
+      />
     </Router>
   );
 };
