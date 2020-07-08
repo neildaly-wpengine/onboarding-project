@@ -4,8 +4,15 @@ import axios from "axios";
 import humps from "humps";
 import { consumer, jsonAPIAllArticleResponseData, jsonAPISpecificArticleResponseData } from "./articles/__helpers__/test-data";
 import { registrationBody, successfulRegistrationResponse } from "./auth/__helpers__/test-data";
+import { CreateArticleBody } from "../common/types";
+import { cleanup } from "@testing-library/react";
 
 jest.mock("axios");
+
+afterEach(() => {
+    cleanup;
+    jest.clearAllMocks();
+})
 
 describe('API Consumer', () => {
 
@@ -82,5 +89,27 @@ describe('API Consumer', () => {
         expect(logoutResponse.data.status).toEqual(expectedResponse.data.status);
         expect(logoutResponse.data.loggedOut).toBe(expectedResponse.data.loggedOut);
         expect(axios.delete).toHaveBeenCalledTimes(1);
+    });
+
+    test('articles are successfully created', async () => {
+        const expectedResponse = {
+            data: jsonAPISpecificArticleResponseData,
+        };
+
+        (axios.post as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve(expectedResponse),
+        );
+
+        const body: CreateArticleBody = {
+            article: {
+                title: jsonAPISpecificArticleResponseData.data.attributes.title,
+                content: jsonAPISpecificArticleResponseData.data.attributes.content,
+                userId: parseInt(jsonAPISpecificArticleResponseData.included[0].id)
+            }
+        };
+        const specificArticle = await consumer.createArticle(body);
+
+        expect(axios.post).toHaveBeenCalledTimes(1);
+        expect(specificArticle.title).toEqual(body.article.title)
     });
 });

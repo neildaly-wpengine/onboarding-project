@@ -31,6 +31,10 @@ interface MatchParams {
 
 export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
 
+export interface ArticleListLocationState extends RouteComponentProps
+    <{}, any, { created: boolean }> {
+} { }
+
 export type RegistrationUser = {
     email: string,
     firstName: string,
@@ -38,7 +42,6 @@ export type RegistrationUser = {
     password: string,
     passwordConfirmation: string
 }
-
 
 export type RegistrationBody = {
     user: RegistrationUser
@@ -89,4 +92,18 @@ export type CollapsibleAlertProps = {
     severity: "error" | "success" | "info" | "warning" | undefined,
     closeAlert(): void,
     message: string
+}
+
+export type AuthStoreProps = {
+    authStore: AuthStore;
+}
+
+export type ArticleCreationContent = {
+    title: string,
+    content: string,
+    userId: number
+}
+
+export type CreateArticleBody = {
+    article: ArticleCreationContent
 }

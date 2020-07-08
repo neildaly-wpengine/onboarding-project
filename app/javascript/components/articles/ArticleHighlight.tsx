@@ -16,6 +16,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Article } from "../../common/types";
+import { createUserInitials } from "../../common/common";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,9 +48,7 @@ const ArticleHighlight: React.FC<Article> = ({
   stockImage,
 }) => {
   const classes = useStyles();
-  const userInitials: string = `${user.firstName.charAt(
-    0
-  )}${user.lastName.charAt(0)}`.toUpperCase();
+  const userInitials: string = createUserInitials(user);
 
   return (
     <Card className={classes.root}>

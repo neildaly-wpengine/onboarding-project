@@ -1,21 +1,26 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  RouteComponentProps,
+} from "react-router-dom";
 import { logout, setAuthDetails } from "../../actions";
 import APIConsumer from "../../common/api-consumer";
-import { ArticleDetailMatchParams, AuthStore } from "../../common/types";
+import { ArticleDetailMatchParams, AuthStore, ArticleListLocationState } from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
 import Login from "../auth/Login";
+import ArticleCreator from "../articles/ArticleCreator";
+import { createUserInitials } from "../../common/common";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
   const auth: AuthStore = useSelector((state: any) => state.auth);
-  const userInitials: string = `${auth.user.firstName.charAt(
-    0
-  )}${auth.user.lastName.charAt(0)}`.toUpperCase();
+  const userInitials: string = createUserInitials(auth.user);
   const dispatch = useDispatch();
 
   const notifyLogin = (authStore: AuthStore) => {
@@ -30,7 +35,9 @@ const App: React.FC = () => {
     {
       path: "/",
       exact: true,
-      component: () => <ArticleList consumer={consumer} />,
+      component: (props: ArticleListLocationState) => (
+        <ArticleList consumer={consumer} authStore={auth} {...props} />
+      ),
     },
     {
       path: "/articles/:id",
@@ -38,6 +45,11 @@ const App: React.FC = () => {
       component: (props: ArticleDetailMatchParams) => (
         <ArticleDetail {...props} consumer={consumer} />
       ),
+    },
+    {
+      path: "/create",
+      exact: true,
+      component: () => <ArticleCreator consumer={consumer} authStore={auth} />,
     },
     {
       path: "/register",

@@ -1,6 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { Article, RegistrationBody, LogoutResponse, LoginBody, Registration } from "./types";
 import humps from 'humps';
+import {
+    Article,
+    CreateArticleBody,
+    LoginBody,
+    LogoutResponse,
+    Registration,
+    RegistrationBody
+} from "./types";
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 class APIConsumer {
@@ -54,6 +61,19 @@ class APIConsumer {
                 { withCredentials: true });
 
             return humps.camelizeKeys(response);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async createArticle(articleBody: CreateArticleBody): Promise<Article> {
+        try {
+            const response: AxiosResponse = await axios.post('/api/v1/articles',
+                humps.decamelizeKeys(articleBody),
+                { withCredentials: true });
+            const articleData: Article = await this.deserializeResponse(response);
+
+            return articleData;
         } catch (e) {
             throw e;
         }

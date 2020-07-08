@@ -1,24 +1,43 @@
-import {
-  CircularProgress,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { Article, ConsumerProps } from "../../common/types";
-import ArticleHighlight from "./ArticleHighlight";
+import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
+import AddIcon from "@material-ui/icons/Add";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import {
+  Article,
+  ArticleListLocationState,
+  AuthStoreProps,
+  ConsumerProps,
+} from "../../common/types";
+import CollapsibleAlert from "../alert/CollapsibleAlert";
+import ArticleHighlight from "./ArticleHighlight";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grid: { margin: 0, width: "100%" },
+    link: {
+      textDecoration: "none",
+      color: "#fff",
+      lineHeight: 0,
+    },
+    fab: {
+      margin: 0,
+      top: "auto",
+      right: 20,
+      bottom: 20,
+      left: "auto",
+      position: "fixed",
+    },
   })
 );
 
-const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
+const ArticleList: React.FC<
+  ConsumerProps & AuthStoreProps & ArticleListLocationState
+> = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const classes = useStyles();
+  const history = useHistory();
 
   useEffect(() => {
     let mounted: boolean = true;
@@ -30,6 +49,19 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
     };
     fetchAllArticles();
 
+    // Handle article creation flash
+    const handleAlertFlash = (): void => {
+      if (mounted) {
+        if (location.state !== undefined && location.state.created) {
+          setShowAlert(true);
+          const state = location.state;
+          delete state.created;
+          history.replace({ ...history.location, state });
+        }
+      }
+    };
+    handleAlertFlash();
+
     return () => {
       mounted = false;
     };
@@ -38,6 +70,10 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
   if (articles === undefined) {
     return null;
   }
+
+  const closeAlert = (): void => {
+    setShowAlert(false);
+  };
 
   const articlesList = articles.map((article: Article) => {
     return (
@@ -53,8 +89,29 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
     );
   });
 
+  const createArticleMarkup: JSX.Element = authStore.authenticated ? (
+    <Fab
+      color="secondary"
+      aria-label="add"
+      data-testid="create-fab"
+      className={classes.fab}
+    >
+      <Link to="/create" className={classes.link}>
+        <AddIcon />
+      </Link>
+    </Fab>
+  ) : (
+    <></>
+  );
+
   return (
     <React.Fragment>
+      <CollapsibleAlert
+        message="Article successfully created!"
+        severity="success"
+        showAlert={showAlert}
+        closeAlert={closeAlert}
+      />
       <Fade in={true}>
         <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
           <Grid item xs={12}>
@@ -64,6 +121,7 @@ const ArticleList: React.FC<ConsumerProps> = ({ consumer }) => {
           </Grid>
         </Grid>
       </Fade>
+      {createArticleMarkup}
     </React.Fragment>
   );
 };

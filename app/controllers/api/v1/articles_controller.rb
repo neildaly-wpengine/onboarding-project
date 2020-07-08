@@ -29,7 +29,7 @@ module Api
 
         # the logged in user cannot create an article on behalf of somebody else
         unless article.user_id == @current_user.id
-          return render json: { error: 'You cannot create an article for somebody else.' }
+          return render json: { error: 'You cannot create an article for somebody else.' }, status: 401
         end
 
         if article.save
