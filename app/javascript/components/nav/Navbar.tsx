@@ -71,10 +71,8 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const toolbarJSX: JSX.Element | null = authenticated ? (
     <React.Fragment>
-      <IconButton>
-        <Avatar className={classes.avatar} onClick={handleMenu}>
-          {userInitials}
-        </Avatar>
+      <IconButton onClick={handleMenu}>
+        <Avatar className={classes.avatar}>{userInitials}</Avatar>
       </IconButton>
       <Menu
         id="menu-appbar"
