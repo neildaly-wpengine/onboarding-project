@@ -4,7 +4,7 @@ import axios from "axios";
 import humps from "humps";
 import { consumer, jsonAPIAllArticleResponseData, jsonAPISpecificArticleResponseData } from "./articles/__helpers__/test-data";
 import { registrationBody, successfulRegistrationResponse } from "./auth/__helpers__/test-data";
-import { CreateArticleBody } from "../common/types";
+import { CreateArticleBody, DeleteResponse } from "../common/types";
 import { cleanup } from "@testing-library/react";
 
 jest.mock("axios");
@@ -111,5 +111,26 @@ describe('API Consumer', () => {
 
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(specificArticle.title).toEqual(body.article.title)
+    });
+
+    test('articles are successfully deleted', async () => {
+        const expectedResponse = {
+            data: {
+                id: '1',
+                discardedAt: 'Tue, 07 Jul 2020 12:39:00 UTC +00:00'
+            },
+        };
+
+        (axios.delete as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve(expectedResponse),
+        );
+
+        const response: DeleteResponse = await consumer.deleteArticle(expectedResponse.data.id);
+
+        expect(axios.delete).toHaveBeenCalledTimes(1);
+        expect(axios.delete).toHaveBeenCalledWith(`/api/v1/articles/${expectedResponse.data.id}`,
+            { "withCredentials": true })
+        expect(response.data.id).toEqual(expectedResponse.data.id);
+        expect(response.data.discardedAt).toEqual(expectedResponse.data.discardedAt);
     });
 });
