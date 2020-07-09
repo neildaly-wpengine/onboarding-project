@@ -17,6 +17,7 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   const [articleBody, setArticleBody] = useState<ArticleContent>({
     title: "",
     content: "",
+    userId: authStore.user.id,
   });
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {

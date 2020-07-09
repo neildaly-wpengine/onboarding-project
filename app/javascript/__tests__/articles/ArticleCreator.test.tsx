@@ -95,6 +95,7 @@ describe("<ArticleCreator />", () => {
           article: {
             title: response.data.attributes.title,
             content: response.data.attributes.content,
+            userId: response.included[0].id,
           },
         }),
         { withCredentials: true }

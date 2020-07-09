@@ -85,6 +85,8 @@ const ArticleList: React.FC<
         user={article.user}
         createdAt={article.createdAt}
         id={article.id}
+        authenticated={authStore.authenticated}
+        currentUserID={authStore.user.id}
       />
     );
   });

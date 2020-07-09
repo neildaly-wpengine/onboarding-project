@@ -18,7 +18,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createUserInitials } from "../../common/common";
-import { Article } from "../../common/types";
+import { Article, AuthenticatedProps } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,17 +45,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ArticleHighlight: React.FC<Article> = ({
+const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
   title,
   content,
   user,
   createdAt,
   id,
   stockImage,
+  authenticated,
+  currentUserID,
 }) => {
   const classes = useStyles();
   const userInitials: string = createUserInitials(user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const articleOwner: boolean = currentUserID.toString() === user.id;
 
   const toggleCardHeaderMenu = (e: React.BaseSyntheticEvent): void => {
     setAnchorEl(e.currentTarget);
@@ -65,23 +68,8 @@ const ArticleHighlight: React.FC<Article> = ({
     setAnchorEl(null);
   };
 
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="user" className={classes.avatar}>
-            {userInitials}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={`${user.firstName} ${user.lastName}`}
-        subheader={createdAt}
-        data-testid="article-card-header"
-      />
+  const menu: JSX.Element =
+    authenticated && articleOwner ? (
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -102,6 +90,31 @@ const ArticleHighlight: React.FC<Article> = ({
           </Link>
         </MenuItem>
       </Menu>
+    ) : (
+      <React.Fragment />
+    );
+
+  return (
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="user" className={classes.avatar}>
+            {userInitials}
+          </Avatar>
+        }
+        action={
+          authenticated &&
+          articleOwner && (
+            <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
+              <MoreVertIcon />
+            </IconButton>
+          )
+        }
+        title={`${user.firstName} ${user.lastName}`}
+        subheader={createdAt}
+        data-testid="article-card-header"
+      />
+      {menu}
       <CardActionArea>
         <CardMedia
           component="img"

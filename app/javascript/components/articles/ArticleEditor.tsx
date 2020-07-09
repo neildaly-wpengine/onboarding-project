@@ -20,6 +20,7 @@ const ArticleEditor: React.FC<
   const [articleBody, setArticleBody] = useState<ArticleContent>({
     title: "",
     content: "",
+    userId: authStore.user.id,
   });
 
   useEffect(() => {

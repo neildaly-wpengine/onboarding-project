@@ -14,6 +14,11 @@ export type Article = {
     [key: string]: any
 }
 
+export type AuthenticatedProps = {
+    authenticated: boolean;
+    currentUserID: string
+}
+
 export type User = {
     id: string;
     email?: string;
@@ -102,6 +107,7 @@ export type AuthStoreProps = {
 export type ArticleContent = {
     title: string,
     content: string,
+    userId: string
     [key: string]: string
 }
 
