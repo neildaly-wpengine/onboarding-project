@@ -167,7 +167,7 @@ const ArticleList: React.FC<
   );
 
   const emptyArticlesMarkup: JSX.Element = (
-    <Alert severity="info">
+    <Alert severity="info" data-testid="no-articles-alert">
       There are no articles present, try creating some!
     </Alert>
   );
