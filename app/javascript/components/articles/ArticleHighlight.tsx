@@ -130,6 +130,7 @@ const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
         handleCancel={handleCancelDialog}
         handleOk={handleOkDialog}
         title="Delete Article"
+        message="Are you sure you wish to delete this article?"
       />
       <Card className={classes.root}>
         <CardHeader

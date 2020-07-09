@@ -13,6 +13,7 @@ interface ConfirmationDialogProps {
   handleCancel(): void;
   handleOk(): void;
   title: string;
+  message: string;
 }
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
@@ -20,6 +21,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   handleCancel,
   handleOk,
   title,
+  message,
 }) => {
   return (
     <Dialog
@@ -31,9 +33,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     >
       <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <Typography variant="body1">
-          Are you sure you wish to delete this article?
-        </Typography>
+        <Typography variant="body1">{message}</Typography>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleCancel} color="primary">
