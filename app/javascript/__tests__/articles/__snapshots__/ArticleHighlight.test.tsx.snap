@@ -43,6 +43,7 @@ exports[`<ArticleHighlight /> Snapshots should render an article highlight witho
         alt="blog-image"
         class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img"
         height="200"
+        src="https://picsum.photos/400/200?image=1"
         title="Some Fake Title"
       />
       <div

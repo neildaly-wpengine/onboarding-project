@@ -9,13 +9,12 @@ const renderHelper = (): RenderResult => {
   return render(
     <Router>
       <ArticleHighlight
-        title={mockArticle.title}
-        content={mockArticle.content}
-        createdAt={mockArticle.createdAt}
-        user={mockArticle.user}
-        id={mockArticle.id}
-        authenticated={false}
-        currentUserID="1"
+        article={mockArticle}
+        auth={{
+          authenticated: false,
+          currentUserID: "",
+        }}
+        notifyDelete={jest.fn}
       />
     </Router>
   );
