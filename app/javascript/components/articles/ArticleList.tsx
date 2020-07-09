@@ -1,11 +1,11 @@
 import {
+  Button,
   createStyles,
   Fab,
   Grid,
   makeStyles,
-  Theme,
   Snackbar,
-  Button,
+  Theme,
 } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
@@ -99,7 +99,6 @@ const ArticleList: React.FC<
           })
         );
         setDeletedArticle(articleID);
-        setAlertMessage("Article successfully deleted!");
       }
     });
   };
@@ -154,15 +153,15 @@ const ArticleList: React.FC<
         showAlert={alertMessage !== ""}
         closeAlert={closeAlert}
       />
-      <Fade in={true}>
-        <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
-          <Grid item xs={12}>
+      <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
+        <Grid item xs={12}>
+          <Fade in={true}>
             <Grid container justify="center" className={classes.grid}>
               {articlesList}
             </Grid>
-          </Grid>
+          </Fade>
         </Grid>
-      </Fade>
+      </Grid>
       {createArticleMarkup}
       <Snackbar
         open={deletedArticle !== ""}
