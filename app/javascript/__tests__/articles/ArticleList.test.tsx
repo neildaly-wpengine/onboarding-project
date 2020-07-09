@@ -86,5 +86,28 @@ describe("<ArticleList />", () => {
       expect(createFab).toBeInTheDocument();
       expect(axios.get).toBeCalledTimes(1);
     });
+
+    it("renders correctly when there are zero articles", async () => {
+      const expectedResponse = {
+        data: {
+          data: [],
+          included: [],
+        },
+      };
+      (axios.get as jest.Mock).mockImplementationOnce(() =>
+        Promise.resolve(expectedResponse)
+      );
+      const { container, getByTestId } = renderArticleList();
+      const resolvedData = await waitFor(() =>
+        getByTestId("no-articles-alert")
+      );
+
+      expect(container).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalledWith("/api/v1/articles");
+      expect(axios.get).toBeCalledTimes(1);
+      expect(resolvedData).toHaveTextContent(
+        "There are no articles present, try creating some!"
+      );
+    });
   });
 });

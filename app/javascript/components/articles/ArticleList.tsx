@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
+import Alert from "@material-ui/lab/Alert";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -145,8 +146,8 @@ const ArticleList: React.FC<
     <></>
   );
 
-  return (
-    <React.Fragment>
+  const articlesMarkup: JSX.Element = (
+    <>
       <CollapsibleAlert
         message={alertMessage}
         severity="success"
@@ -162,6 +163,18 @@ const ArticleList: React.FC<
           </Fade>
         </Grid>
       </Grid>
+    </>
+  );
+
+  const emptyArticlesMarkup: JSX.Element = (
+    <Alert severity="info" data-testid="no-articles-alert">
+      There are no articles present, try creating some!
+    </Alert>
+  );
+
+  return (
+    <React.Fragment>
+      {articles.length > 0 ? articlesMarkup : emptyArticlesMarkup}
       {createArticleMarkup}
       <Snackbar
         open={deletedArticle !== ""}
