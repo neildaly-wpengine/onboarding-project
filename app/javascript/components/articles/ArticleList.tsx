@@ -1,4 +1,12 @@
-import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
+import {
+  createStyles,
+  Fab,
+  Grid,
+  makeStyles,
+  Theme,
+  Snackbar,
+  Button,
+} from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect, useState } from "react";
@@ -29,6 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
       left: "auto",
       position: "fixed",
     },
+    snackbar: {
+      [theme.breakpoints.down("xs")]: {
+        bottom: 90,
+      },
+    },
   })
 );
 
@@ -37,6 +50,7 @@ const ArticleList: React.FC<
 > = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [deletedArticle, setDeletedArticle] = useState<string>("");
   const classes = useStyles();
   const history = useHistory();
 
@@ -84,8 +98,18 @@ const ArticleList: React.FC<
             return article.id !== articleID;
           })
         );
+        setDeletedArticle(articleID);
+        setAlertMessage("Article successfully deleted!");
       }
     });
+  };
+
+  const closeSnackbar = () => {
+    setDeletedArticle("");
+  };
+
+  const undoDeletion = () => {
+    console.log("undo");
   };
 
   const articlesList = articles.map((article: Article) => {
@@ -135,6 +159,18 @@ const ArticleList: React.FC<
         </Grid>
       </Fade>
       {createArticleMarkup}
+      <Snackbar
+        open={deletedArticle !== ""}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+        message="Article Deleted"
+        action={
+          <Button color="inherit" size="small" onClick={undoDeletion}>
+            Undo
+          </Button>
+        }
+        className={classes.snackbar}
+      />
     </React.Fragment>
   );
 };

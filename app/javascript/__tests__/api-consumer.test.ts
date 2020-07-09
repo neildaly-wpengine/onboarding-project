@@ -133,4 +133,25 @@ describe('API Consumer', () => {
         expect(response.data.id).toEqual(expectedResponse.data.id);
         expect(response.data.discardedAt).toEqual(expectedResponse.data.discardedAt);
     });
+
+    test('articles can be successfully recovered', async () => {
+        const expectedResponse = {
+            data: jsonAPISpecificArticleResponseData,
+        };
+        const articleID: string = expectedResponse.data.data.id;
+
+        (axios.post as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve(expectedResponse),
+        );
+
+        const specificArticle = await consumer.recoverArticle(articleID);
+
+        expect(axios.post).toHaveBeenCalledWith(
+            `/api/v1/articles/${articleID}/recover`,
+            { withCredentials: true }
+        );
+        expect(specificArticle.title).toEqual(expectedResponse.data.data.attributes.title);
+        expect(specificArticle.content).toEqual(expectedResponse.data.data.attributes.content);
+        expect(specificArticle.discardedAt).toBe(undefined);
+    });
 });
