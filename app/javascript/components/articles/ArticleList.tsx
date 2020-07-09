@@ -8,6 +8,7 @@ import {
   ArticleListLocationState,
   AuthStoreProps,
   ConsumerProps,
+  DeleteResponse,
 } from "../../common/types";
 import CollapsibleAlert from "../alert/CollapsibleAlert";
 import ArticleHighlight from "./ArticleHighlight";
@@ -75,8 +76,16 @@ const ArticleList: React.FC<
     setAlertMessage("");
   };
 
-  const handleArticleDeletion = (articleID: string): void => {
-    console.log("will delete ", articleID);
+  const handleArticleDeletion = (articleID: string) => {
+    consumer.deleteArticle(articleID).then((response: DeleteResponse) => {
+      if (response.data.discardedAt) {
+        setArticles(
+          articles.filter((article: Article) => {
+            return article.id !== articleID;
+          })
+        );
+      }
+    });
   };
 
   const articlesList = articles.map((article: Article) => {
