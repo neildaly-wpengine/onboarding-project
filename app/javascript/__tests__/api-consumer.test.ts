@@ -104,6 +104,7 @@ describe('API Consumer', () => {
             article: {
                 title: jsonAPISpecificArticleResponseData.data.attributes.title,
                 content: jsonAPISpecificArticleResponseData.data.attributes.content,
+                userId: jsonAPISpecificArticleResponseData.included[0].id
             }
         };
         const specificArticle = await consumer.createArticle(body);
