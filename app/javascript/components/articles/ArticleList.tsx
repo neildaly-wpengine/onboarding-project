@@ -75,18 +75,20 @@ const ArticleList: React.FC<
     setAlertMessage("");
   };
 
+  const handleArticleDeletion = (articleID: string): void => {
+    console.log("will delete ", articleID);
+  };
+
   const articlesList = articles.map((article: Article) => {
     return (
       <ArticleHighlight
         key={article.id}
-        stockImage={`https://picsum.photos/400/200?image=${article.id}`}
-        title={article.title}
-        content={article.content}
-        user={article.user}
-        createdAt={article.createdAt}
-        id={article.id}
-        authenticated={authStore.authenticated}
-        currentUserID={authStore.user.id}
+        article={article}
+        auth={{
+          authenticated: authStore.authenticated,
+          currentUserID: authStore.user.id,
+        }}
+        notifyDelete={handleArticleDeletion}
       />
     );
   });

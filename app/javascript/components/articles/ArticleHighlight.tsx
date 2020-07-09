@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createUserInitials } from "../../common/common";
 import { Article, AuthenticatedProps } from "../../common/types";
+import ConfirmationDialog from "../alert/ConfirmationDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,20 +46,25 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
-  title,
-  content,
-  user,
-  createdAt,
-  id,
-  stockImage,
-  authenticated,
-  currentUserID,
+interface ArticleHighlightProps {
+  article: Article;
+  auth: AuthenticatedProps;
+  notifyDelete(articleID: string): void;
+}
+
+const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
+  article,
+  auth,
+  notifyDelete,
 }) => {
   const classes = useStyles();
-  const userInitials: string = createUserInitials(user);
+  const userInitials: string = createUserInitials(article.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const articleOwner: boolean = currentUserID.toString() === user.id;
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [deletedArticle, setDeletedArticle] = useState<string>("");
+
+  const articleOwner: boolean =
+    auth.currentUserID.toString() === article.user.id;
 
   const toggleCardHeaderMenu = (e: React.BaseSyntheticEvent): void => {
     setAnchorEl(e.currentTarget);
@@ -68,8 +74,24 @@ const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
     setAnchorEl(null);
   };
 
+  const handleCancelDialog = (): void => {
+    setDialogOpen(false);
+    setDeletedArticle("");
+  };
+
+  const handleOkDialog = (): void => {
+    setDialogOpen(false);
+    notifyDelete(deletedArticle);
+  };
+
+  const handleDelete = (id: string) => {
+    setDialogOpen(true);
+    setAnchorEl(null);
+    setDeletedArticle(id);
+  };
+
   const menu: JSX.Element =
-    authenticated && articleOwner ? (
+    auth.authenticated && articleOwner ? (
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -85,9 +107,16 @@ const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
         onClose={handleClose}
       >
         <MenuItem>
-          <Link to={`/articles/edit/${id}`} className={classes.link}>
+          <Link to={`/articles/edit/${article.id}`} className={classes.link}>
             Edit
           </Link>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleDelete(article.id);
+          }}
+        >
+          Delete
         </MenuItem>
       </Menu>
     ) : (
@@ -95,68 +124,76 @@ const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
     );
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="user" className={classes.avatar}>
-            {userInitials}
-          </Avatar>
-        }
-        action={
-          authenticated &&
-          articleOwner && (
-            <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
-              <MoreVertIcon />
-            </IconButton>
-          )
-        }
-        title={`${user.firstName} ${user.lastName}`}
-        subheader={createdAt}
-        data-testid="article-card-header"
+    <React.Fragment>
+      <ConfirmationDialog
+        open={dialogOpen}
+        handleCancel={handleCancelDialog}
+        handleOk={handleOkDialog}
+        title="Delete Article"
       />
-      {menu}
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="blog-image"
-          height="200"
-          image={stockImage}
-          title={title}
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="user" className={classes.avatar}>
+              {userInitials}
+            </Avatar>
+          }
+          action={
+            auth.authenticated &&
+            articleOwner && (
+              <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
+                <MoreVertIcon />
+              </IconButton>
+            )
+          }
+          title={`${article.user.firstName} ${article.user.lastName}`}
+          subheader={article.createdAt}
+          data-testid="article-card-header"
         />
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h2"
-            data-testid="article-card-title"
+        {menu}
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            alt="blog-image"
+            height="200"
+            image={`https://picsum.photos/400/200?image=${article.id}`}
+            title={article.title}
+          />
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              data-testid="article-card-title"
+            >
+              {article.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              data-testid="article-card-content"
+            >
+              {article.content.substring(0, 200)}...
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={classes.cardActions}>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <Button
+            size="small"
+            color="primary"
+            component={Link}
+            to={`/articles/${article.id}`}
+            data-testid="article-card-button"
           >
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            data-testid="article-card-content"
-          >
-            {content.substring(0, 200)}...
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions className={classes.cardActions}>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <Button
-          size="small"
-          color="primary"
-          component={Link}
-          to={`/articles/${id}`}
-          data-testid="article-card-button"
-        >
-          View More
-        </Button>
-      </CardActions>
-    </Card>
+            View More
+          </Button>
+        </CardActions>
+      </Card>
+    </React.Fragment>
   );
 };
 
