@@ -114,3 +114,11 @@ export type ArticleContent = {
 export type CreateArticleBody = {
     article: ArticleContent
 }
+
+export interface DeleteResponse {
+    data: {
+        id: string,
+        discardedAt: string,
+        message?: string
+    }
+}

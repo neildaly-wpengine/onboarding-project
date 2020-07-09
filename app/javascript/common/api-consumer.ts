@@ -6,7 +6,8 @@ import {
     LoginBody,
     LogoutResponse,
     Registration,
-    RegistrationBody
+    RegistrationBody,
+    DeleteResponse
 } from "./types";
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
@@ -87,6 +88,17 @@ class APIConsumer {
             const articleData: Article = await this.deserializeResponse(response);
 
             return articleData;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async deleteArticle(articleID: string): Promise<DeleteResponse> {
+        try {
+            const response: AxiosResponse = await axios.delete(`/api/v1/articles/${articleID}`,
+                { withCredentials: true });
+
+            return humps.camelizeKeys(response) as DeleteResponse;
         } catch (e) {
             throw e;
         }
