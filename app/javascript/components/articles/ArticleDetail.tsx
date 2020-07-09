@@ -14,6 +14,7 @@ import {
   ConsumerProps,
 } from "../../common/types";
 import { createUserInitials } from "../../common/common";
+import ArticleImageHeader from "./ArticleImageHeader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,21 +81,11 @@ const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
   if (article === undefined) {
     return <CircularProgress data-testid="loading" />;
   }
-
   const userInitials: string = createUserInitials(article.user);
-
-  article.stockImage = `https://picsum.photos/1920/450?image=${article.id}`;
 
   return (
     <React.Fragment>
-      <Box m={1} p={1} className={classes.boxHeader} width={1}>
-        <img
-          data-testid="specific-article-stock-image"
-          src={article.stockImage}
-          alt={article.title}
-          className={classes.imageHeader}
-        />
-      </Box>
+      <ArticleImageHeader title={article.title} id={article.id} />
       <Box m={1} p={1} className={classes.mainArea} data-testid="resolved">
         <Box width="50%" className={classes.mainHeader}>
           <Typography variant="h2" gutterBottom>

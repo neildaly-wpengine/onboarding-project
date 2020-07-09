@@ -14,6 +14,8 @@ const renderHelper = (): RenderResult => {
         createdAt={mockArticle.createdAt}
         user={mockArticle.user}
         id={mockArticle.id}
+        authenticated={false}
+        currentUserID="1"
       />
     </Router>
   );

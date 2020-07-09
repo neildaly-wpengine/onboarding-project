@@ -13,7 +13,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
         class="MuiCollapse-wrapperInner"
       >
         <div
-          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-11 MuiPaper-elevation0"
+          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-12 MuiPaper-elevation0"
           role="alert"
         >
           <div
@@ -32,9 +32,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
           </div>
           <div
             class="MuiAlert-message"
-          >
-            Article successfully created!
-          </div>
+          />
           <div
             class="MuiAlert-action"
           >
@@ -76,10 +74,10 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
-        class="MuiGrid-root makeStyles-grid-8 MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root makeStyles-grid-9 MuiGrid-container MuiGrid-justify-xs-center"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-12 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-13 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <div
             class="MuiCardHeader-root"
@@ -90,7 +88,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-14 MuiAvatar-colorDefault"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-15 MuiAvatar-colorDefault"
               >
                 HS
               </div>
@@ -175,7 +173,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             />
           </button>
           <div
-            class="MuiCardActions-root makeStyles-cardActions-13 MuiCardActions-spacing"
+            class="MuiCardActions-root makeStyles-cardActions-14 MuiCardActions-spacing"
           >
             <button
               aria-label="add to favorites"
@@ -225,7 +223,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
   </div>
   <button
     aria-label="add"
-    class="MuiButtonBase-root MuiFab-root makeStyles-fab-10 MuiFab-secondary"
+    class="MuiButtonBase-root MuiFab-root makeStyles-fab-11 MuiFab-secondary"
     data-testid="create-fab"
     tabindex="0"
     type="button"
@@ -234,7 +232,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
       class="MuiFab-label"
     >
       <a
-        class="makeStyles-link-9"
+        class="makeStyles-link-10"
         href="/create"
       >
         <svg
@@ -288,9 +286,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
           </div>
           <div
             class="MuiAlert-message"
-          >
-            Article successfully created!
-          </div>
+          />
           <div
             class="MuiAlert-action"
           >
@@ -364,34 +360,6 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
               >
                 2020-06-25T10:07:42.357Z
               </span>
-            </div>
-            <div
-              class="MuiCardHeader-action"
-            >
-              <button
-                aria-label="settings"
-                class="MuiButtonBase-root MuiIconButton-root"
-                tabindex="0"
-                type="button"
-              >
-                <span
-                  class="MuiIconButton-label"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                    />
-                  </svg>
-                </span>
-                <span
-                  class="MuiTouchRipple-root"
-                />
-              </button>
             </div>
           </div>
           <button

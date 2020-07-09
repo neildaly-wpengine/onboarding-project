@@ -79,6 +79,19 @@ class APIConsumer {
         }
     }
 
+    async editArticle(articleBody: CreateArticleBody, articleID: string): Promise<Article> {
+        try {
+            const response: AxiosResponse = await axios.patch(`/api/v1/articles/${articleID}`,
+                humps.decamelizeKeys(articleBody),
+                { withCredentials: true });
+            const articleData: Article = await this.deserializeResponse(response);
+
+            return articleData;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     private deserializeResponse = (response: AxiosResponse) => {
         const deserializerOptions = {
             keyForAttribute: "camelCase"

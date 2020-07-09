@@ -8,15 +8,17 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
+  Menu,
+  MenuItem,
   Typography,
 } from "@material-ui/core";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Article } from "../../common/types";
 import { createUserInitials } from "../../common/common";
+import { Article, AuthenticatedProps } from "../../common/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,19 +38,61 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       backgroundColor: theme.palette.primary.main,
     },
+    link: {
+      textDecoration: "none",
+      color: "#000",
+    },
   })
 );
 
-const ArticleHighlight: React.FC<Article> = ({
+const ArticleHighlight: React.FC<Article & AuthenticatedProps> = ({
   title,
   content,
   user,
   createdAt,
   id,
   stockImage,
+  authenticated,
+  currentUserID,
 }) => {
   const classes = useStyles();
   const userInitials: string = createUserInitials(user);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const articleOwner: boolean = currentUserID.toString() === user.id;
+
+  const toggleCardHeaderMenu = (e: React.BaseSyntheticEvent): void => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const menu: JSX.Element =
+    authenticated && articleOwner ? (
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem>
+          <Link to={`/articles/edit/${id}`} className={classes.link}>
+            Edit
+          </Link>
+        </MenuItem>
+      </Menu>
+    ) : (
+      <React.Fragment />
+    );
 
   return (
     <Card className={classes.root}>
@@ -59,14 +103,18 @@ const ArticleHighlight: React.FC<Article> = ({
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          authenticated &&
+          articleOwner && (
+            <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
+              <MoreVertIcon />
+            </IconButton>
+          )
         }
         title={`${user.firstName} ${user.lastName}`}
         subheader={createdAt}
         data-testid="article-card-header"
       />
+      {menu}
       <CardActionArea>
         <CardMedia
           component="img"

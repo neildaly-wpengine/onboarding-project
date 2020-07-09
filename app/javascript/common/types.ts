@@ -11,6 +11,12 @@ export type Article = {
     id: string;
     user: User;
     stockImage?: string;
+    [key: string]: any
+}
+
+export type AuthenticatedProps = {
+    authenticated: boolean;
+    currentUserID: string
 }
 
 export type User = {
@@ -32,7 +38,7 @@ interface MatchParams {
 export interface ArticleDetailMatchParams extends RouteComponentProps<MatchParams> { }
 
 export interface ArticleListLocationState extends RouteComponentProps
-    <{}, any, { created: boolean }> {
+    <{}, any, { message: string }> {
 } { }
 
 export type RegistrationUser = {
@@ -98,12 +104,13 @@ export type AuthStoreProps = {
     authStore: AuthStore;
 }
 
-export type ArticleCreationContent = {
+export type ArticleContent = {
     title: string,
     content: string,
-    userId: number
+    userId: string
+    [key: string]: string
 }
 
 export type CreateArticleBody = {
-    article: ArticleCreationContent
+    article: ArticleContent
 }

@@ -8,7 +8,11 @@ import {
 } from "react-router-dom";
 import { logout, setAuthDetails } from "../../actions";
 import APIConsumer from "../../common/api-consumer";
-import { ArticleDetailMatchParams, AuthStore, ArticleListLocationState } from "../../common/types";
+import {
+  ArticleDetailMatchParams,
+  AuthStore,
+  ArticleListLocationState,
+} from "../../common/types";
 import ArticleDetail from "../articles/ArticleDetail";
 import ArticleList from "../articles/ArticleList";
 import Registration from "../auth/Registration";
@@ -16,6 +20,7 @@ import Navbar from "../nav/Navbar";
 import Login from "../auth/Login";
 import ArticleCreator from "../articles/ArticleCreator";
 import { createUserInitials } from "../../common/common";
+import ArticleEditor from "../articles/ArticleEditor";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
@@ -44,6 +49,13 @@ const App: React.FC = () => {
       exact: true,
       component: (props: ArticleDetailMatchParams) => (
         <ArticleDetail {...props} consumer={consumer} />
+      ),
+    },
+    {
+      path: "/articles/edit/:id",
+      exact: true,
+      component: (props: ArticleDetailMatchParams) => (
+        <ArticleEditor {...props} consumer={consumer} authStore={auth} />
       ),
     },
     {
