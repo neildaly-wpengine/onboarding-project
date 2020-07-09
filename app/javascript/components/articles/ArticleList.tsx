@@ -108,8 +108,13 @@ const ArticleList: React.FC<
     setDeletedArticle("");
   };
 
-  const undoDeletion = () => {
-    console.log("undo");
+  const undoDeletion = async () => {
+    const recoveredArticle: Article = await consumer.recoverArticle(
+      deletedArticle
+    );
+    setDeletedArticle("");
+    setAlertMessage("Article Recovered!");
+    setArticles([recoveredArticle].concat(articles));
   };
 
   const articlesList = articles.map((article: Article) => {
