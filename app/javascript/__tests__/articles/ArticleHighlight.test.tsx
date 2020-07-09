@@ -1,18 +1,27 @@
 import "@testing-library/jest-dom/extend-expect";
-import { cleanup, render, RenderResult } from "@testing-library/react";
+import {
+  cleanup,
+  render,
+  RenderResult,
+  act,
+  fireEvent,
+} from "@testing-library/react";
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import ArticleHighlight from "../../components/articles/ArticleHighlight";
 import { mockArticle } from "./__helpers__/test-data";
 
-const renderHelper = (): RenderResult => {
+const renderHelper = (
+  authenticated = false,
+  currentUserID = "1"
+): RenderResult => {
   return render(
     <Router>
       <ArticleHighlight
         article={mockArticle}
         auth={{
-          authenticated: false,
-          currentUserID: "",
+          authenticated: authenticated,
+          currentUserID: currentUserID,
         }}
         notifyDelete={jest.fn}
       />
@@ -66,6 +75,45 @@ describe("<ArticleHighlight />", () => {
       expect(getByTestId("article-card-button").closest("a")).toHaveAttribute(
         "href",
         `/articles/${mockArticle.id}`
+      );
+    });
+
+    test("should show a menu when authenticated & owner", () => {
+      const { getByTestId } = renderHelper(true);
+      const cardMenuToggle = getByTestId("card-menu-toggle");
+
+      fireEvent.click(cardMenuToggle);
+      const cardMenu = getByTestId("card-menu");
+
+      expect(cardMenu).toBeInTheDocument();
+    });
+
+    test("should not show a menu when not authenticated", () => {
+      const { queryByTestId } = renderHelper();
+
+      expect(queryByTestId("card-menu-toggle")).not.toBeInTheDocument();
+    });
+
+    test("should not show a menu when not the owner", () => {
+      const { queryByTestId } = renderHelper(true, "2");
+
+      expect(queryByTestId("card-menu-toggle")).not.toBeInTheDocument();
+    });
+
+    test("should show a confirmation modal when deleting", () => {
+      const { getByTestId } = renderHelper(true);
+      const cardMenuToggle = getByTestId("card-menu-toggle");
+
+      fireEvent.click(cardMenuToggle);
+      act(() => {
+        fireEvent.click(getByTestId("menu-delete"));
+      });
+      const confirmationDialog = getByTestId("delete-dialog");
+      const dialogMessage = getByTestId("dialog-message");
+
+      expect(confirmationDialog).toBeInTheDocument();
+      expect(dialogMessage).toHaveTextContent(
+        "Are you sure you wish to delete this article?"
       );
     });
   });
