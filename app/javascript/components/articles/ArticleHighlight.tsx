@@ -94,6 +94,7 @@ const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
     auth.authenticated && articleOwner ? (
       <Menu
         id="menu-appbar"
+        data-testid="card-menu"
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "top",
@@ -112,6 +113,7 @@ const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
           </Link>
         </MenuItem>
         <MenuItem
+          data-testid="menu-delete"
           onClick={() => {
             handleDelete(article.id);
           }}
@@ -142,7 +144,11 @@ const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
           action={
             auth.authenticated &&
             articleOwner && (
-              <IconButton aria-label="settings" onClick={toggleCardHeaderMenu}>
+              <IconButton
+                aria-label="settings"
+                onClick={toggleCardHeaderMenu}
+                data-testid="card-menu-toggle"
+              >
                 <MoreVertIcon />
               </IconButton>
             )

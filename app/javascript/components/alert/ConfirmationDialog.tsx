@@ -25,6 +25,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
 }) => {
   return (
     <Dialog
+      data-testid="delete-dialog"
       disableBackdropClick
       disableEscapeKeyDown
       maxWidth="xs"
@@ -33,10 +34,17 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     >
       <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <Typography variant="body1">{message}</Typography>
+        <Typography variant="body1" data-testid="dialog-message">
+          {message}
+        </Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCancel} color="primary">
+        <Button
+          autoFocus
+          onClick={handleCancel}
+          color="primary"
+          data-testid="dialog-cancel"
+        >
           Cancel
         </Button>
         <Button onClick={handleOk} color="primary">

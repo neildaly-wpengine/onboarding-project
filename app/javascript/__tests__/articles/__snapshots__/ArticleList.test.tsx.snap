@@ -114,6 +114,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
               <button
                 aria-label="settings"
                 class="MuiButtonBase-root MuiIconButton-root"
+                data-testid="card-menu-toggle"
                 tabindex="0"
                 type="button"
               >
