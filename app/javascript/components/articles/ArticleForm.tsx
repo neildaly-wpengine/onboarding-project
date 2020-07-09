@@ -12,7 +12,7 @@ import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
     padding: 10,

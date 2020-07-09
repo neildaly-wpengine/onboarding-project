@@ -3,21 +3,21 @@
 exports[`<ArticleDetail /> Content renders correctly 1`] = `
 <div>
   <div
-    class="MuiBox-root MuiBox-root-6 makeStyles-boxHeader-1"
+    class="MuiBox-root MuiBox-root-8 makeStyles-boxHeader-6"
   >
     <img
       alt="Computer Games Development"
-      class="makeStyles-imageHeader-2"
+      class="makeStyles-imageHeader-7"
       data-testid="specific-article-stock-image"
       src="https://picsum.photos/1920/450?image=1"
     />
   </div>
   <div
-    class="MuiBox-root MuiBox-root-7 makeStyles-mainArea-3"
+    class="MuiBox-root MuiBox-root-9 makeStyles-mainArea-3"
     data-testid="resolved"
   >
     <div
-      class="MuiBox-root MuiBox-root-8 makeStyles-mainHeader-4"
+      class="MuiBox-root MuiBox-root-10 makeStyles-mainHeader-4"
     >
       <h2
         class="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
@@ -42,7 +42,7 @@ exports[`<ArticleDetail /> Content renders correctly 1`] = `
       </h6>
     </div>
     <div
-      class="MuiBox-root MuiBox-root-9 makeStyles-mainHeader-4"
+      class="MuiBox-root MuiBox-root-11 makeStyles-mainHeader-4"
     >
       <p
         class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom MuiTypography-alignJustify"

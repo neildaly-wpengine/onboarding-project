@@ -10,6 +10,7 @@ import {
   CreateArticleBody,
 } from "../../common/types";
 import ArticleForm from "./ArticleForm";
+import ArticleImageHeader from "./ArticleImageHeader";
 
 const ArticleEditor: React.FC<
   ConsumerProps & AuthStoreProps & ArticleDetailMatchParams
@@ -88,16 +89,19 @@ const ArticleEditor: React.FC<
   }
 
   return (
-    <ArticleForm
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-      icon={<EditIcon />}
-      formTitle="Edit Article"
-      buttonText="Edit"
-      titlePlaceholder={article.title}
-      contentPlaceholder={article.content}
-      disabled={disabled}
-    />
+    <React.Fragment>
+      <ArticleImageHeader title={article.title} id={article.id} />
+      <ArticleForm
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        icon={<EditIcon />}
+        formTitle="Edit Article"
+        buttonText="Edit"
+        titlePlaceholder={article.title}
+        contentPlaceholder={article.content}
+        disabled={disabled}
+      />
+    </React.Fragment>
   );
 };
 
