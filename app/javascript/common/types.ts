@@ -11,6 +11,7 @@ export type Article = {
     id: string;
     user: User;
     stockImage?: string;
+    [key: string]: any
 }
 
 export type User = {
@@ -98,12 +99,12 @@ export type AuthStoreProps = {
     authStore: AuthStore;
 }
 
-export type ArticleCreationContent = {
+export type ArticleContent = {
     title: string,
     content: string,
-    userId: number
+    [key: string]: string
 }
 
 export type CreateArticleBody = {
-    article: ArticleCreationContent
+    article: ArticleContent
 }

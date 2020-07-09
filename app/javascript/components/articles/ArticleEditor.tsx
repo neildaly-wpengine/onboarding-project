@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import {
   Article,
-  ArticleCreationContent,
+  ArticleContent,
   ArticleDetailMatchParams,
   AuthStoreProps,
   ConsumerProps,
@@ -15,11 +15,11 @@ const ArticleEditor: React.FC<
   ConsumerProps & AuthStoreProps & ArticleDetailMatchParams
 > = ({ consumer, authStore, match }) => {
   const [edited, setEdited] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
   const [article, setArticle] = useState<Article>();
-  const [articleBody, setArticleBody] = useState<ArticleCreationContent>({
+  const [articleBody, setArticleBody] = useState<ArticleContent>({
     title: "",
     content: "",
-    userId: parseInt(authStore.user.id),
   });
 
   useEffect(() => {
@@ -43,19 +43,22 @@ const ArticleEditor: React.FC<
   }
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
+    setDisabled(false);
     const { name, value } = e.target;
     setArticleBody({ ...articleBody, [name]: value });
   };
 
+  const checkUnchangedValues = (): void => {
+    for (const key in articleBody) {
+      if (articleBody[key] === "") {
+        articleBody[key] = article[key];
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-
-    if (articleBody.title === "") {
-      articleBody.title = article.title;
-    } else if (articleBody.content === "") {
-      articleBody.content = article.content;
-    }
-
+    checkUnchangedValues();
     const response = await consumer.editArticle(
       {
         article: articleBody,
@@ -83,13 +86,6 @@ const ArticleEditor: React.FC<
     );
   }
 
-  const checkDisabled = (): boolean => {
-    if (articleBody.title === "" && articleBody.content === "") {
-      return true;
-    }
-    return false;
-  };
-
   return (
     <ArticleForm
       handleChange={handleChange}
@@ -99,7 +95,7 @@ const ArticleEditor: React.FC<
       buttonText="Edit"
       titlePlaceholder={article.title}
       contentPlaceholder={article.content}
-      disabled={checkDisabled()}
+      disabled={disabled}
     />
   );
 };

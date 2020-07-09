@@ -2,7 +2,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import React, { useState } from "react";
 import { Redirect } from "react-router";
 import {
-  ArticleCreationContent,
+  ArticleContent,
   AuthStoreProps,
   ConsumerProps,
   CreateArticleBody,
@@ -14,10 +14,9 @@ const ArticleCreator: React.FC<ConsumerProps & AuthStoreProps> = ({
   authStore,
 }) => {
   const [created, setCreated] = useState<boolean>(false);
-  const [articleBody, setArticleBody] = useState<ArticleCreationContent>({
+  const [articleBody, setArticleBody] = useState<ArticleContent>({
     title: "",
     content: "",
-    userId: parseInt(authStore.user.id),
   });
 
   const handleChange = (e: React.BaseSyntheticEvent): void => {
