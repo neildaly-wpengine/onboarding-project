@@ -89,6 +89,12 @@ describe("<ArticleHighlight />", () => {
     });
 
     test("should not show a menu when not authenticated", () => {
+      const { queryByTestId } = renderHelper();
+
+      expect(queryByTestId("card-menu-toggle")).not.toBeInTheDocument();
+    });
+
+    test("should not show a menu when not the owner", () => {
       const { queryByTestId } = renderHelper(true, "2");
 
       expect(queryByTestId("card-menu-toggle")).not.toBeInTheDocument();
