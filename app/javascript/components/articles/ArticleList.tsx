@@ -1,4 +1,12 @@
-import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
+import {
+  Button,
+  createStyles,
+  Fab,
+  Grid,
+  makeStyles,
+  Snackbar,
+  Theme,
+} from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect, useState } from "react";
@@ -29,6 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
       left: "auto",
       position: "fixed",
     },
+    snackbar: {
+      [theme.breakpoints.down("xs")]: {
+        bottom: 90,
+      },
+    },
   })
 );
 
@@ -37,6 +50,7 @@ const ArticleList: React.FC<
 > = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [deletedArticle, setDeletedArticle] = useState<string>("");
   const classes = useStyles();
   const history = useHistory();
 
@@ -84,8 +98,22 @@ const ArticleList: React.FC<
             return article.id !== articleID;
           })
         );
+        setDeletedArticle(articleID);
       }
     });
+  };
+
+  const closeSnackbar = () => {
+    setDeletedArticle("");
+  };
+
+  const undoDeletion = async () => {
+    const recoveredArticle: Article = await consumer.recoverArticle(
+      deletedArticle
+    );
+    setDeletedArticle("");
+    setAlertMessage("Article Recovered!");
+    setArticles([recoveredArticle].concat(articles));
   };
 
   const articlesList = articles.map((article: Article) => {
@@ -125,16 +153,28 @@ const ArticleList: React.FC<
         showAlert={alertMessage !== ""}
         closeAlert={closeAlert}
       />
-      <Fade in={true}>
-        <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
-          <Grid item xs={12}>
+      <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
+        <Grid item xs={12}>
+          <Fade in={true}>
             <Grid container justify="center" className={classes.grid}>
               {articlesList}
             </Grid>
-          </Grid>
+          </Fade>
         </Grid>
-      </Fade>
+      </Grid>
       {createArticleMarkup}
+      <Snackbar
+        open={deletedArticle !== ""}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+        message="Article Deleted"
+        action={
+          <Button color="inherit" size="small" onClick={undoDeletion}>
+            Undo
+          </Button>
+        }
+        className={classes.snackbar}
+      />
     </React.Fragment>
   );
 };

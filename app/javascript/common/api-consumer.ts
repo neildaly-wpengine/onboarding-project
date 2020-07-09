@@ -104,6 +104,18 @@ class APIConsumer {
         }
     }
 
+    async recoverArticle(articleID: string): Promise<Article> {
+        try {
+            const response: AxiosResponse = await axios.post(`/api/v1/articles/${articleID}/recover`,
+                { withCredentials: true });
+            const articleData: Article = await this.deserializeResponse(response);
+
+            return articleData;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     private deserializeResponse = (response: AxiosResponse) => {
         const deserializerOptions = {
             keyForAttribute: "camelCase"
