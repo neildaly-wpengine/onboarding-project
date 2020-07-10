@@ -47,7 +47,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
         >
           Cancel
         </Button>
-        <Button onClick={handleOk} color="primary">
+        <Button onClick={handleOk} color="primary" data-testid="dialog-ok">
           Ok
         </Button>
       </DialogActions>
