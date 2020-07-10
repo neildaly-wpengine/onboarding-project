@@ -12,9 +12,11 @@ import {
 const JSONAPIDeserializer = require("jsonapi-serializer").Deserializer;
 
 class APIConsumer {
+    private baseURL: string = '/api/v1/';
+
     async getAllArticles(): Promise<Article[]> {
         try {
-            const response: AxiosResponse = await axios.get("/api/v1/articles");
+            const response: AxiosResponse = await axios.get(`${this.baseURL}articles`);
             const articleData: Article[] = await this.deserializeResponse(response);
 
             return articleData;
@@ -25,7 +27,7 @@ class APIConsumer {
 
     async getSpecificArticle(id: string): Promise<Article> {
         try {
-            const response: AxiosResponse = await axios.get(`/api/v1/articles/${id}`);
+            const response: AxiosResponse = await axios.get(`${this.baseURL}articles/${id}`);
             const articleData: Article = await this.deserializeResponse(response);
 
             return articleData;
@@ -37,7 +39,7 @@ class APIConsumer {
     async registerNewUser(registrationBody: RegistrationBody): Promise<any> {
         try {
             const decamelizedKeys: RegistrationBody = humps.decamelizeKeys(registrationBody) as RegistrationBody;
-            const response: Registration = await axios.post('/api/v1/registrations', decamelizedKeys,
+            const response: Registration = await axios.post(`${this.baseURL}registrations`, decamelizedKeys,
                 { withCredentials: true });
 
             return humps.camelizeKeys(response);
@@ -48,7 +50,7 @@ class APIConsumer {
 
     async destroySession(): Promise<LogoutResponse> {
         try {
-            const response: AxiosResponse = await axios.delete('/api/v1/logout');
+            const response: AxiosResponse = await axios.delete(`${this.baseURL}logout`);
 
             return humps.camelizeKeys(response) as LogoutResponse;
         } catch (e) {
@@ -58,7 +60,7 @@ class APIConsumer {
 
     async loginUser(loginBody: LoginBody): Promise<any> {
         try {
-            const response: AxiosResponse = await axios.post('/api/v1/sessions', loginBody,
+            const response: AxiosResponse = await axios.post(`${this.baseURL}sessions`, loginBody,
                 { withCredentials: true });
 
             return humps.camelizeKeys(response);
@@ -69,7 +71,7 @@ class APIConsumer {
 
     async createArticle(articleBody: CreateArticleBody): Promise<Article> {
         try {
-            const response: AxiosResponse = await axios.post('/api/v1/articles',
+            const response: AxiosResponse = await axios.post(`${this.baseURL}articles`,
                 humps.decamelizeKeys(articleBody),
                 { withCredentials: true });
             const articleData: Article = await this.deserializeResponse(response);
@@ -82,7 +84,7 @@ class APIConsumer {
 
     async editArticle(articleBody: CreateArticleBody, articleID: string): Promise<Article> {
         try {
-            const response: AxiosResponse = await axios.patch(`/api/v1/articles/${articleID}`,
+            const response: AxiosResponse = await axios.patch(`${this.baseURL}articles/${articleID}`,
                 humps.decamelizeKeys(articleBody),
                 { withCredentials: true });
             const articleData: Article = await this.deserializeResponse(response);
@@ -95,7 +97,7 @@ class APIConsumer {
 
     async deleteArticle(articleID: string): Promise<DeleteResponse> {
         try {
-            const response: AxiosResponse = await axios.delete(`/api/v1/articles/${articleID}`,
+            const response: AxiosResponse = await axios.delete(`${this.baseURL}articles/${articleID}`,
                 { withCredentials: true });
 
             return humps.camelizeKeys(response) as DeleteResponse;
@@ -106,7 +108,7 @@ class APIConsumer {
 
     async recoverArticle(articleID: string): Promise<Article> {
         try {
-            const response: AxiosResponse = await axios.post(`/api/v1/articles/${articleID}/recover`,
+            const response: AxiosResponse = await axios.post(`${this.baseURL}articles/${articleID}/recover`,
                 { withCredentials: true });
             const articleData: Article = await this.deserializeResponse(response);
 
