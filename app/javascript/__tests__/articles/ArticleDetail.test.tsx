@@ -33,9 +33,7 @@ const createRouteComponentProps = (): ArticleDetailMatchParams => {
 };
 
 const renderArticleDetail = (): RenderResult => {
-  return render(
-    <ArticleDetail consumer={consumer} {...createRouteComponentProps()} />
-  );
+  return render(<ArticleDetail {...createRouteComponentProps()} />);
 };
 
 afterEach(cleanup);

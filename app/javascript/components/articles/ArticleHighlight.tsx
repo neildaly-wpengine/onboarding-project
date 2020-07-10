@@ -107,11 +107,9 @@ const ArticleHighlight: React.FC<ArticleHighlightProps> = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
-          <Link to={`/articles/edit/${article.id}`} className={classes.link}>
-            Edit
-          </Link>
-        </MenuItem>
+        <Link to={`/articles/edit/${article.id}`} className={classes.link}>
+          <MenuItem>Edit</MenuItem>
+        </Link>
         <MenuItem
           data-testid="menu-delete"
           onClick={() => {

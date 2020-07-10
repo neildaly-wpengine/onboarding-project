@@ -101,15 +101,7 @@ describe("<ArticleHighlight />", () => {
     });
 
     test("should show a confirmation modal when deleting", () => {
-      const { getByTestId } = renderHelper(true);
-      const cardMenuToggle = getByTestId("card-menu-toggle");
-
-      fireEvent.click(cardMenuToggle);
-      act(() => {
-        fireEvent.click(getByTestId("menu-delete"));
-      });
-      const confirmationDialog = getByTestId("delete-dialog");
-      const dialogMessage = getByTestId("dialog-message");
+      const [confirmationDialog, dialogMessage] = openDeleteModal();
 
       expect(confirmationDialog).toBeInTheDocument();
       expect(dialogMessage).toHaveTextContent(
@@ -117,4 +109,19 @@ describe("<ArticleHighlight />", () => {
       );
     });
   });
+
+  const openDeleteModal = (): HTMLElement[] => {
+    const { getByTestId } = renderHelper(true);
+    const cardMenuToggle = getByTestId("card-menu-toggle");
+
+    fireEvent.click(cardMenuToggle);
+    act(() => {
+      fireEvent.click(getByTestId("menu-delete"));
+    });
+    const confirmationDialog = getByTestId("delete-dialog");
+    const dialogMessage = getByTestId("dialog-message");
+    const cancelButton = getByTestId("dialog-cancel");
+
+    return [confirmationDialog, dialogMessage, cancelButton];
+  };
 });

@@ -1,8 +1,8 @@
 import EditIcon from "@material-ui/icons/Edit";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { useSpecificArticle } from "../../common/common";
 import {
-  Article,
   ArticleContent,
   ArticleDetailMatchParams,
   AuthStoreProps,
@@ -15,30 +15,14 @@ import ArticleImageHeader from "./ArticleImageHeader";
 const ArticleEditor: React.FC<
   ConsumerProps & AuthStoreProps & ArticleDetailMatchParams
 > = ({ consumer, authStore, match }) => {
+  const article = useSpecificArticle(match.params.id);
   const [edited, setEdited] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [article, setArticle] = useState<Article>();
   const [articleBody, setArticleBody] = useState<ArticleContent>({
     title: "",
     content: "",
     userId: authStore.user.id,
   });
-
-  useEffect(() => {
-    let mounted: boolean = true;
-    const fetchSpecificArticle = async () => {
-      const articleID: string = match.params.id;
-      const articleData = await consumer.getSpecificArticle(articleID);
-      if (mounted) {
-        setArticle(articleData);
-      }
-    };
-    fetchSpecificArticle();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   if (article === undefined) {
     return null;
