@@ -2,18 +2,14 @@ import {
   Avatar,
   Box,
   CircularProgress,
-  makeStyles,
-  Typography,
   createStyles,
+  makeStyles,
   Theme,
+  Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import {
-  Article,
-  ArticleDetailMatchParams,
-  ConsumerProps,
-} from "../../common/types";
-import { createUserInitials } from "../../common/common";
+import React from "react";
+import { createUserInitials, useSpecificArticle } from "../../common/common";
+import { ArticleDetailMatchParams } from "../../common/types";
 import ArticleImageHeader from "./ArticleImageHeader";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,28 +51,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ArticleDetail: React.FC<ArticleDetailMatchParams & ConsumerProps> = ({
-  match,
-  consumer,
-}) => {
-  const [article, setArticle] = useState<Article>();
+const ArticleDetail: React.FC<ArticleDetailMatchParams> = ({ match }) => {
+  const article = useSpecificArticle(match.params.id);
   const classes = useStyles();
-
-  useEffect(() => {
-    let mounted: boolean = true;
-    const fetchSpecificArticle = async () => {
-      const articleID: string = match.params.id;
-      const articleData = await consumer.getSpecificArticle(articleID);
-      if (mounted) {
-        setArticle(articleData);
-      }
-    };
-    fetchSpecificArticle();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   if (article === undefined) {
     return <CircularProgress data-testid="loading" />;

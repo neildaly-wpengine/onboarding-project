@@ -1,6 +1,15 @@
-import { createStyles, Fab, Grid, makeStyles, Theme } from "@material-ui/core";
+import {
+  Button,
+  createStyles,
+  Fab,
+  Grid,
+  makeStyles,
+  Snackbar,
+  Theme,
+} from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import AddIcon from "@material-ui/icons/Add";
+import Alert from "@material-ui/lab/Alert";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -8,6 +17,7 @@ import {
   ArticleListLocationState,
   AuthStoreProps,
   ConsumerProps,
+  DeleteResponse,
 } from "../../common/types";
 import CollapsibleAlert from "../alert/CollapsibleAlert";
 import ArticleHighlight from "./ArticleHighlight";
@@ -28,6 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
       left: "auto",
       position: "fixed",
     },
+    snackbar: {
+      [theme.breakpoints.down("xs")]: {
+        bottom: 90,
+      },
+    },
   })
 );
 
@@ -36,6 +51,7 @@ const ArticleList: React.FC<
 > = ({ consumer, authStore, location }) => {
   const [articles, setArticles] = useState<Article[]>();
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [deletedArticle, setDeletedArticle] = useState<string>("");
   const classes = useStyles();
   const history = useHistory();
 
@@ -75,18 +91,42 @@ const ArticleList: React.FC<
     setAlertMessage("");
   };
 
+  const handleArticleDeletion = (articleID: string) => {
+    consumer.deleteArticle(articleID).then((response: DeleteResponse) => {
+      if (response.data.discardedAt) {
+        setArticles(
+          articles.filter((article: Article) => {
+            return article.id !== articleID;
+          })
+        );
+        setDeletedArticle(articleID);
+      }
+    });
+  };
+
+  const closeSnackbar = () => {
+    setDeletedArticle("");
+  };
+
+  const undoDeletion = async () => {
+    const recoveredArticle: Article = await consumer.recoverArticle(
+      deletedArticle
+    );
+    setDeletedArticle("");
+    setAlertMessage("Article Recovered!");
+    setArticles([recoveredArticle].concat(articles));
+  };
+
   const articlesList = articles.map((article: Article) => {
     return (
       <ArticleHighlight
         key={article.id}
-        stockImage={`https://picsum.photos/400/200?image=${article.id}`}
-        title={article.title}
-        content={article.content}
-        user={article.user}
-        createdAt={article.createdAt}
-        id={article.id}
-        authenticated={authStore.authenticated}
-        currentUserID={authStore.user.id}
+        article={article}
+        auth={{
+          authenticated: authStore.authenticated,
+          currentUserID: authStore.user.id,
+        }}
+        notifyDelete={handleArticleDeletion}
       />
     );
   });
@@ -106,24 +146,48 @@ const ArticleList: React.FC<
     <></>
   );
 
-  return (
-    <React.Fragment>
+  const articlesMarkup: JSX.Element = (
+    <>
       <CollapsibleAlert
         message={alertMessage}
         severity="success"
         showAlert={alertMessage !== ""}
         closeAlert={closeAlert}
       />
-      <Fade in={true}>
-        <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
-          <Grid item xs={12}>
+      <Grid container data-testid="resolved" style={{ marginTop: 25 }}>
+        <Grid item xs={12}>
+          <Fade in={true}>
             <Grid container justify="center" className={classes.grid}>
               {articlesList}
             </Grid>
-          </Grid>
+          </Fade>
         </Grid>
-      </Fade>
+      </Grid>
+    </>
+  );
+
+  const emptyArticlesMarkup: JSX.Element = (
+    <Alert severity="info" data-testid="no-articles-alert">
+      There are no articles present, try creating some!
+    </Alert>
+  );
+
+  return (
+    <React.Fragment>
+      {articles.length > 0 ? articlesMarkup : emptyArticlesMarkup}
       {createArticleMarkup}
+      <Snackbar
+        open={deletedArticle !== ""}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+        message="Article Deleted"
+        action={
+          <Button color="inherit" size="small" onClick={undoDeletion}>
+            Undo
+          </Button>
+        }
+        className={classes.snackbar}
+      />
     </React.Fragment>
   );
 };

@@ -1,7 +1,9 @@
 name: Yarn
 on:
   pull_request:
-    branches: [master]
+    branches:
+      - master
+      - "feature/**"
 jobs:
   test:
     name: Test

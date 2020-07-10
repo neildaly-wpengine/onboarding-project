@@ -13,7 +13,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
         class="MuiCollapse-wrapperInner"
       >
         <div
-          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-12 MuiPaper-elevation0"
+          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-14 MuiPaper-elevation0"
           role="alert"
         >
           <div
@@ -68,16 +68,17 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
   <div
     class="MuiGrid-root MuiGrid-container"
     data-testid="resolved"
-    style="opacity: 1; margin-top: 25px; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    style="margin-top: 25px;"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
-        class="MuiGrid-root makeStyles-grid-9 MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root makeStyles-grid-10 MuiGrid-container MuiGrid-justify-xs-center"
+        style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-13 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-15 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <div
             class="MuiCardHeader-root"
@@ -88,7 +89,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-15 MuiAvatar-colorDefault"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-17 MuiAvatar-colorDefault"
               >
                 HS
               </div>
@@ -113,6 +114,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
               <button
                 aria-label="settings"
                 class="MuiButtonBase-root MuiIconButton-root"
+                data-testid="card-menu-toggle"
                 tabindex="0"
                 type="button"
               >
@@ -173,7 +175,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
             />
           </button>
           <div
-            class="MuiCardActions-root makeStyles-cardActions-14 MuiCardActions-spacing"
+            class="MuiCardActions-root makeStyles-cardActions-16 MuiCardActions-spacing"
           >
             <button
               aria-label="add to favorites"
@@ -223,7 +225,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
   </div>
   <button
     aria-label="add"
-    class="MuiButtonBase-root MuiFab-root makeStyles-fab-11 MuiFab-secondary"
+    class="MuiButtonBase-root MuiFab-root makeStyles-fab-12 MuiFab-secondary"
     data-testid="create-fab"
     tabindex="0"
     type="button"
@@ -232,7 +234,7 @@ exports[`<ArticleList /> Content renders correctly when authenticated 1`] = `
       class="MuiFab-label"
     >
       <a
-        class="makeStyles-link-10"
+        class="makeStyles-link-11"
         href="/create"
       >
         <svg
@@ -267,7 +269,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
         class="MuiCollapse-wrapperInner"
       >
         <div
-          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-4 MuiPaper-elevation0"
+          class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess makeStyles-alert-5 MuiPaper-elevation0"
           role="alert"
         >
           <div
@@ -322,16 +324,17 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
   <div
     class="MuiGrid-root MuiGrid-container"
     data-testid="resolved"
-    style="opacity: 1; margin-top: 25px; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    style="margin-top: 25px;"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
         class="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-justify-xs-center"
+        style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
       >
         <div
-          class="MuiPaper-root MuiCard-root makeStyles-root-5 MuiPaper-elevation1 MuiPaper-rounded"
+          class="MuiPaper-root MuiCard-root makeStyles-root-6 MuiPaper-elevation1 MuiPaper-rounded"
         >
           <div
             class="MuiCardHeader-root"
@@ -342,7 +345,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
             >
               <div
                 aria-label="user"
-                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-7 MuiAvatar-colorDefault"
+                class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-8 MuiAvatar-colorDefault"
               >
                 HS
               </div>
@@ -399,7 +402,7 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
             />
           </button>
           <div
-            class="MuiCardActions-root makeStyles-cardActions-6 MuiCardActions-spacing"
+            class="MuiCardActions-root makeStyles-cardActions-7 MuiCardActions-spacing"
           >
             <button
               aria-label="add to favorites"
@@ -445,6 +448,36 @@ exports[`<ArticleList /> Content renders correctly when not authenticated 1`] = 
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ArticleList /> Content renders correctly when there are zero articles 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiAlert-root MuiAlert-standardInfo MuiPaper-elevation0"
+    data-testid="no-articles-alert"
+    role="alert"
+  >
+    <div
+      class="MuiAlert-icon"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+        />
+      </svg>
+    </div>
+    <div
+      class="MuiAlert-message"
+    >
+      There are no articles present, try creating some!
     </div>
   </div>
 </div>
