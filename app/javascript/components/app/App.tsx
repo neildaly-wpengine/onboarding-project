@@ -1,26 +1,21 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  RouteComponentProps,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { logout, setAuthDetails } from "../../actions";
 import APIConsumer from "../../common/api-consumer";
+import { createUserInitials } from "../../common/common";
 import {
   ArticleDetailMatchParams,
-  AuthStore,
   ArticleListLocationState,
+  AuthStore,
 } from "../../common/types";
+import ArticleCreator from "../articles/ArticleCreator";
 import ArticleDetail from "../articles/ArticleDetail";
+import ArticleEditor from "../articles/ArticleEditor";
 import ArticleList from "../articles/ArticleList";
+import Login from "../auth/Login";
 import Registration from "../auth/Registration";
 import Navbar from "../nav/Navbar";
-import Login from "../auth/Login";
-import ArticleCreator from "../articles/ArticleCreator";
-import { createUserInitials } from "../../common/common";
-import ArticleEditor from "../articles/ArticleEditor";
 
 const App: React.FC = () => {
   const consumer: APIConsumer = new APIConsumer();
@@ -48,7 +43,7 @@ const App: React.FC = () => {
       path: "/articles/:id",
       exact: true,
       component: (props: ArticleDetailMatchParams) => (
-        <ArticleDetail {...props} consumer={consumer} />
+        <ArticleDetail {...props} />
       ),
     },
     {
