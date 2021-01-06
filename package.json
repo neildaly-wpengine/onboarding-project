@@ -20,7 +20,7 @@
     "@types/react-router": "^5.1.8",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "humps": "^2.0.1",
     "jsonapi-serializer": "^3.6.6",
